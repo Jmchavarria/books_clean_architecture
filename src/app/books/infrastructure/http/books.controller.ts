@@ -21,8 +21,8 @@ export class BooksController {
   }
 
   @Post()
-  create(@Body() body: CreateBookHttpDto) {
-    return this.createBook.execute(body);
+  create(@Body() input : CreateBookHttpDto) {
+    return this.createBook.execute(input);
   }
 
   @Get(":id")

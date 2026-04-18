@@ -4,8 +4,8 @@ import { BooksDE } from "../entities/book.entity";
 export interface SaveBookParams {
   title: string;
   authorId: string;
-  categoryId?: string | null;
-  description?: string | null;
+  categoryId?: string ;
+  description?: string ;
   pages: number;
   isActive: boolean;
   publishedYear: number;

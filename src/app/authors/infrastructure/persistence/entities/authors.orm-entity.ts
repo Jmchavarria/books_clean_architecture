@@ -23,13 +23,13 @@ export class AuthorsOrmEntity {
   birthdate: Date;
 
   @Column({ nullable: true, type: "text" })
-  biography: string | null;
+  biography: string ;
 
   @Column()
   countryOfBirth: string;
 
   @Column({ type: "varchar", nullable: true })
-  literaryGenre: string | null;
+  literaryGenre: string ;
 
   @Column({ default: true })
   isActive: boolean;

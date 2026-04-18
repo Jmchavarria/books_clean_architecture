@@ -9,7 +9,7 @@ export class CreateBookUseCase {
         private readonly bookRepository: BookRepository,
     ) { }
 
-    async execute(data: CreateBookDto): Promise<BooksDE> {
-        return this.bookRepository.save(data);
+    async execute(input: CreateBookDto): Promise<BooksDE> {
+        return this.bookRepository.save(input);
     }
 }

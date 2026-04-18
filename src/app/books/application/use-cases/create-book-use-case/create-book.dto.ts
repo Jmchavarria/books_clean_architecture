@@ -1,8 +1,8 @@
 export interface CreateBookDto {
     title: string
-    categoryId?: string | null
+    categoryId?: string 
     authorId: string
-    description?: string | null
+    description?: string 
     pages: number
     isActive: boolean
     publishedYear: number

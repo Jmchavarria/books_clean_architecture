@@ -15,14 +15,14 @@ export class CreateAuthorHttpDto {
 
     @IsOptional()
     @IsString()
-    biography?: string | null
+    biography?: string 
 
     @IsString()
     countryOfBirth: string
 
     @IsOptional()
     @IsString()
-    literaryGenre?: string | null
+    literaryGenre?: string 
 
     @Type(() => Boolean)
     @IsBoolean()

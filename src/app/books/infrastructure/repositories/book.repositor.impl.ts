@@ -18,7 +18,7 @@ export class BookRepositoryImpl implements BookRepository {
     ) { }
 
     async save(book: SaveBookParams): Promise<BooksDE> {
-    
+
         const saved = await this.repository.save(book);
         return BookMapper.toDomain(saved);
     }
@@ -47,36 +47,78 @@ export class BookRepositoryImpl implements BookRepository {
     }
 
     async findById(id: string): Promise<BooksDE> {
-        const book = await this.repository.findOneBy({ id });
 
-        if (!book) {
-            throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+        try {
+
+            const book = await this.repository.findOneBy({ id });
+            if (!book) {
+                throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+            }
+            return BookMapper.toDomain(book)
+        } catch (error) {
+            if (error instanceof CustomError) {
+                throw error;
+            }
+
+            throw new CustomError(
+                ErrorCode.INTERNAL_SERVER_ERROR,
+                "Failed to update book",
+                undefined,
+                error,
+            );
         }
 
-        return BookMapper.toDomain(book)
+
     }
 
     async update(input: UpdateBookParams): Promise<BooksDE> {
-        const existing = await this.repository.findOneBy({ id: input.id });
+        try {
+            const existing = await this.repository.findOneBy({ id: input.id });
 
-        if (!existing) {
-            throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+            if (!existing) {
+                throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+            }
+
+            const saved = await this.repository.save({
+                ...existing,
+                ...input
+            })
+
+            return BookMapper.toDomain(saved)
+        } catch (error) {
+            if (error instanceof CustomError) {
+                throw error;
+            }
+
+            throw new CustomError(
+                ErrorCode.INTERNAL_SERVER_ERROR,
+                "Failed to update book",
+                undefined,
+                error,
+            );
         }
-
-        const saved = await this.repository.save({
-            ...existing,
-            ...input
-        })
-        return BookMapper.toDomain(saved)
     }
 
     async delete(id: string): Promise<void> {
-        const book = await this.repository.findOneBy({ id });
+        try {
+            const book = await this.repository.findOneBy({ id });
 
-        if (!book) {
-            throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+            if (!book) {
+                throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+            }
+
+            await this.repository.delete(id);
+        } catch (error) {
+            if (error instanceof CustomError) {
+                throw error;
+            }
+
+            throw new CustomError(
+                ErrorCode.INTERNAL_SERVER_ERROR,
+                "Failed to delete book",
+                undefined,
+                error,
+            );
         }
-
-        await this.repository.delete(id);
     }
 }

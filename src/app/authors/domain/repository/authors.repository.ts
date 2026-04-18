@@ -5,9 +5,9 @@ export interface CreateAuthorParams {
     name: string;
     lastname: string;
     birthdate: Date;
-    biography?: string | null;
+    biography?: string;
     countryOfBirth: string;
-    literaryGenre?: string | null;
+    literaryGenre?: string;
     isActive: boolean;
 }
 

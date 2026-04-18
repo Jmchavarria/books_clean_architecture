@@ -8,13 +8,13 @@ export class CreateBookHttpDto {
   @IsUUID()
   authorId: string;
 
-  @IsOptional()
   @IsUUID()
-  categoryId?: string | null;
+  @IsOptional()
+  categoryId?: string 
 
   @IsOptional()
   @IsString()
-  description?: string | null;
+  description?: string 
 
   @Type(() => Number)
   @IsNumber()

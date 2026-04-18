@@ -11,15 +11,19 @@ const ERROR_STATUS_MAP: Record<ErrorCode, HttpStatus> = {
 
 export class CustomError extends Error {
   public readonly statusCode: HttpStatus;
+  public readonly instanceName?: string;
 
   constructor(
     public readonly code: ErrorCode,
     message: string,
     statusCode?: HttpStatus,
     public readonly details?: unknown,
+    instanceName?: string,
   ) {
     super(message);
     this.name = "CustomError";
     this.statusCode = statusCode ?? ERROR_STATUS_MAP[code];
+    this.instanceName = instanceName;
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }

@@ -21,7 +21,7 @@ export class BookOrmEntity {
   title: string;
 
   @Column({ nullable: true, type: "text" })
-  description: string | null;
+  description: string;
 
   @Column()
   authorId: string;
@@ -42,11 +42,11 @@ export class BookOrmEntity {
   updatedAt: Date;
 
   @Column({ type: "varchar", nullable: true })
-  categoryId: string | null;
+  categoryId: string;
 
   @ManyToOne(() => CategoryOrmEntity, (category) => category.books, { nullable: true })
   @JoinColumn({ name: "categoryId" })
-  category?: CategoryOrmEntity | null;
+  category?: CategoryOrmEntity;
 
   @ManyToOne(() => AuthorsOrmEntity, (author) => author.books)
   @JoinColumn({ name: "authorId" })
