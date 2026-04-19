@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { BookRepository } from "../domain/repositories/book.repository";
 import { CreateBookUseCase } from "../application/use-cases/create-book-use-case/create-book-use-case";
-import { DeleteBookUseCase } from "../application/use-cases/delete-book-use-case/delete-book.use-case";
 import { GetAllBooksUseCase } from "../application/use-cases/get-all-book-use-case/get-all-book.use-case";
 import { GetBookByIdUseCase } from "../application/use-cases/get-book-by-id-use-case/get-book-by-id.use-case";
 import { UpdateBookUseCase } from "../application/use-cases/update-book-use-case/update-book.use-case";
@@ -23,7 +22,6 @@ import { AuthorsOrmEntity } from "src/app/authors/infrastructure/persistence/ent
       useClass: BookRepositoryImpl,
     },
     CreateBookUseCase,
-    DeleteBookUseCase,
     GetBookByIdUseCase,
     UpdateBookUseCase,
     GetAllBooksUseCase,

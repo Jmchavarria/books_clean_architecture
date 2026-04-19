@@ -18,7 +18,7 @@ export class CustomValidationPipe implements PipeTransform<any> {
 
         if (errors.length > 0) {
             throw new CustomError(
-                ErrorCode.VALIDATION_ERROR,
+                ErrorCode.valdiation_error,
                 'Validation failed',
                 undefined,
                 errors.map(error => ({

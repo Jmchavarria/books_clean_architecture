@@ -1,7 +1,8 @@
 export enum ErrorCode {
-  BOOK_NOT_FOUND = 1001,
-  CATEGORY_NOT_FOUND = 1002,
-  CATEGORY_ID_UNDEFINED = 1003,
-  VALIDATION_ERROR = 1004,
-  INTERNAL_SERVER_ERROR = 1005,
+  register_not_found = 1001,
+  record_id_undefined = 1002,
+  valdiation_error = 1004,
+  internal_server_error = 1005,
+  update_record_failed = 1006,
+  create_record_failed = 1007,
 }

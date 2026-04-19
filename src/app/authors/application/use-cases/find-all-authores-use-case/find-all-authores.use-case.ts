@@ -1,4 +1,4 @@
-import { AuthorsDE } from "src/app/authors/domain/entity/authors.entity";
+import { AuthorsDE } from "src/app/authors/domain/entity/authors.domain-entity";
 import { AuthorsRepository } from "src/app/authors/domain/repository/authors.repository";
 import Injectable from "src/app/conmon/decorators/injectable";
 import { FindAllAuthorsDto } from "./find-all-authors.dto";

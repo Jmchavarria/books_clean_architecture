@@ -1,10 +1,5 @@
-export interface UpdateBookDto {
+import { CreateBookDto } from "../use-cases/create-book-use-case/create-book.dto";
+
+export interface UpdateBookDto extends Partial<CreateBookDto> {
     id: string
-    title: string
-    categoryId: string
-    authorId: string
-    description: string
-    pages: number
-    isActive: boolean
-    publishedYear: number
 }

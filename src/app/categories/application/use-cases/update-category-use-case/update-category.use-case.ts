@@ -15,8 +15,10 @@ export class UpdateCategoryUsCase {
 
         const existCategory = await this.findCategoryByIdUseCase.execute(id)
 
-        if (!existCategory.id) throw new CustomError(ErrorCode.CATEGORY_ID_UNDEFINED, 'Category id is undefined')
+        if (!existCategory.id) {
+            throw new CustomError(ErrorCode.record_id_undefined, 'failed to update Category')
+        }
 
-        return this.repository.update(existCategory.id, data)
+        return this.repository.updateCategory(existCategory.id, data)
     }
 }

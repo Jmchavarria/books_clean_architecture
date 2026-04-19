@@ -1,4 +1,4 @@
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsBoolean, IsOptional, IsString } from "class-validator";
 
 export class FindAllAuthorsHttpDto {
@@ -7,9 +7,13 @@ export class FindAllAuthorsHttpDto {
     name?: string
 
     @IsOptional()
-    @Type(() => Boolean)
+    @Transform(({ value }) => {
+        if (value === "true") return true;
+        if (value === "false") return false;
+        return value;
+    })
     @IsBoolean()
-    isActive?: boolean
+    isActive?: boolean;
 
     @IsOptional()
     @IsString()

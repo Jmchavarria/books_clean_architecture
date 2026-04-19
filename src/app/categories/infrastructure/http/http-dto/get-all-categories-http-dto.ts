@@ -1,13 +1,12 @@
 import { Type } from "class-transformer";
 import { IsBoolean, IsNumber, IsOptional, IsString } from "class-validator";
 
-export class FindAllCategoriesFiltersHttpDto {
+export class GetAllCategoriesHttpDto {
     @IsString()
     @IsOptional()
     name?: string
 
     @IsOptional()
-    @Type(() => Boolean)
     @IsBoolean()
     isActive?: boolean
 

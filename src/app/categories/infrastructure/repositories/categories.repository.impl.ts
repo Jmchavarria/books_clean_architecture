@@ -2,11 +2,12 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CategoryOrmEntity } from "../persistence/entities/category.orm-entity";
 import { CategoryRepository, FindAllCategoriesFilters, SaveCategoryParams } from "src/app/categories/domain/repositories/category.reposiroty";
 import { FindOptionsWhere, Repository } from "typeorm";
-import { CategoryDE } from "../../domain/enitities/category.entity";
+import { CategoryDE } from "../../domain/enitities/category.domain-entity";
 import { Pagination } from "src/app/conmon/pagination/pagination";
 import Injectable from "src/app/conmon/decorators/injectable";
 import { CustomError } from "src/app/conmon/errors/custom.error";
 import { ErrorCode } from "src/app/conmon/errors/error-code.enum";
+import { CategoriesMapper } from "../mapper/categories.mapper";
 
 @Injectable()
 export class CategoryRepositoryImpl implements CategoryRepository {
@@ -16,32 +17,15 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         private readonly repository: Repository<CategoryOrmEntity>,
     ) { }
 
-
-    async delete(id: string): Promise<{ success: boolean, message: string, data: {} }> {
-
-        await this.findById(id)
-        const result = await this.repository.delete(id)
-        return { success: true, message: 'Success', data: result }
-
-    }
-
-    async findById(idCategory: string): Promise<CategoryDE> {
-        const result = await this.repository.findOne({
+    async getCategoryById(idCategory: string): Promise<CategoryDE | null> {
+        const category = await this.repository.findOne({
             where: { id: idCategory }
         })
 
-        if (!result) throw new CustomError(ErrorCode.CATEGORY_NOT_FOUND, 'Category not found')
-
-        return new CategoryDE(
-            result.id,
-            result.name,
-            result.isActive,
-            result.createdAt,
-            result.updatedAt
-        )
+        return category !== null ? CategoriesMapper.toDomain(category) : null
     }
 
-    async findAll(filters: FindAllCategoriesFilters): Promise<Pagination<CategoryDE[]>> {
+    async getAllCategories(filters: FindAllCategoriesFilters): Promise<Pagination<CategoryDE[]>> {
         const { isActive, name, pageQuery = 1, takeQuery = 200 } = filters
 
         const where: FindOptionsWhere<CategoryOrmEntity> = {}
@@ -49,56 +33,58 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         if (name) where.name = name
         if (typeof isActive === "boolean") where.isActive = isActive
 
-
         const skip = (pageQuery - 1) * takeQuery
-
 
         const data = await this.repository.find({
             where,
             take: takeQuery,
             skip
-
         })
 
-        const total = await this.repository.count({ where })
+        const count = await this.repository.count({ where })
 
-        return new Pagination(data.map((category) => this.toDomain(category)), total, pageQuery, takeQuery)
-
-
-
+        return new Pagination(data.map(CategoriesMapper.toDomain), count, pageQuery, takeQuery)
     }
 
-    async save(data: SaveCategoryParams): Promise<CategoryDE> {
-        const category = await this.repository.save(data)
-        return this.toDomain(category)
-    }
+    async createCategory(data: SaveCategoryParams): Promise<CategoryDE> {
+        try {
+            const category = await this.repository.save(data)
+            return CategoriesMapper.toDomain(category)
+        } catch (error) {
 
-
-
-    async update(id: string, data: Partial<SaveCategoryParams>): Promise<CategoryDE> {
-
-        const existing = await this.repository.findOneBy({ id });
-
-        if (!existing) {
-            throw new CustomError(ErrorCode.CATEGORY_NOT_FOUND, "Category not found");
+            throw new CustomError(
+                ErrorCode.create_record_failed,
+                "Failed to create category",
+                undefined,
+                error,
+                CategoryRepositoryImpl.name,
+            );
         }
-
-        const updated = await this.repository.save({
-            ...existing,
-            ...data
-        })
-        return this.toDomain(updated)
-
     }
 
-    private toDomain(category: CategoryOrmEntity): CategoryDE {
-        return new CategoryDE(
-            category.id,
-            category.name,
-            category.isActive,
-            category.createdAt,
-            category.updatedAt,
-        )
+
+
+    async updateCategory(id: string, data: Partial<SaveCategoryParams>): Promise<CategoryDE | null> {
+        try {
+            const categoryFound = await this.repository.findOneBy({ id });
+
+
+            const updated = await this.repository.save({
+                ...categoryFound,
+                ...data
+            })
+
+            return categoryFound !== null ? CategoriesMapper.toDomain(updated) : null
+
+        } catch (error) {
+
+            throw new CustomError(
+                ErrorCode.update_record_failed,
+                "Failed to update record",
+                undefined,
+                error,
+            );
+        }
     }
 
 }

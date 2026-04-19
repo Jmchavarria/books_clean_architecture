@@ -40,7 +40,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       response.status(status).json({
         success: false,
         error: {
-          code: normalizedResponse.code ?? ErrorCode.INTERNAL_SERVER_ERROR,
+          code: normalizedResponse.code ?? ErrorCode.internal_server_error,
           message:
             typeof normalizedResponse.message === 'string'
               ? normalizedResponse.message
@@ -56,7 +56,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     response.status(500).json({
       success: false,
       error: {
-        code: ErrorCode.INTERNAL_SERVER_ERROR,
+        code: ErrorCode.internal_server_error ,
         message: exception.message || 'Internal server error',
         details: null,
       },

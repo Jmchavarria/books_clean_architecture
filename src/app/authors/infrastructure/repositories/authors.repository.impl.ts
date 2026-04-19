@@ -2,7 +2,7 @@ import { AuthorsOrmEntity } from "../persistence/entities/authors.orm-entity";
 import { AuthorsRepository, CreateAuthorParams, FindAllAuthorsParams } from "../../domain/repository/authors.repository";
 import { FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { AuthorsDE } from "../../domain/entity/authors.entity";
+import { AuthorsDE } from "../../domain/entity/authors.domain-entity";
 import { Pagination } from "src/app/conmon/pagination/pagination";
 import Injectable from "src/app/conmon/decorators/injectable";
 

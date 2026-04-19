@@ -1,5 +1,5 @@
 import { Pagination } from "src/app/conmon/pagination/pagination";
-import { CategoryDE } from "../enitities/category.entity";
+import { CategoryDE } from "../enitities/category.domain-entity";
 
 export interface SaveCategoryParams {
     name: string;
@@ -14,9 +14,8 @@ export interface FindAllCategoriesFilters {
 }
 
 export abstract class CategoryRepository {
-    abstract save(data: SaveCategoryParams): Promise<CategoryDE>
-    abstract findById(id: string): Promise<CategoryDE>
-    abstract findAll(filters: FindAllCategoriesFilters): Promise<Pagination<CategoryDE[]>>
-    abstract update(id: string, data: Partial<SaveCategoryParams>): Promise<CategoryDE>
-    abstract delete(id: string): Promise<{ success: boolean, message: string, data: {} }>
+    abstract createCategory(data: SaveCategoryParams): Promise<CategoryDE>
+    abstract getCategoryById(id: string): Promise<CategoryDE | null>
+    abstract getAllCategories(filters: FindAllCategoriesFilters): Promise<Pagination<CategoryDE[]>>
+    abstract updateCategory(id: string, data: Partial<SaveCategoryParams>): Promise<CategoryDE | null >
 }

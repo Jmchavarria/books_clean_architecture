@@ -1,6 +1,6 @@
 import { BookRepository } from "src/app/books/domain/repositories/book.repository";
 import Injectable from "src/app/conmon/decorators/injectable";
-import { BooksDE } from "src/app/books/domain/entities/book.entity";
+import { BooksDE } from "src/app/books/domain/entities/book.domain-entity";
 import { CreateBookDto } from "./create-book.dto";
 
 @Injectable()
@@ -10,6 +10,6 @@ export class CreateBookUseCase {
     ) { }
 
     async execute(input: CreateBookDto): Promise<BooksDE> {
-        return this.bookRepository.save(input);
+        return this.bookRepository.createBook(input);
     }
 }

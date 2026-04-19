@@ -8,6 +8,4 @@ export class CreateCategoryHttpDto {
     @Type(() => Boolean)
     @IsBoolean()
     isActive: boolean
-
-
 }

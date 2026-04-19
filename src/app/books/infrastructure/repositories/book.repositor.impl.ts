@@ -1,5 +1,5 @@
-import { BooksDE } from "src/app/books/domain/entities/book.entity";
-import { BookRepository, FindBooksFilters, SaveBookParams, UpdateBookParams } from "src/app/books/domain/repositories/book.repository";
+import { BooksDE } from "src/app/books/domain/entities/book.domain-entity";
+import { BookRepository, SaveBookParams, UpdateBookParams } from "src/app/books/domain/repositories/book.repository";
 import { FindOptionsWhere, Repository } from "typeorm";
 import Injectable from "src/app/conmon/decorators/injectable";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -8,6 +8,7 @@ import { BookOrmEntity } from "../persistence/entities/book.orm-entity";
 import { BookMapper } from "../mappers/book.mapper";
 import { CustomError } from "src/app/conmon/errors/custom.error";
 import { ErrorCode } from "src/app/conmon/errors/error-code.enum";
+import { GetAllBooksDto } from "../../application/use-cases/get-all-book-use-case/ge-all-book-filters.dto";
 
 @Injectable()
 export class BookRepositoryImpl implements BookRepository {
@@ -17,15 +18,15 @@ export class BookRepositoryImpl implements BookRepository {
         private readonly repository: Repository<BookOrmEntity>
     ) { }
 
-    async save(book: SaveBookParams): Promise<BooksDE> {
+    async createBook(book: SaveBookParams): Promise<BooksDE> {
 
         const saved = await this.repository.save(book);
         return BookMapper.toDomain(saved);
     }
 
-    async getAll(filters: FindBooksFilters): Promise<Pagination<BooksDE[]>> {
+    async getAllBooks(input: GetAllBooksDto): Promise<Pagination<BooksDE[]>> {
 
-        const { isActive, publishedYear, title, pageQuery = 1, takeQuery = 10 } = filters
+        const { isActive, publishedYear, title, pageQuery = 1, takeQuery = 10 } = input
 
         let where: FindOptionsWhere<BookOrmEntity> = {}
 
@@ -46,37 +47,31 @@ export class BookRepositoryImpl implements BookRepository {
         return new Pagination(data.map(BookMapper.toDomain), count, pageQuery, takeQuery)
     }
 
-    async findById(id: string): Promise<BooksDE> {
+    async getBookById(id: string): Promise<BooksDE | null> {
 
         try {
 
             const book = await this.repository.findOneBy({ id });
-            if (!book) {
-                throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
-            }
-            return BookMapper.toDomain(book)
-        } catch (error) {
-            if (error instanceof CustomError) {
-                throw error;
-            }
 
+            return book !== null ? BookMapper.toDomain(book) : null
+
+        } catch (error) {
             throw new CustomError(
-                ErrorCode.INTERNAL_SERVER_ERROR,
+                ErrorCode.update_record_failed,
                 "Failed to update book",
                 undefined,
                 error,
+                BookRepositoryImpl.name,
             );
         }
-
-
     }
 
-    async update(input: UpdateBookParams): Promise<BooksDE> {
+    async updateBook(input: UpdateBookParams): Promise<BooksDE> {
         try {
             const existing = await this.repository.findOneBy({ id: input.id });
 
             if (!existing) {
-                throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+                throw new CustomError(ErrorCode.register_not_found, "Book not found");
             }
 
             const saved = await this.repository.save({
@@ -91,20 +86,21 @@ export class BookRepositoryImpl implements BookRepository {
             }
 
             throw new CustomError(
-                ErrorCode.INTERNAL_SERVER_ERROR,
+                ErrorCode.internal_server_error,
                 "Failed to update book",
                 undefined,
                 error,
+                BookRepositoryImpl.name,
             );
         }
     }
 
-    async delete(id: string): Promise<void> {
+    async deleteBook(id: string): Promise<void> {
         try {
             const book = await this.repository.findOneBy({ id });
 
             if (!book) {
-                throw new CustomError(ErrorCode.BOOK_NOT_FOUND, "Book not found");
+                throw new CustomError(ErrorCode.register_not_found, "Book not found");
             }
 
             await this.repository.delete(id);
@@ -114,10 +110,11 @@ export class BookRepositoryImpl implements BookRepository {
             }
 
             throw new CustomError(
-                ErrorCode.INTERNAL_SERVER_ERROR,
+                ErrorCode.internal_server_error,
                 "Failed to delete book",
                 undefined,
                 error,
+                BookRepositoryImpl.name,
             );
         }
     }

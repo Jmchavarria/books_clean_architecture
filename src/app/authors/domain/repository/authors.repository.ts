@@ -1,5 +1,5 @@
 import { Pagination } from "src/app/conmon/pagination/pagination";
-import { AuthorsDE } from "../entity/authors.entity";
+import { AuthorsDE } from "../entity/authors.domain-entity";
 
 export interface CreateAuthorParams {
     name: string;
