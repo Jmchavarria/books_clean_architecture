@@ -1,16 +1,16 @@
 import { Type } from "class-transformer";
-import { IsBoolean, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
+import { IsBoolean, IsNumber, IsOptional, isString, IsString, IsUUID } from "class-validator";
 
 export class CreateBookHttpDto {
   @IsString()
   title: string;
 
-  @IsUUID()
-  authorId: string;
+  @IsNumber()
+  authorId: number;
 
-  @IsUUID()
+  @IsNumber()
   @IsOptional()
-  categoryId?: string 
+  categoryId?: number 
 
   @IsOptional()
   @IsString()

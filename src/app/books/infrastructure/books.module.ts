@@ -10,6 +10,7 @@ import { BookRepositoryImpl } from "./repositories/book.repositor.impl";
 import { BookOrmEntity } from "./persistence/entities/book.orm-entity";
 import { CategoryOrmEntity } from "src/app/categories/infrastructure/persistence/entities/category.orm-entity";
 import { AuthorsOrmEntity } from "src/app/authors/infrastructure/persistence/entities/authors.orm-entity";
+import { VerifyBookExistsUseCase } from "../application/use-cases/verify-book-exists/verify-book-exists.use-case";
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { AuthorsOrmEntity } from "src/app/authors/infrastructure/persistence/ent
     GetBookByIdUseCase,
     UpdateBookUseCase,
     GetAllBooksUseCase,
+    VerifyBookExistsUseCase
   ],
-  exports: [BookRepository, GetBookByIdUseCase, ],
+  exports: [BookRepository, GetBookByIdUseCase,],
 })
-export class BooksModule {}
+export class BooksModule { }

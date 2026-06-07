@@ -1,9 +1,9 @@
 export class BooksDE {
     constructor(
-        public id: string,
+        public id: number,
         public title: string,
-        public authorId: string,
-        public categoryId: string,
+        public authorId: number,
+        public categoryId: number,
         public description: string,
         public pages: number,
         public isActive: boolean,

@@ -11,7 +11,7 @@ export class UpdateCategoryUsCase {
         private readonly findCategoryByIdUseCase: FindCategoryByIdUseCase
     ) { }
 
-    async execute(id: string, data: CreateCategoryDto) {
+    async execute(id: number, data: CreateCategoryDto) {
 
         const existCategory = await this.findCategoryByIdUseCase.execute(id)
 

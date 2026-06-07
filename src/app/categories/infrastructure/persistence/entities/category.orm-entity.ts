@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -9,9 +10,10 @@ import {
 import { BookOrmEntity } from "src/app/books/infrastructure/persistence/entities/book.orm-entity";
 
 @Entity("categories")
+@Index(["name"], { unique: true })
 export class CategoryOrmEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;

@@ -9,13 +9,11 @@ export class GetBookByIdUseCase {
     constructor(
         private readonly bookrepository: BookRepository) { }
 
-    async execute(id: string): Promise<BooksDE> {
+    async execute(id: number): Promise<BooksDE> {
 
         const book = await this.bookrepository.getBookById(id)
 
-        if (book === null) {
-            throw new CustomError(ErrorCode.register_not_found, "Book not found")
-        }
+        if (!book) throw new CustomError(ErrorCode.register_not_found, 'Book not found')
 
         return book
     }

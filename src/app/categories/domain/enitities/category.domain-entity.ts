@@ -2,7 +2,7 @@ import { BooksDE } from "src/app/books/domain/entities/book.domain-entity";
 
 export class CategoryDE {
   constructor(
-    public readonly id: string,
+    public readonly id: number,
     public name: string,
     public isActive: boolean,
     public books: BooksDE[],

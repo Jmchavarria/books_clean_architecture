@@ -17,7 +17,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         private readonly repository: Repository<CategoryOrmEntity>,
     ) { }
 
-    async getCategoryById(idCategory: string): Promise<CategoryDE | null> {
+    async getCategoryById(idCategory: number): Promise<CategoryDE | null> {
         const category = await this.repository.findOne({
             where: { id: idCategory }
         })
@@ -55,7 +55,6 @@ export class CategoryRepositoryImpl implements CategoryRepository {
             throw new CustomError(
                 ErrorCode.create_record_failed,
                 "Failed to create category",
-                undefined,
                 error,
                 CategoryRepositoryImpl.name,
             );
@@ -63,8 +62,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     }
 
 
-
-    async updateCategory(id: string, data: Partial<SaveCategoryParams>): Promise<CategoryDE | null> {
+    async updateCategory(id: number, data: Partial<SaveCategoryParams>): Promise<CategoryDE | null> {
         try {
             const categoryFound = await this.repository.findOneBy({ id });
 

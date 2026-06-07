@@ -5,6 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { AuthorsDE } from "../../domain/entity/authors.domain-entity";
 import { Pagination } from "src/app/conmon/pagination/pagination";
 import Injectable from "src/app/conmon/decorators/injectable";
+import { AuthorsMapper } from "../mapper/authors.mapper";
 
 @Injectable()
 export class AuthorsRepositoryImpl implements AuthorsRepository {
@@ -14,55 +15,42 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
 
     async createAuthor(input: CreateAuthorParams): Promise<AuthorsDE> {
         const author = await this.repository.save(input)
-        return this.toDomain(author)
+        return AuthorsMapper.toDomain(author)
     }
 
-    async finAllAuthors(input: FindAllAuthorsParams): Promise<Pagination<AuthorsDE[]>> {
+    async finAllAuthors({ isActive, literaryGenre, name, pageQuery = 1, takeQuery = 10 }: FindAllAuthorsParams): Promise<Pagination<AuthorsDE[]>> {
 
-        const { isActive, literaryGenre, name, pageQuery = 1, takeQuery = 10 } = input
+        const where: FindOptionsWhere<AuthorsOrmEntity> = Object.fromEntries(
+            Object.entries({
+                isActive,
+                literaryGenre,
+                name,
+            }).filter(([, value]) => value !== undefined)
+        );
 
-        let where: FindOptionsWhere<AuthorsOrmEntity> = {}
-
-        if (typeof isActive === "boolean") where.isActive = isActive
-        if (literaryGenre) where.literaryGenre = literaryGenre
-        if (name) where.name = name
-
-        const skip = (pageQuery - 1) * takeQuery
+        const skip = (pageQuery - 1) * takeQuery;
 
         const data = await this.repository.find({
-            where,
-            take: takeQuery,
-            skip,
+            where, take: takeQuery, skip,
         })
 
         const count = await this.repository.count({ where })
 
-        return new Pagination(data.map((author) => this.toDomain(author)), count, pageQuery, takeQuery)
-
+        return new Pagination(
+            data.map(AuthorsMapper.toDomain),
+            count,
+            pageQuery,
+            takeQuery,
+        );
     }
 
-    async findAuthorById(id: string): Promise<AuthorsDE> {
+    async findAuthorById(id: number): Promise<AuthorsDE> {
         const author = await this.repository.findOneByOrFail({ id })
-        return this.toDomain(author)
+        return AuthorsMapper.toDomain(author)
     }
 
     async updateAuthor(): Promise<void> {
 
     }
 
-    private toDomain(author: AuthorsOrmEntity): AuthorsDE {
-        return new AuthorsDE(
-            author.id,
-            author.name,
-            author.lastname,
-            author.birthdate,
-            author.biography ?? null,
-            author.countryOfBirth,
-            author.literaryGenre ?? null,
-            author.isActive,
-            author.createdAt,
-            author.updatedAt,
-            author.books?.map((book) => book.id) ?? [],
-        )
-    }
 }

@@ -14,8 +14,8 @@ import { AuthorsOrmEntity } from "src/app/authors/infrastructure/persistence/ent
 @Entity("books")
 @Index("UQ_books_title_author_published_year", ["title", "authorId", "publishedYear"], { unique: true })
 export class BookOrmEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   title: string;
@@ -24,7 +24,7 @@ export class BookOrmEntity {
   description: string;
 
   @Column()
-  authorId: string;
+  authorId: number;
 
   @Column()
   pages: number;
@@ -41,8 +41,8 @@ export class BookOrmEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: "varchar", nullable: true })
-  categoryId: string;
+  @Column({ type: "int", nullable: true })
+  categoryId: number;
 
   @ManyToOne(() => CategoryOrmEntity, (category) => category.books, { nullable: true })
   @JoinColumn({ name: "categoryId" })

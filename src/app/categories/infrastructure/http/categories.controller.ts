@@ -21,7 +21,7 @@ export class CategoriesController {
   }
 
   @Get(":id")
-  findById(@Param("id") id: string) {
+  findById(@Param("id") id: number) {
     return this.findCategoryByIdUseCase.execute(id);
   }
 
@@ -31,7 +31,7 @@ export class CategoriesController {
   }
 
   @Put(":id")
-  updateCategory(@Param("id") id: string, @Body() data: CreateCategoryHttpDto) {
+  updateCategory(@Param("id") id: number, @Body() data: CreateCategoryHttpDto) {
     return this.updateCategoryUseCase.execute(id, data);
   }
 

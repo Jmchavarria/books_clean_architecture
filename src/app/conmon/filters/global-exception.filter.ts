@@ -1,9 +1,4 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CustomError } from '../errors/custom.error';
 import { ErrorCode } from '../errors/error-code.enum';
@@ -16,12 +11,17 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     if (exception instanceof CustomError) {
+      console.error({
+        code: exception.code,
+        message: exception.message,
+        path: request.url,
+      });
+
       response.status(exception.statusCode).json({
         success: false,
         error: {
           code: exception.code,
-          message: exception.message,
-          details: exception.details ?? null,
+          message: exception.code,
         },
         path: request.url,
         timestamp: new Date().toISOString(),
@@ -56,7 +56,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     response.status(500).json({
       success: false,
       error: {
-        code: ErrorCode.internal_server_error ,
+        code: ErrorCode.internal_server_error,
         message: exception.message || 'Internal server error',
         details: null,
       },

@@ -22,6 +22,6 @@ export interface FindAllAuthorsParams {
 export abstract class AuthorsRepository {
     abstract createAuthor(input: CreateAuthorParams): Promise<AuthorsDE>
     abstract finAllAuthors(input: FindAllAuthorsParams): Promise<Pagination<AuthorsDE[]>>
-    abstract findAuthorById(id: string): Promise<AuthorsDE>
+    abstract findAuthorById(id: number): Promise<AuthorsDE>
     abstract updateAuthor(): Promise<void>
 }

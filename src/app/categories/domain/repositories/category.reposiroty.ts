@@ -15,7 +15,7 @@ export interface FindAllCategoriesFilters {
 
 export abstract class CategoryRepository {
     abstract createCategory(data: SaveCategoryParams): Promise<CategoryDE>
-    abstract getCategoryById(id: string): Promise<CategoryDE | null>
+    abstract getCategoryById(id: number): Promise<CategoryDE | null>
     abstract getAllCategories(filters: FindAllCategoriesFilters): Promise<Pagination<CategoryDE[]>>
-    abstract updateCategory(id: string, data: Partial<SaveCategoryParams>): Promise<CategoryDE | null >
+    abstract updateCategory(id: number, data: Partial<SaveCategoryParams>): Promise<CategoryDE | null >
 }

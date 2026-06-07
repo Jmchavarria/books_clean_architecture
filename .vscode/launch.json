@@ -6,24 +6,23 @@
       "request": "attach",
       "name": "Attach NestJS",
       "port": 9229,
-      "address": "127.0.0.1",
-      "protocol": "inspector",
+      "address": "localhost",
       "restart": true,
-      "cwd": "${workspaceFolder}",
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/dist/**",
+        "!**/node_modules/**"
+      ],
       "sourceMapPathOverrides": {
+        "../../../../../../src/*": "${workspaceFolder}/src/*",
         "../../../../../src/*": "${workspaceFolder}/src/*",
         "../../../../src/*": "${workspaceFolder}/src/*",
         "../../../src/*": "${workspaceFolder}/src/*",
         "../../src/*": "${workspaceFolder}/src/*",
         "../src/*": "${workspaceFolder}/src/*"
-      },
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/dist/**/*.js",
-        "!**/node_modules/**"
-      ]
+      }
     }
   ]
 }

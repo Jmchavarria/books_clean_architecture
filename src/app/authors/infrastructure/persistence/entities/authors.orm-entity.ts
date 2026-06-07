@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -9,9 +10,10 @@ import {
 import { BookOrmEntity } from "src/app/books/infrastructure/persistence/entities/book.orm-entity";
 
 @Entity("authors")
+@Index(["name"], { unique: true })
 export class AuthorsOrmEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;
@@ -29,7 +31,7 @@ export class AuthorsOrmEntity {
   countryOfBirth: string;
 
   @Column({ type: "varchar", nullable: true })
-  literaryGenre: string ;
+  literaryGenre: string ;  //DEBERIA SER UNA RELACION DE MUCHOS A MUCHOS
 
   @Column({ default: true })
   isActive: boolean;

@@ -1,6 +1,6 @@
 export class AuthorsDE {
     constructor(
-        public id: string,
+        public id: number,
         public name: string,
         public lastname: string,
         public birthdate: Date,
@@ -10,6 +10,6 @@ export class AuthorsDE {
         public isActive: boolean,
         public createdAt: Date,
         public updatedAt: Date,
-        public books: string[] = []
+        public books: number[] 
     ) { }
 }

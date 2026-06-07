@@ -8,7 +8,7 @@ import { ErrorCode } from "src/app/conmon/errors/error-code.enum";
 export class FindCategoryByIdUseCase {
     constructor(private readonly repository: CategoryRepository) { }
 
-    async execute(id: string): Promise<CategoryDE> {
+    async execute(id: number): Promise<CategoryDE> {
         const category = await this.repository.getCategoryById(id)
         if (!category) throw new CustomError(ErrorCode.register_not_found, 'Category not found')
         return category
