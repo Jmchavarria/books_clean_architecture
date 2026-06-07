@@ -1,4 +1,4 @@
-import { BooksDE } from "src/app/books/domain/entities/book.domain-entity";
+import type { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 
 export class CategoryDE {
   constructor(
@@ -8,5 +8,5 @@ export class CategoryDE {
     public books: BooksDE[],
     public createdAt: Date,
     public updatedAt: Date,
-  ) { }
+  ) {}
 }

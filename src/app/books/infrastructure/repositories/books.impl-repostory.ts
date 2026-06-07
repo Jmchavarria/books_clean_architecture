@@ -30,7 +30,7 @@ export class BookRepositoryImpl implements BookRepository {
     title,
     authorId,
     publishedYear,
-  }: VerifyBookExistsDto): Promise<Boolean> {
+  }: VerifyBookExistsDto): Promise<boolean> {
     try {
       return await this.repository.exists({
         where: {
@@ -71,7 +71,12 @@ export class BookRepositoryImpl implements BookRepository {
 
       const count = await this.repository.count({ where });
 
-      return new Pagination(data.map(BookMapper.toDomain), count, pageQuery, takeQuery);
+      return new Pagination(
+        data.map((entity) => BookMapper.toDomain(entity)),
+        count,
+        pageQuery,
+        takeQuery,
+      );
     } catch (error) {
       throw new CustomError(
         ErrorCode.error_getting_records,
@@ -88,10 +93,14 @@ export class BookRepositoryImpl implements BookRepository {
 
       return book !== null ? BookMapper.toDomain(book) : null;
     } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
       throw new CustomError(
         ErrorCode.update_record_failed,
         'Failed to get book by id',
-        error,
+        HttpStatus.NOT_FOUND,
         BookRepositoryImpl.name,
       );
     }
@@ -99,7 +108,6 @@ export class BookRepositoryImpl implements BookRepository {
 
   async updateBook(input: UpdateBookDto): Promise<BooksDE> {
     try {
-      console.log(input);
       await this.repository.update(input.id, {
         ...input,
       });
@@ -119,6 +127,7 @@ export class BookRepositoryImpl implements BookRepository {
       if (error instanceof CustomError) {
         throw error;
       }
+
       throw new CustomError(
         ErrorCode.update_record_failed,
         'Failed to update book',

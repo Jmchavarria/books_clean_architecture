@@ -7,6 +7,7 @@ export enum ErrorCode {
   create_record_failed = 1007,
   error_getting_records = 1008,
   book_exists_verfication_error = 1009,
-  book_already_exists = 1010
-
+  book_already_exists = 1010,
+  category_already_exists = 1011,
+  database_error = 1012,
 }

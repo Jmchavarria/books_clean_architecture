@@ -1,27 +1,51 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+  Logger,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
+import { QueryFailedError } from 'typeorm';
 import { CustomError } from '../errors/custom.error';
 import { ErrorCode } from '../errors/error-code.enum';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
+  private readonly logger = new Logger(GlobalExceptionFilter.name);
+
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    if (exception instanceof CustomError) {
-      console.error({
-        code: exception.code,
-        message: exception.message,
-        path: request.url,
-      });
+    // Loguea siempre el error original
+    this.logger.error(
+      `[${request.method}] ${request.url}`,
+      exception instanceof Error ? exception.stack : String(exception),
+    );
 
+    if (exception instanceof CustomError) {
       response.status(exception.statusCode).json({
         success: false,
         error: {
           code: exception.code,
-          message: exception.code,
+          message: exception.message,
+        },
+        path: request.url,
+        timestamp: new Date().toISOString(),
+      });
+      return;
+    }
+
+    if (exception instanceof QueryFailedError) {
+      response.status(HttpStatus.BAD_REQUEST).json({
+        success: false,
+        error: {
+          code: ErrorCode.database_error,
+          message: 'Database operation failed',
+          details: null,
         },
         path: request.url,
         timestamp: new Date().toISOString(),
@@ -53,11 +77,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       return;
     }
 
-    response.status(500).json({
+    const error = exception instanceof Error ? exception : new Error(String(exception));
+    response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       error: {
         code: ErrorCode.internal_server_error,
-        message: exception.message || 'Internal server error',
+        message: error.message || 'Internal server error',
         details: null,
       },
       path: request.url,

@@ -6,7 +6,9 @@ import { VerifyBookExistsDto } from './verify-book-exists.dto';
 export class VerifyBookExistsUseCase {
   constructor(private readonly repository: BookRepository) {}
 
-  async execute(input: VerifyBookExistsDto): Promise<Boolean> {
-    return await this.repository.verifyBookExists(input);
+  async execute(input: VerifyBookExistsDto): Promise<boolean> {
+    const result = await this.repository.verifyBookExists(input);
+
+    return result;
   }
 }
