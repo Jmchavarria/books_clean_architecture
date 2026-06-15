@@ -31,109 +31,47 @@ export class BookRepositoryImpl implements BookRepository {
     authorId,
     publishedYear,
   }: VerifyBookExistsDto): Promise<boolean> {
-    try {
-      return await this.repository.exists({
-        where: {
-          title,
-          authorId,
-          publishedYear,
-        },
-      });
-    } catch (error) {
-      throw new CustomError(
-        ErrorCode.error_getting_records,
-        'Error retrieving all records',
-        HttpStatus.NOT_FOUND,
-        BookRepositoryImpl.name,
-      );
-    }
+    return this.repository.exists({ where: { title, authorId, publishedYear } });
   }
 
   async getAllBooks(input: GetAllBooksDto): Promise<Pagination<BooksDE[]>> {
-    try {
-      const { isActive, publishedYear, title, pageQuery = 1, takeQuery = 10 } = input;
+    const { isActive, publishedYear, title, pageQuery = 1, takeQuery = 10 } = input;
 
-      const where: FindOptionsWhere<BookOrmEntity> = Object.fromEntries(
-        Object.entries({
-          title,
-          isActive,
-          publishedYear,
-        }).filter(([, value]) => value !== undefined),
-      );
+    const where: FindOptionsWhere<BookOrmEntity> = Object.fromEntries(
+      Object.entries({ title, isActive, publishedYear }).filter(([, value]) => value !== undefined),
+    );
 
-      const skip = (pageQuery - 1) * takeQuery;
+    const skip = (pageQuery - 1) * takeQuery;
 
-      const data = await this.repository.find({
-        where,
-        take: takeQuery,
-        skip,
-      });
+    const data = await this.repository.find({ where, take: takeQuery, skip });
+    const count = await this.repository.count({ where });
 
-      const count = await this.repository.count({ where });
-
-      return new Pagination(
-        data.map((entity) => BookMapper.toDomain(entity)),
-        count,
-        pageQuery,
-        takeQuery,
-      );
-    } catch (error) {
-      throw new CustomError(
-        ErrorCode.error_getting_records,
-        'Error retrieving all records',
-        HttpStatus.NOT_FOUND,
-        BookRepositoryImpl.name,
-      );
-    }
+    return new Pagination(
+      data.map((entity) => BookMapper.toDomain(entity)),
+      count,
+      pageQuery,
+      takeQuery,
+    );
   }
 
   async getBookById(id: number): Promise<BooksDE | null> {
-    try {
-      const book = await this.repository.findOneBy({ id });
-
-      return book !== null ? BookMapper.toDomain(book) : null;
-    } catch (error) {
-      if (error instanceof CustomError) {
-        throw error;
-      }
-
-      throw new CustomError(
-        ErrorCode.update_record_failed,
-        'Failed to get book by id',
-        HttpStatus.NOT_FOUND,
-        BookRepositoryImpl.name,
-      );
-    }
+    const book = await this.repository.findOneBy({ id });
+    return book !== null ? BookMapper.toDomain(book) : null;
   }
 
   async updateBook(input: UpdateBookDto): Promise<BooksDE> {
-    try {
-      await this.repository.update(input.id, {
-        ...input,
-      });
+    await this.repository.update(input.id, { ...input });
 
-      const book = await this.repository.findOneBy({ id: input.id });
+    const book = await this.repository.findOneBy({ id: input.id });
 
-      if (!book)
-        throw new CustomError(
-          ErrorCode.update_record_failed,
-          'Error attempting to update the register',
-          HttpStatus.BAD_REQUEST,
-          BookRepositoryImpl.name,
-        );
-
-      return BookMapper.toDomain(book);
-    } catch (error) {
-      if (error instanceof CustomError) {
-        throw error;
-      }
-
+    if (!book)
       throw new CustomError(
         ErrorCode.update_record_failed,
-        'Failed to update book',
+        'Error attempting to update the register',
         HttpStatus.BAD_REQUEST,
         BookRepositoryImpl.name,
       );
-    }
+
+    return BookMapper.toDomain(book);
   }
 }

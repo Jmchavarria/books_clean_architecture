@@ -5,9 +5,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './app/books/infrastructure/books.module';
 import { CategoryModule } from './app/categories/infrastructure/categories.module';
 import { AuthorsModule } from './app/authors/infrastructure/authors.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -21,10 +27,10 @@ import { AuthorsModule } from './app/authors/infrastructure/authors.module';
     BooksModule,
     CategoryModule,
     AuthorsModule,
-
-
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

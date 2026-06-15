@@ -1,4 +1,4 @@
-import { CategoryOrmEntity } from '../persistence/entities/category.orm-entity';
+import type { CategoryOrmEntity } from '../persistence/entities/category.orm-entity';
 import { CategoryDE } from '../../domain/enitities/category.domain-entity';
 
 export class CategoriesMapper {

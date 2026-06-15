@@ -36,10 +36,12 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   async getAllCategories(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
     const { isActive, name, pageQuery = 1, takeQuery = 200 } = filters;
 
-    const where: FindOptionsWhere<CategoryOrmEntity> = {};
-
-    if (name) where.name = name;
-    if (typeof isActive === 'boolean') where.isActive = isActive;
+    const where: FindOptionsWhere<CategoryOrmEntity> = Object.fromEntries(
+      Object.entries({
+        name,
+        isActive,
+      }).filter(([, value]) => value !== undefined),
+    );
 
     const skip = (pageQuery - 1) * takeQuery;
 

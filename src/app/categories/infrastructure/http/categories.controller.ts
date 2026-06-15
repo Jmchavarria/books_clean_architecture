@@ -3,9 +3,9 @@ import { CreateCategoryUseCase } from '../../application/use-cases/create-catego
 import { GetAllCategoriesUseCase } from '../../application/use-cases/find-all-categories-use-case/find-all-categories.use-case';
 import { FindCategoryByIdUseCase } from '../../application/use-cases/find-category-by-id/find-category-by-id.use-case';
 import { UpdateCategoryUseCase } from '../../application/use-cases/update-category/update-category.use-case';
-import { CreateCategoryHttpDto } from './http-dto/create-category-http-dto';
-import { GetAllCategoriesHttpDto } from './http-dto/get-all-categories-http-dto';
-import { UpdateCategoryHttpDto } from './http-dto/update-category.http-dto';
+import { CreateCategoryHttpDto } from './dto/create-category-http-dto';
+import { GetAllCategoriesHttpDto } from './dto/get-all-categories-http-dto';
+import { UpdateCategoryHttpDto } from './dto/update-category.http-dto';
 
 @Controller('categories')
 export class CategoriesController {

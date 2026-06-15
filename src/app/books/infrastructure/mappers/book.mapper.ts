@@ -1,5 +1,5 @@
-import { BooksDE } from "src/app/books/domain/entities/book.domain-entity";
-import { BookOrmEntity } from "../persistence/entities/book.orm-entity";
+import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
+import type { BookOrmEntity } from '../persistence/entities/book.orm-entity';
 
 export class BookMapper {
   static toDomain(entity: BookOrmEntity): BooksDE {
