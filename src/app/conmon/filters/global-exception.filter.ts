@@ -45,7 +45,6 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         error: {
           code: ErrorCode.database_error,
           message: 'Database operation failed',
-          details: null,
         },
         path: request.url,
         timestamp: new Date().toISOString(),
@@ -69,7 +68,6 @@ export class GlobalExceptionFilter implements ExceptionFilter {
             typeof normalizedResponse.message === 'string'
               ? normalizedResponse.message
               : exception.message,
-          details: normalizedResponse.errors ?? normalizedResponse.details ?? null,
         },
         path: request.url,
         timestamp: new Date().toISOString(),
@@ -83,7 +81,6 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       error: {
         code: ErrorCode.internal_server_error,
         message: error.message || 'Internal server error',
-        details: null,
       },
       path: request.url,
       timestamp: new Date().toISOString(),

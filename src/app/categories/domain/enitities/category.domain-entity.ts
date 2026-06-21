@@ -1,11 +1,11 @@
-import type { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
+import type { IBooksSumary } from 'src/app/books/domain/interface/books-summary.interface';
 
 export class CategoryDE {
   constructor(
     public readonly id: number,
     public name: string,
     public isActive: boolean,
-    public books: BooksDE[],
+    public books: IBooksSumary[],
     public createdAt: Date,
     public updatedAt: Date,
   ) {}

@@ -6,7 +6,7 @@ import { GetAllBooksUseCase } from '../application/use-cases/get-all-book-use-ca
 import { GetBookByIdUseCase } from '../application/use-cases/get-book-by-id-use-case/get-book-by-id.use-case';
 import { UpdateBookUseCase } from '../application/use-cases/update-book-use-case/update-book.use-case';
 import { BooksController } from './http/books.controller';
-import { BookRepositoryImpl } from './repositories/books.impl-repostory';
+import { BookRepositoryImpl } from './repositories/books.repostory-impl';
 import { BookOrmEntity } from './persistence/entities/book.orm-entity';
 import { CategoryOrmEntity } from 'src/app/categories/infrastructure/persistence/entities/category.orm-entity';
 import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/entities/authors.orm-entity';

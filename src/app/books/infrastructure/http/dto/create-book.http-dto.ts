@@ -1,5 +1,5 @@
-import { Type } from "class-transformer";
-import { IsBoolean, IsNumber, IsOptional, isString, IsString, IsUUID } from "class-validator";
+import { Type } from 'class-transformer';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateBookHttpDto {
   @IsString()
@@ -10,11 +10,11 @@ export class CreateBookHttpDto {
 
   @IsNumber()
   @IsOptional()
-  categoryId?: number 
+  categoryId?: number;
 
   @IsOptional()
   @IsString()
-  description?: string 
+  description?: string;
 
   @Type(() => Number)
   @IsNumber()

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CreateBookUseCase } from '../../application/use-cases/create-book-use-case/create-book-use-case';
 import { GetAllBooksUseCase } from '../../application/use-cases/get-all-book-use-case/get-all-book.use-case';
 import { GetBookByIdUseCase } from '../../application/use-cases/get-book-by-id-use-case/get-book-by-id.use-case';
@@ -6,6 +6,9 @@ import { CreateBookHttpDto } from './dto/create-book.http-dto';
 import { GetAllBooksHttpDto } from './dto/get-all-books.dto';
 import { UpdateBookUseCase } from '../../application/use-cases/update-book-use-case/update-book.use-case';
 import { UpdateBookHttpDto } from './dto/update-book.http-dto';
+import { JwtAuthGuard } from 'src/auth/infrastructure/guards/jwt-auth.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 
 @Controller('books')
 export class BooksController {
@@ -16,6 +19,8 @@ export class BooksController {
     private readonly updateBookUseCase: UpdateBookUseCase,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
+  @Roles('admin')
   @Get()
   getAll(@Query() filters: GetAllBooksHttpDto) {
     return this.getAllBooksUseCase.execute(filters);
