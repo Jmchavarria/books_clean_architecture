@@ -1,7 +1,7 @@
 // src/auth/application/use-cases/validate-user/validate-user.use-case.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { UsersRepository } from 'src/users/domain/repository/users.repository';
+import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 
 @Injectable()
 export class ValidateUserUseCase {

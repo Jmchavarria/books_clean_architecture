@@ -3,7 +3,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UsersModule } from '../users/users.module';
 import { AuthController } from './infrastructure/http/auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
@@ -15,6 +14,7 @@ import { RefreshTokenRepository } from './domain/repository/refresh-token.reposi
 import { RefreshTokenOrmEntity } from './infrastructure/persitence/entities/refresh-token.orm-entity';
 import { RefreshTokenRepositoryImpl } from './infrastructure/repositories/refresh-token.impl-repository';
 import { LogoutUseCase } from './application/use-cases/logout/logout.use-case';
+import { UsersModule } from 'src/app/users/users.module';
 
 @Module({
   imports: [

@@ -1,4 +1,4 @@
-import type { CreateUserDto } from 'src/users/application/use-cases/create-user/create-user.dto';
+import type { CreateUserDto } from '../../application/use-cases/create-user/create-user.dto';
 import type { UsersDE } from '../entity/users.domain-enity';
 
 export abstract class UsersRepository {

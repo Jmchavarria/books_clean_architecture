@@ -1,4 +1,4 @@
-import { UsersDE } from 'src/users/domain/entity/users.domain-enity';
+import { UsersDE } from '../../domain/entity/users.domain-enity';
 import type { UsersOrmEntity } from '../persistence/entities/users.orm-entity';
 
 export class UsersMapper {

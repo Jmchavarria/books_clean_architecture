@@ -43,7 +43,12 @@ export class BookRepositoryImpl implements BookRepository {
 
     const skip = (pageQuery - 1) * takeQuery;
 
-    const data = await this.repository.find({ where, take: takeQuery, skip });
+    const data = await this.repository.find({
+      where,
+      take: takeQuery,
+      skip,
+      relations: ['category'],
+    });
     const count = await this.repository.count({ where });
 
     return new Pagination(

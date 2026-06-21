@@ -1,9 +1,9 @@
-import { UsersRepository } from 'src/users/domain/repository/users.repository';
-import { UsersDE } from 'src/users/domain/entity/users.domain-enity';
 import Injectable from 'src/app/conmon/decorators/injectable';
 import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { HttpStatus } from '@nestjs/common';
+import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
+import { UsersDE } from 'src/app/users/domain/entity/users.domain-enity';
 
 @Injectable()
 export class GetUserByIdUseCase {

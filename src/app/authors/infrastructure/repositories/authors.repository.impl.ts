@@ -1,8 +1,5 @@
 import { AuthorsOrmEntity } from '../persistence/entities/authors.orm-entity';
-import {
-  AuthorsRepository,
-  FindAllAuthorsParams,
-} from '../../domain/repository/authors.repository';
+import { AuthorsRepository } from '../../domain/repository/authors.repository';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthorsDE } from '../../domain/entity/authors.domain-entity';
@@ -14,6 +11,7 @@ import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { HttpStatus } from '@nestjs/common';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { CreateAuthorDto } from '../../application/use-cases/create-author/create-author.dto';
+import { FindAllAuthorsDto } from '../../application/use-cases/get-all-authors/get-all-authors.dto';
 
 @Injectable()
 export class AuthorsRepositoryImpl implements AuthorsRepository {
@@ -33,7 +31,7 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     name,
     pageQuery = 1,
     takeQuery = 10,
-  }: FindAllAuthorsParams): Promise<Pagination<AuthorsDE[]>> {
+  }: FindAllAuthorsDto): Promise<Pagination<AuthorsDE[]>> {
     const where: FindOptionsWhere<AuthorsOrmEntity> = Object.fromEntries(
       Object.entries({
         isActive,
@@ -48,6 +46,7 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
       where,
       take: takeQuery,
       skip,
+      relations: { books: true },
     });
 
     const count = await this.repository.count({ where });
@@ -61,7 +60,7 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
   }
 
   async getAuthorById(id: number): Promise<AuthorsDE | null> {
-    const author = await this.repository.findOneBy({ id });
+    const author = await this.repository.findOne({ where: { id }, relations: { books: true } });
     return author !== null ? AuthorsMapper.toDomain(author) : null;
   }
 

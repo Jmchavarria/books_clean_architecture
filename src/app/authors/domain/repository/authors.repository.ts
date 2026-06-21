@@ -4,14 +4,6 @@ import type { UpdateAuthorDto } from '../../application/use-cases/update-author/
 import type { CreateAuthorDto } from '../../application/use-cases/create-author/create-author.dto';
 import type { FindAllAuthorsDto } from '../../application/use-cases/get-all-authors/get-all-authors.dto';
 
-export interface FindAllAuthorsParams {
-  pageQuery?: number;
-  takeQuery?: number;
-  name?: string;
-  isActive?: boolean;
-  literaryGenre?: string;
-}
-
 export abstract class AuthorsRepository {
   abstract createAuthor(input: CreateAuthorDto): Promise<AuthorsDE>;
   abstract getAllAuthors(input: FindAllAuthorsDto): Promise<Pagination<AuthorsDE[]>>;

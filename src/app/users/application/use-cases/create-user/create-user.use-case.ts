@@ -1,6 +1,6 @@
-import { UsersRepository } from 'src/users/domain/repository/users.repository';
+import { UsersDE } from 'src/app/users/domain/entity/users.domain-enity';
+import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 import { CreateUserDto } from './create-user.dto';
-import { UsersDE } from 'src/users/domain/entity/users.domain-enity';
 import Injectable from 'src/app/conmon/decorators/injectable';
 
 @Injectable()

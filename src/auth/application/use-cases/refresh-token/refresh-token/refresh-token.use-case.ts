@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshTokenRepository } from '../../../../domain/repository/refresh-token.repository';
-import { UsersRepository } from '../../../../../users/domain/repository/users.repository';
 import { CreateRefreshTokenUseCase } from '../create-refresh-token/create-refresh-token.use-cae';
 import { RefreshTokenDto } from './refresh-token.dto';
+import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 
 @Injectable()
 export class RefreshTokenUseCase {

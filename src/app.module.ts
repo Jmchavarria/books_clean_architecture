@@ -6,8 +6,8 @@ import { BooksModule } from './app/books/infrastructure/books.module';
 import { CategoryModule } from './app/categories/infrastructure/categories.module';
 import { AuthorsModule } from './app/authors/infrastructure/authors.module';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './app/users/users.module';
 
 @Module({
   imports: [

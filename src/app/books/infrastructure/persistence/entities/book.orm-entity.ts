@@ -43,12 +43,12 @@ export class BookOrmEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'int' })
   categoryId: number;
 
-  @ManyToOne(() => CategoryOrmEntity, (category) => category.books, { nullable: true })
+  @ManyToOne(() => CategoryOrmEntity, (category) => category.books)
   @JoinColumn({ name: 'categoryId' })
-  category?: CategoryOrmEntity;
+  category: CategoryOrmEntity;
 
   @ManyToOne(() => AuthorsOrmEntity, (author) => author.books)
   @JoinColumn({ name: 'authorId' })

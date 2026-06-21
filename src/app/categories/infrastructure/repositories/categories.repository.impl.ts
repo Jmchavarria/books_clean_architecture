@@ -24,6 +24,9 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   async getCategoryById(idCategory: number): Promise<CategoryDE | null> {
     const category = await this.repository.findOne({
       where: { id: idCategory },
+      relations: {
+        books: true,
+      },
     });
 
     return category !== null ? CategoriesMapper.toDomain(category) : null;
@@ -45,7 +48,16 @@ export class CategoryRepositoryImpl implements CategoryRepository {
 
     const skip = (pageQuery - 1) * takeQuery;
 
-    const data = await this.repository.find({ where, take: takeQuery, skip });
+    const data = await this.repository.find({
+      where,
+      take: takeQuery,
+      skip,
+      relations: {
+        books: {
+          category: true,
+        },
+      },
+    });
     const count = await this.repository.count({ where });
 
     return new Pagination(

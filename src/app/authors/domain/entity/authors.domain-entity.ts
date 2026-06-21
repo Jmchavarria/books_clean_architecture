@@ -1,3 +1,5 @@
+import type { IBooksSumary } from 'src/app/books/domain/interface/books-summary.interface';
+
 export class AuthorsDE {
   constructor(
     public id: number,
@@ -10,6 +12,6 @@ export class AuthorsDE {
     public isActive: boolean,
     public createdAt: Date,
     public updatedAt: Date,
-    public books: number[],
+    public books: IBooksSumary[],
   ) {}
 }

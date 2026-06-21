@@ -1,11 +1,11 @@
-import type { UsersRepository } from 'src/users/domain/repository/users.repository';
 import { Repository } from 'typeorm';
 import { UsersOrmEntity } from '../persistence/entities/users.orm-entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersDE } from 'src/users/domain/entity/users.domain-enity';
 import { UsersMapper } from '../mapper/users.mapper';
-import { CreateUserDto } from 'src/users/application/use-cases/create-user/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UsersDE } from '../../domain/entity/users.domain-enity';
+import { CreateUserDto } from '../../application/use-cases/create-user/create-user.dto';
+import { UsersRepository } from '../../domain/repository/users.repository';
 
 export class UsersImplRepository implements UsersRepository {
   constructor(

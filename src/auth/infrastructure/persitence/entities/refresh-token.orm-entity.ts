@@ -1,3 +1,4 @@
+import { UsersOrmEntity } from 'src/app/users/infrastructure/persistence/entities/users.orm-entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +7,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UsersOrmEntity } from '../../../../users/infrastructure/persistence/entities/users.orm-entity';
 
 @Entity('refresh_tokens')
 export class RefreshTokenOrmEntity {

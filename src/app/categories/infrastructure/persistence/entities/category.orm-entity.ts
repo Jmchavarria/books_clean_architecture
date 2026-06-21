@@ -6,11 +6,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { BookOrmEntity } from "src/app/books/infrastructure/persistence/entities/book.orm-entity";
+} from 'typeorm';
+import { BookOrmEntity } from 'src/app/books/infrastructure/persistence/entities/book.orm-entity';
 
-@Entity("categories")
-@Index(["name"], { unique: true })
+@Entity('categories')
+@Index(['name'], { unique: true })
 export class CategoryOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
