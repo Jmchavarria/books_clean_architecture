@@ -1,4 +1,4 @@
-import type { IAuthorSummaary } from 'src/app/authors/domain/interfaces/authors-summary.interface';
+import type { IAuthorsSummary } from 'src/app/authors/domain/interfaces/authors-summary.interface';
 import type { ICategorySummary } from 'src/app/categories/domain/interfaces/category-summary.interface';
 
 export class BooksDE {
@@ -9,7 +9,7 @@ export class BooksDE {
     public categoryId: number,
     public category: ICategorySummary,
     public description: string,
-    public author: IAuthorSummaary,
+    public author: IAuthorsSummary,
     public pages: number,
     public isActive: boolean,
     public publishedYear: number,

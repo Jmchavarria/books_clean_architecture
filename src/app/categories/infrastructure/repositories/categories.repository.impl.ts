@@ -33,7 +33,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   async verifyCategoryExists({ name }: VerifyCategoryExistsDto): Promise<boolean> {
-    return this.repository.exists({ where: { name } });
+    return this.repository.exists({ where: { name }, relations: { books: true } });
   }
 
   async getAllCategories(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
@@ -76,7 +76,12 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   async updateCategory(input: UpdateCategoryDto): Promise<CategoryDE> {
     await this.repository.update(input.id, { ...input });
 
-    const category = await this.repository.findOneBy({ id: input.id });
+    const category = await this.repository.findOne({
+      where: {
+        id: input.id,
+      },
+      relations: { books: true },
+    });
 
     if (!category)
       throw new CustomError(

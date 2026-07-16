@@ -2,6 +2,7 @@ import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 import type { BookOrmEntity } from '../persistence/entities/book.orm-entity';
 import { CategoriesMapper } from 'src/app/categories/infrastructure/mapper/categories.mapper';
 import type { IBooksSumary } from '../../domain/interface/books-summary.interface';
+import { AuthorsMapper } from 'src/app/authors/infrastructure/mapper/authors.mapper';
 
 export class BookMapper {
   static toDomain(entity: BookOrmEntity): BooksDE {
@@ -12,7 +13,7 @@ export class BookMapper {
       entity.categoryId,
       CategoriesMapper.toDomainBooks(entity.category),
       entity.description,
-      entity.author,
+      AuthorsMapper.toAuthorsSummary(entity.author),
       entity.pages,
       entity.isActive,
       entity.publishedYear,

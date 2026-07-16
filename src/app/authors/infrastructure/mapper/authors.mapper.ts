@@ -1,6 +1,7 @@
 import { BookMapper } from 'src/app/books/infrastructure/mappers/book.mapper';
 import { AuthorsDE } from '../../domain/entity/authors.domain-entity';
 import type { AuthorsOrmEntity } from '../persistence/entities/authors.orm-entity';
+import type { IAuthorsSummary } from '../../domain/interfaces/authors-summary.interface';
 
 export class AuthorsMapper {
   static toDomain(author: AuthorsOrmEntity): AuthorsDE {
@@ -17,5 +18,12 @@ export class AuthorsMapper {
       author.updatedAt,
       author.books.map((books) => BookMapper.toBooksSummary(books)),
     );
+  }
+
+  static toAuthorsSummary(author: AuthorsOrmEntity): IAuthorsSummary {
+    return {
+      // id: author.id,
+      name: author.name,
+    };
   }
 }

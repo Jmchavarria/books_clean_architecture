@@ -1,5 +1,6 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { UserRoleEnum, UserStatus } from '../../persistence/entities/users.orm-entity';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
+import { UserStatus } from 'src/app/users/domain/enums/user-status.enum';
 
 export class CreateUserHttpDto {
   @IsString()
@@ -12,6 +13,7 @@ export class CreateUserHttpDto {
 
   @IsString()
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   @IsString()

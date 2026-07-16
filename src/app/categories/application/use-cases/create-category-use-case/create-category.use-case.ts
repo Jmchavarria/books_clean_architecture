@@ -19,8 +19,8 @@ export class CreateCategoryUseCase {
 
     if (verifyCategoryExists)
       throw new CustomError(
-        ErrorCode.book_already_exists,
-        'The book already exists',
+        ErrorCode.category_already_exists,
+        'The category already exists',
         HttpStatus.BAD_REQUEST,
         CreateCategoryUseCase.name,
       );

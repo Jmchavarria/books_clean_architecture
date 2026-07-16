@@ -1,7 +1,5 @@
-import type {
-  UserRoleEnum,
-  UserStatus,
-} from 'src/app/users/infrastructure/persistence/entities/users.orm-entity';
+import type { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
+import type { UserStatus } from 'src/app/users/domain/enums/user-status.enum';
 
 export interface CreateUserDto {
   name: string;

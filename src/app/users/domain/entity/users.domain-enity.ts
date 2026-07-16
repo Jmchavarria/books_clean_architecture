@@ -1,4 +1,4 @@
-import type { UserRoleEnum } from '../../infrastructure/persistence/entities/users.orm-entity';
+import type { UserRoleEnum } from '../enums/user-role.enum';
 
 export class UsersDE {
   constructor(

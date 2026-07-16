@@ -8,7 +8,6 @@ import { UpdateBookUseCase } from '../../application/use-cases/update-book-use-c
 import { UpdateBookHttpDto } from './dto/update-book.http-dto';
 import { JwtAuthGuard } from 'src/auth/infrastructure/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 
 @Controller('books')
 export class BooksController {
@@ -19,8 +18,8 @@ export class BooksController {
     private readonly updateBookUseCase: UpdateBookUseCase,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Roles('admin')
+  // @UseGuards(JwtAuthGuard)
+  // @Roles('admin')
   @Get()
   getAll(@Query() filters: GetAllBooksHttpDto) {
     return this.getAllBooksUseCase.execute(filters);

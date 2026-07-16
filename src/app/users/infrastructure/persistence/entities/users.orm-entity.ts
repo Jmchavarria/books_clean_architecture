@@ -1,3 +1,5 @@
+import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
+import { UserStatus } from 'src/app/users/domain/enums/user-status.enum';
 import {
   Column,
   CreateDateColumn,
@@ -5,16 +7,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export enum UserRoleEnum {
-  ADMIN = 'admin',
-  USER = 'user',
-}
-
-export enum UserStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-}
 
 @Entity('users')
 export class UsersOrmEntity {

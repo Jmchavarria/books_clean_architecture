@@ -1,4 +1,4 @@
-export interface IAuthorSummaary {
-  id: number;
+export interface IAuthorsSummary {
+  // id: number;
   name: string;
 }
