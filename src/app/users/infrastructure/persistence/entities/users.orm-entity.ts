@@ -1,5 +1,5 @@
 import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
-import { UserStatus } from 'src/app/users/domain/enums/user-status.enum';
+import { UserStatusEnum } from 'src/app/users/domain/enums/user-status.enum';
 import {
   Column,
   CreateDateColumn,
@@ -16,6 +16,9 @@ export class UsersOrmEntity {
   @Column({ type: 'varchar', length: 100 })
   name: string;
 
+  @Column({ type: 'varchar', length: 50 })
+  firstName: string;
+
   @Column({ type: 'varchar', length: 100 })
   lastName: string;
 
@@ -28,10 +31,11 @@ export class UsersOrmEntity {
   @Column({ type: 'enum', enum: UserRoleEnum, default: UserRoleEnum.USER })
   role: UserRoleEnum;
 
-  @Column({ type: 'enum', enum: UserStatus, default: UserStatus.ACTIVE })
-  status: UserStatus;
+  @Column({ type: 'enum', enum: UserStatusEnum, default: UserStatusEnum.ACTIVE })
+  status: UserStatusEnum;
+
   @CreateDateColumn()
-  createdAt: Date; 
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
