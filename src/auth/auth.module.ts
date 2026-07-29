@@ -15,6 +15,7 @@ import { RefreshTokenOrmEntity } from './infrastructure/persitence/entities/refr
 import { RefreshTokenRepositoryImpl } from './infrastructure/repositories/refresh-token.impl-repository';
 import { LogoutUseCase } from './application/use-cases/logout/logout.use-case';
 import { UsersModule } from 'src/app/users/users.module';
+import { VerifyTokenOAuthUseCase } from './application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { UsersModule } from 'src/app/users/users.module';
     RefreshTokenUseCase,
     CreateRefreshTokenUseCase,
     LogoutUseCase,
+    VerifyTokenOAuthUseCase,
     {
       provide: RefreshTokenRepository,
       useClass: RefreshTokenRepositoryImpl,

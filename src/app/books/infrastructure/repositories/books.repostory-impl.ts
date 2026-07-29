@@ -1,6 +1,6 @@
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 import { BookRepository } from 'src/app/books/domain/repositories/book.repository';
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import Injectable from 'src/app/conmon/decorators/injectable';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pagination } from 'src/app/conmon/pagination/pagination';
@@ -53,7 +53,9 @@ export class BookRepositoryImpl implements BookRepository {
       query.andWhere(
         `(
       books.title LIKE :search
+      OR books.description LIKE :search
       OR author.name LIKE :search
+      OR category.name LIKE :search
     )`,
         { search: `%${search}%` },
       );

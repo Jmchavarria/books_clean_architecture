@@ -30,9 +30,8 @@ export class UsersOrmEntity {
 
   @Column({ type: 'enum', enum: UserStatus, default: UserStatus.ACTIVE })
   status: UserStatus;
-
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date; 
 
   @UpdateDateColumn()
   updatedAt: Date;

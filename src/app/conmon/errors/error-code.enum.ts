@@ -10,4 +10,5 @@ export enum ErrorCode {
   book_already_exists = 1010,
   category_already_exists = 1011,
   database_error = 1012,
+  token_oauth_not_exist = 1013,
 }

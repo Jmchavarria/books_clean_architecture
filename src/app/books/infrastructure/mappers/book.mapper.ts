@@ -6,20 +6,20 @@ import { AuthorsMapper } from 'src/app/authors/infrastructure/mapper/authors.map
 
 export class BookMapper {
   static toDomain(entity: BookOrmEntity): BooksDE {
-    return new BooksDE(
-      entity.id,
-      entity.title,
-      entity.authorId,
-      entity.categoryId,
-      CategoriesMapper.toDomainBooks(entity.category),
-      entity.description,
-      AuthorsMapper.toAuthorsSummary(entity.author),
-      entity.pages,
-      entity.isActive,
-      entity.publishedYear,
-      entity.createdAt,
-      entity.updatedAt,
-    );
+    return new BooksDE({
+      createdAt: entity.createdAt,
+      description: entity.description,
+      id: entity.id,
+      isActive: entity.isActive,
+      pages: entity.pages,
+      publishedYear: entity.publishedYear,
+      title: entity.title,
+      updatedAt: entity.updatedAt,
+      author: AuthorsMapper.toAuthorsSummary(entity.author),
+      authorId: entity.authorId,
+      category: CategoriesMapper.toDomainBooks(entity.category),
+      categoryId: entity.categoryId,
+    });
   }
 
   static toBooksSummary(entity: BookOrmEntity): IBooksSumary {
