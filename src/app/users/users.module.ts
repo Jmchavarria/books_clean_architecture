@@ -21,6 +21,6 @@ import { GetUserByIdUseCase } from './application/use-cases/get-user-by-id/get-u
       useClass: UsersImplRepository,
     },
   ],
-  exports: [UsersRepository],
+  exports: [UsersRepository, GetUserByEmailUseCase, CreateUserUseCase],
 })
 export class UsersModule {}

@@ -23,8 +23,4 @@ export class CreateUserHttpDto {
   @IsEnum(UserRoleEnum)
   @IsNotEmpty()
   role: UserRoleEnum;
-
-  @IsEnum(UserStatusEnum)
-  @IsNotEmpty()
-  status: UserStatusEnum;
 }
