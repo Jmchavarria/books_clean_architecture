@@ -29,6 +29,7 @@ export class UsersImplRepository implements UsersRepository {
       ...input,
       password: hashedPassword,
     });
-    return UsersMapper.toDomain(saved);
+    const domain = UsersMapper.toDomain(saved);
+    return domain;
   }
 }

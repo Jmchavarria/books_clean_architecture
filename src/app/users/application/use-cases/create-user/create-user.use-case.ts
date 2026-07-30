@@ -9,7 +9,6 @@ export class CreateUserUseCase {
 
   async execute(input: CreateUserDto): Promise<UsersDE> {
     const result = await this.repository.createUser(input);
-
     return result;
   }
 }

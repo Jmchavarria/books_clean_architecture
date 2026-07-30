@@ -13,8 +13,8 @@ export class RegisterUseCase {
     private readonly getUserByEmailUseCase: GetUserByEmailUseCase,
     private readonly createUserUseCase: CreateUserUseCase,
   ) {}
-  async execute({ email, confirmPassword, password, firstName, lastName }: RegisterDto) {
-    const userExists = await this.getUserByEmailUseCase.execute(email);
+  async execute(input: RegisterDto) {
+    const userExists = await this.getUserByEmailUseCase.execute(input.email);
 
     if (userExists)
       throw new CustomError({
@@ -24,7 +24,7 @@ export class RegisterUseCase {
         instanceName: RegisterUseCase.name,
       });
 
-    if (password !== confirmPassword) {
+    if (input.password !== input.confirmPassword) {
       throw new CustomError({
         code: ErrorCode.password_mismatch,
         message: 'Password and confirmation password do not match',
@@ -34,11 +34,8 @@ export class RegisterUseCase {
     }
 
     await this.createUserUseCase.execute({
+      ...input,
       role: UserRoleEnum.USER,
-      email,
-      lastName,
-      firstName,
-      password,
     });
   }
 }

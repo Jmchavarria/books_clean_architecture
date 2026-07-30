@@ -5,7 +5,7 @@ export class UsersMapper {
   static toDomain(entity: UsersOrmEntity): UsersDE {
     return new UsersDE(
       entity.id,
-      entity.name,
+      entity.firstName,
       entity.lastName,
       entity.email,
       entity.password,
