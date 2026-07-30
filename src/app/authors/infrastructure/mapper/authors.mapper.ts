@@ -5,25 +5,29 @@ import type { IAuthorsSummary } from '../../domain/interfaces/authors-summary.in
 
 export class AuthorsMapper {
   static toDomain(author: AuthorsOrmEntity): AuthorsDE {
-    return new AuthorsDE(
-      author.id,
-      author.name,
-      author.lastname,
-      author.birthdate,
-      author.biography ?? null,
-      author.countryOfBirth,
-      author.literaryGenre ?? null,
-      author.isActive,
-      author.createdAt,
-      author.updatedAt,
-      author.books.map((books) => BookMapper.toBooksSummary(books)),
-    );
+    return new AuthorsDE({
+      id: author.id,
+      name: author.name,
+      lastName: author.lastName,
+      biography: author.biography,
+      birthdate: author.birthdate,
+      countryOfBirth: author.countryOfBirth,
+      createdAt: author.createdAt,
+      updatedAt: author.createdAt,
+      literaryGenre: author.literaryGenre,
+      books: author.books.map((books) => BookMapper.toDomain(books)),
+    });
   }
 
   static toAuthorsSummary(author: AuthorsOrmEntity): IAuthorsSummary {
     return {
-      // id: author.id,
       name: author.name,
+      biography: author.biography,
+      birthdate: author.birthdate,
+      countryOfBirth: author.countryOfBirth,
+      createdAt: author.createdAt,
+      lastName: author.lastName,
+      literaryGenre: author.literaryGenre,
     };
   }
 }

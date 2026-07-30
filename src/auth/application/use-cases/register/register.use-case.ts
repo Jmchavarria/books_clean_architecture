@@ -6,12 +6,16 @@ import { HttpStatus } from '@nestjs/common';
 import { CreateUserUseCase } from 'src/app/users/application/use-cases/create-user/create-user.use-case';
 import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
 import Injectable from 'src/app/conmon/decorators/injectable';
+import { CreateRefreshTokenUseCase } from '../refresh-token/create-refresh-token/create-refresh-token.use-cae';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class RegisterUseCase {
   constructor(
     private readonly getUserByEmailUseCase: GetUserByEmailUseCase,
     private readonly createUserUseCase: CreateUserUseCase,
+    private readonly createRefreshTokenUseCase: CreateRefreshTokenUseCase,
+    private readonly jwtService: JwtService,
   ) {}
   async execute(input: RegisterDto) {
     const userExists = await this.getUserByEmailUseCase.execute(input.email);
@@ -33,9 +37,22 @@ export class RegisterUseCase {
       });
     }
 
-    await this.createUserUseCase.execute({
+    const user = await this.createUserUseCase.execute({
       ...input,
       role: UserRoleEnum.USER,
     });
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const refreshToken = await this.createRefreshTokenUseCase.execute(user.id);
+
+    return {
+      accessToken: await this.jwtService.signAsync(payload),
+      refreshToken,
+    };
   }
 }

@@ -19,7 +19,7 @@ export class AuthorsOrmEntity {
   name: string;
 
   @Column()
-  lastname: string;
+  lastName: string;
 
   @Column()
   birthdate: Date;
