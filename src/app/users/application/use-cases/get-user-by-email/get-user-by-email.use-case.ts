@@ -1,7 +1,4 @@
-import { HttpStatus } from '@nestjs/common';
 import Injectable from 'src/app/conmon/decorators/injectable';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { UsersDE } from 'src/app/users/domain/entity/users.domain-enity';
 import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 
@@ -9,16 +6,8 @@ import { UsersRepository } from 'src/app/users/domain/repository/users.repositor
 export class GetUserByEmailUseCase {
   constructor(private readonly repository: UsersRepository) {}
 
-  async execute(email: string): Promise<UsersDE> {
+  async execute(email: string): Promise<UsersDE | null> {
     const result = await this.repository.getUserByEmail(email);
-
-    if (!result)
-      throw new CustomError(
-        ErrorCode.register_not_found,
-        'User not found',
-        HttpStatus.NOT_FOUND,
-        GetUserByEmailUseCase.name,
-      );
 
     return result;
   }

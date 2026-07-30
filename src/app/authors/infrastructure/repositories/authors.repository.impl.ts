@@ -70,12 +70,12 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     const author = await this.repository.findOneBy({ id: input.id });
 
     if (!author)
-      throw new CustomError(
-        ErrorCode.update_record_failed,
-        'Error attempting to update the register',
-        HttpStatus.BAD_REQUEST,
-        AuthorsRepository.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.update_record_failed,
+        message: 'Error attempting to update the register',
+        statusCode: HttpStatus.BAD_REQUEST,
+        instanceName: AuthorsRepository.name,
+      });
 
     return AuthorsMapper.toDomain(author);
   }

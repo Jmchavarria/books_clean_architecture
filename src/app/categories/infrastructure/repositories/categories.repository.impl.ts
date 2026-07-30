@@ -84,12 +84,12 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     });
 
     if (!category)
-      throw new CustomError(
-        ErrorCode.update_record_failed,
-        'Error attempting to update the register',
-        HttpStatus.BAD_REQUEST,
-        CategoryRepositoryImpl.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.update_record_failed,
+        message: 'Error attempting to update the register',
+        statusCode: HttpStatus.BAD_REQUEST,
+        instanceName: CategoryRepositoryImpl.name,
+      });
 
     return CategoriesMapper.toDomain(category);
   }

@@ -1,4 +1,4 @@
-import { GetUserByEmailUseCase } from 'src/app/users/application/use-cases/get-user-by-username/get-user-by-username.use-case';
+import { GetUserByEmailUseCase } from 'src/app/users/application/use-cases/get-user-by-email/get-user-by-email.use-case';
 import type { RegisterDto } from './register.dto';
 import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
@@ -14,22 +14,23 @@ export class RegisterUseCase {
     private readonly createUserUseCase: CreateUserUseCase,
   ) {}
   async execute({ email, confirmPassword, password, firstName, lastName }: RegisterDto) {
-    // CAMBIAR YA QUE TIRA ERROR CUANDO NO ENCUENTRA EL USUARIO.
     const userExists = await this.getUserByEmailUseCase.execute(email);
 
     if (userExists)
-      throw new CustomError(
-        ErrorCode.user_already_exist,
-        'User already Exist',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new CustomError({
+        code: ErrorCode.user_already_exist,
+        message: 'User already Exist',
+        statusCode: HttpStatus.BAD_REQUEST,
+        instanceName: RegisterUseCase.name,
+      });
 
     if (password !== confirmPassword) {
-      throw new CustomError(
-        ErrorCode.password_mismatch,
-        'Password and confirmation password do not match',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new CustomError({
+        code: ErrorCode.password_mismatch,
+        message: 'Password and confirmation password do not match',
+        statusCode: HttpStatus.BAD_REQUEST,
+        instanceName: RegisterUseCase.name,
+      });
     }
 
     await this.createUserUseCase.execute({

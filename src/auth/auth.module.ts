@@ -18,7 +18,7 @@ import { UsersModule } from 'src/app/users/users.module';
 import { VerifyTokenOAuthUseCase } from './application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
 import { RegisterUseCase } from './application/use-cases/register/register.use-case';
 import { CreateUserUseCase } from 'src/app/users/application/use-cases/create-user/create-user.use-case';
-import { GetUserByEmailUseCase } from 'src/app/users/application/use-cases/get-user-by-username/get-user-by-username.use-case';
+import { GetUserByEmailUseCase } from 'src/app/users/application/use-cases/get-user-by-email/get-user-by-email.use-case';
 
 @Module({
   imports: [

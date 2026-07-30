@@ -5,6 +5,7 @@ import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { UpdateCategoryDto } from './update-category.dto';
 import { CategoryDE } from 'src/app/categories/domain/enitities/category.domain-entity';
+import { HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class UpdateCategoryUseCase {
@@ -14,11 +15,15 @@ export class UpdateCategoryUseCase {
   ) {}
 
   async execute(input: UpdateCategoryDto): Promise<CategoryDE> {
-
     const existCategory = await this.findCategoryByIdUseCase.execute(input.id);
 
     if (!existCategory.id) {
-      throw new CustomError(ErrorCode.record_id_undefined, 'failed to update Category');
+      throw new CustomError({
+        code: ErrorCode.record_id_undefined,
+        message: 'failed to update Category',
+        statusCode: HttpStatus.NOT_FOUND,
+        instanceName: UpdateCategoryUseCase.name,
+      });
     }
 
     return this.repository.updateCategory(input);
