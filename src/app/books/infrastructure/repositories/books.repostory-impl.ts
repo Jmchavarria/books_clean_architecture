@@ -83,12 +83,12 @@ export class BookRepositoryImpl implements BookRepository {
     const book = await this.repository.findOneBy({ id: input.id });
 
     if (!book)
-      throw new CustomError(
-        ErrorCode.update_record_failed,
-        'Error attempting to update the register',
-        HttpStatus.BAD_REQUEST,
-        BookRepositoryImpl.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.update_record_failed,
+        message: 'Error attempting to update the register',
+        statusCode: HttpStatus.BAD_REQUEST,
+        instanceName: BookRepositoryImpl.name,
+      });
 
     return BookMapper.toDomain(book);
   }

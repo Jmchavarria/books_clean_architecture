@@ -18,10 +18,23 @@ export class CustomValidationPipe<T = unknown> implements PipeTransform<
     const object = plainToInstance(metatype, value) as unknown as object;
     const errors = await validate(object);
 
-    if (errors.length > 0) {
-      throw new CustomError(ErrorCode.valdiation_error, 'Validation failed');
-    }
+    // if (errors.length > 0) {
+    //   throw new CustomError(ErrorCode.validation_error, 'Validation failed');
+    // }
 
+    if (errors.length > 0) {
+      const details = errors.map((err) => ({
+        field: err.property,
+        errors: Object.values(err.constraints ?? {}),
+      }));
+
+      throw new CustomError({
+        code: ErrorCode.validation_error,
+        message: 'Validation failed',
+        statusCode: 400,
+        details,
+      });
+    }
     return object;
   }
 

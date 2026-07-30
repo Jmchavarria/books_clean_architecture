@@ -10,7 +10,12 @@ export class FindCategoryByIdUseCase {
 
   async execute(id: number): Promise<CategoryDE> {
     const category = await this.repository.getCategoryById(id);
-    if (!category) throw new CustomError(ErrorCode.register_not_found, 'Category not found');
+    if (!category)
+      throw new CustomError({
+        code: ErrorCode.register_not_found,
+        message: 'Category not found',
+        instanceName: FindCategoryByIdUseCase.name,
+      });
     return category;
   }
 }

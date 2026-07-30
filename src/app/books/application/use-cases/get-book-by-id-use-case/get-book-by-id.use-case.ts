@@ -1,3 +1,4 @@
+import { HttpStatus } from '@nestjs/common';
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 import { BookRepository } from 'src/app/books/domain/repositories/book.repository';
 import Injectable from 'src/app/conmon/decorators/injectable';
@@ -11,7 +12,13 @@ export class GetBookByIdUseCase {
   async execute(id: number): Promise<BooksDE> {
     const book = await this.bookrepository.getBookById(id);
 
-    if (!book) throw new CustomError(ErrorCode.register_not_found, 'Book not found');
+    if (!book)
+      throw new CustomError({
+        code: ErrorCode.register_not_found,
+        message: 'Book not found',
+        statusCode: HttpStatus.NOT_FOUND,
+        instanceName: GetBookByIdUseCase.name,
+      });
 
     return book;
   }

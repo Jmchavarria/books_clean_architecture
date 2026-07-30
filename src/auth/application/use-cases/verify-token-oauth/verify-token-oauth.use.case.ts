@@ -16,12 +16,12 @@ export class VerifyTokenOAuthUseCase {
     const payload = ticket.getPayload();
 
     if (payload === undefined) {
-      throw new CustomError(
-        ErrorCode.token_oauth_not_exist,
-        'OAuth token not exist',
-        HttpStatus.NOT_FOUND,
-        VerifyTokenOAuthUseCase.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.token_oauth_not_exist,
+        message: 'OAuth token not exist',
+        statusCode: HttpStatus.NOT_FOUND,
+        instanceName: VerifyTokenOAuthUseCase.name,
+      });
     }
 
     const userId = payload['sub'];

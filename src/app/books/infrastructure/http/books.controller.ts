@@ -18,8 +18,8 @@ export class BooksController {
     private readonly updateBookUseCase: UpdateBookUseCase,
   ) {}
 
-  // @UseGuards(JwtAuthGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard)
+  @Roles('admin')
   @Get()
   getAll(@Query() filters: GetAllBooksHttpDto) {
     return this.getAllBooksUseCase.execute(filters);

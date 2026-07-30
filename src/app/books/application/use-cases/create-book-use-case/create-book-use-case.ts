@@ -23,12 +23,12 @@ export class CreateBookUseCase {
       });
 
       if (verifyBookExists)
-        throw new CustomError(
-          ErrorCode.book_already_exists,
-          'The book already exists',
-          HttpStatus.BAD_REQUEST,
-          CreateBookUseCase.name,
-        );
+        throw new CustomError({
+          code: ErrorCode.book_already_exists,
+          message: 'The book already exists',
+          statusCode: HttpStatus.BAD_REQUEST,
+          instanceName: CreateBookUseCase.name,
+        });
 
       return this.bookRepository.createBook(input);
     } catch (error) {

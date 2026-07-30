@@ -5,7 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersOrmEntity } from './infrastructure/persistence/entities/users.orm-entity';
 import { UsersController } from './infrastructure/http/users.controller';
 import { CreateUserUseCase } from './application/use-cases/create-user/create-user.use-case';
-import { GetUserByEmailUseCase } from './application/use-cases/get-user-by-username/get-user-by-username.use-case';
+import { GetUserByEmailUseCase } from './application/use-cases/get-user-by-email/get-user-by-email.use-case';
+import { GetUserByIdUseCase } from './application/use-cases/get-user-by-id/get-user-by-id.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UsersOrmEntity])],
@@ -14,11 +15,12 @@ import { GetUserByEmailUseCase } from './application/use-cases/get-user-by-usern
   providers: [
     CreateUserUseCase,
     GetUserByEmailUseCase,
+    GetUserByIdUseCase,
     {
       provide: UsersRepository,
       useClass: UsersImplRepository,
     },
   ],
-  exports: [UsersRepository],
+  exports: [UsersRepository, GetUserByEmailUseCase, CreateUserUseCase],
 })
 export class UsersModule {}

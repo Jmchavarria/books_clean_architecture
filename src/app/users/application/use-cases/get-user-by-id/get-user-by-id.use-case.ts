@@ -13,12 +13,12 @@ export class GetUserByIdUseCase {
     const user = await this.repository.getUserById(id);
 
     if (!user)
-      throw new CustomError(
-        ErrorCode.register_not_found,
-        'user not found',
-        HttpStatus.NOT_FOUND,
-        GetUserByIdUseCase.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.register_not_found,
+        message: 'user not found',
+        statusCode: HttpStatus.NOT_FOUND,
+        instanceName: GetUserByIdUseCase.name,
+      });
     return user;
   }
 }

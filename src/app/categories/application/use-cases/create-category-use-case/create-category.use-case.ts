@@ -18,12 +18,12 @@ export class CreateCategoryUseCase {
     const verifyCategoryExists = await this.verifyCategoryExistsUseCase.execute(input);
 
     if (verifyCategoryExists)
-      throw new CustomError(
-        ErrorCode.category_already_exists,
-        'The category already exists',
-        HttpStatus.BAD_REQUEST,
-        CreateCategoryUseCase.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.category_already_exists,
+        message: 'The category already exists',
+        statusCode: HttpStatus.BAD_REQUEST,
+        instanceName: CreateCategoryUseCase.name,
+      });
 
     return this.repository.createCategory(input);
   }

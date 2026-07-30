@@ -4,6 +4,9 @@ import { LogoutUseCase } from 'src/auth/application/use-cases/logout/logout.use-
 import { RefreshTokenDto } from 'src/auth/application/use-cases/refresh-token/refresh-token/refresh-token.dto';
 import { RefreshTokenUseCase } from 'src/auth/application/use-cases/refresh-token/refresh-token/refresh-token.use-case';
 import { VerifyTokenOAuthUseCase } from 'src/auth/application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
+import { LoginHttpDto } from './dto/login.http-dto';
+import { RegisterUseCase } from 'src/auth/application/use-cases/register/register.use-case';
+import { RegisterHttpDto } from './dto/register.http-dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,11 +15,12 @@ export class AuthController {
     private readonly refreshTokenUseCase: RefreshTokenUseCase,
     private readonly logoutUseCase: LogoutUseCase,
     private readonly verifyTokenOAuthUseCase: VerifyTokenOAuthUseCase,
+    private readonly registerUseCase: RegisterUseCase,
   ) {}
 
   @Post('login')
-  async login(@Body() body: { email: string; password: string }) {
-    return this.loginUseCase.execute(body.email, body.password);
+  async login(@Body() input: LoginHttpDto) {
+    return this.loginUseCase.execute(input);
   }
 
   @Post('refresh')
@@ -25,9 +29,13 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Body() dto: RefreshTokenDto) {
-    await this.logoutUseCase.execute(dto.refreshToken);
-    return { message: 'Logged out successfully' };
+  async logout(@Body() input: RefreshTokenDto) {
+    await this.logoutUseCase.execute(input.refreshToken);
+  }
+
+  @Post('register')
+  async register(@Body() input: RegisterHttpDto) {
+    return this.registerUseCase.execute(input);
   }
 
   @Post('verify-token-google')

@@ -13,12 +13,12 @@ export class GetAuthorByidUseCase {
     const result = await this.repository.getAuthorById(id);
 
     if (result === null)
-      throw new CustomError(
-        ErrorCode.register_not_found,
-        'Author not found by id ',
-        HttpStatus.NOT_FOUND,
-        GetAuthorByidUseCase.name,
-      );
+      throw new CustomError({
+        code: ErrorCode.register_not_found,
+        message: 'Author not found by id ',
+        statusCode: HttpStatus.NOT_FOUND,
+        instanceName: GetAuthorByidUseCase.name,
+      });
 
     return result;
   }
