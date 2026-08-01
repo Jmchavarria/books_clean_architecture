@@ -9,6 +9,6 @@ export abstract class CategoryRepository {
   abstract createCategory(data: CreateCategoryDto): Promise<CategoryDE>;
   abstract getCategoryById(id: number): Promise<CategoryDE | null>;
   abstract getAllCategories(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>>;
-  abstract updateCategory(input: UpdateCategoryDto): Promise<CategoryDE>;
+  abstract updateCategory(input: UpdateCategoryDto): Promise<CategoryDE | null>;
   abstract verifyCategoryExists(input: VerifyCategoryExistsDto): Promise<boolean>;
 }

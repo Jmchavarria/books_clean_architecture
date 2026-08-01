@@ -4,21 +4,18 @@ import { Repository } from 'typeorm';
 import Injectable from 'src/app/conmon/decorators/injectable';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pagination } from 'src/app/conmon/pagination/pagination';
-import { BookOrmEntity } from '../persistence/entities/book.orm-entity';
 import { BookMapper } from '../mappers/book.mapper';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { GetAllBooksDto } from '../../application/use-cases/get-all-book-use-case/ge-all-book-filters.dto';
 import { CreateBookDto } from '../../application/use-cases/create-book-use-case/create-book.dto';
 import { UpdateBookDto } from '../../application/dto/update-book.dto';
 import { VerifyBookExistsDto } from '../../application/use-cases/verify-book-exists/verify-book-exists.dto';
-import { HttpStatus } from '@nestjs/common';
+import { BooksOrmEntity } from '../persistence/entities/books.orm-entity';
 
 @Injectable()
 export class BookRepositoryImpl implements BookRepository {
   constructor(
-    @InjectRepository(BookOrmEntity)
-    private readonly repository: Repository<BookOrmEntity>,
+    @InjectRepository(BooksOrmEntity)
+    private readonly repository: Repository<BooksOrmEntity>,
   ) {}
 
   async createBook(book: CreateBookDto): Promise<BooksDE> {
@@ -77,19 +74,11 @@ export class BookRepositoryImpl implements BookRepository {
     return book !== null ? BookMapper.toDomain(book) : null;
   }
 
-  async updateBook(input: UpdateBookDto): Promise<BooksDE> {
+  async updateBook(input: UpdateBookDto): Promise<BooksDE | null> {
     await this.repository.update(input.id, { ...input });
 
     const book = await this.repository.findOneBy({ id: input.id });
 
-    if (!book)
-      throw new CustomError({
-        code: ErrorCode.update_record_failed,
-        message: 'Error attempting to update the register',
-        statusCode: HttpStatus.BAD_REQUEST,
-        instanceName: BookRepositoryImpl.name,
-      });
-
-    return BookMapper.toDomain(book);
+    return book !== null ? BookMapper.toDomain(book) : null;
   }
 }

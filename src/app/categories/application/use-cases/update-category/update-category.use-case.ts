@@ -15,17 +15,18 @@ export class UpdateCategoryUseCase {
   ) {}
 
   async execute(input: UpdateCategoryDto): Promise<CategoryDE> {
-    const existCategory = await this.findCategoryByIdUseCase.execute(input.id);
+    await this.findCategoryByIdUseCase.execute(input.id);
 
-    if (!existCategory.id) {
+    const updateCategory = await this.repository.updateCategory(input);
+
+    if (!updateCategory)
       throw new CustomError({
         code: ErrorCode.record_id_undefined,
         message: 'failed to update Category',
         statusCode: HttpStatus.NOT_FOUND,
         instanceName: UpdateCategoryUseCase.name,
       });
-    }
 
-    return this.repository.updateCategory(input);
+    return updateCategory;
   }
 }

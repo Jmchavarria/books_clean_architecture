@@ -7,13 +7,13 @@ import { GetBookByIdUseCase } from '../application/use-cases/get-book-by-id-use-
 import { UpdateBookUseCase } from '../application/use-cases/update-book-use-case/update-book.use-case';
 import { BooksController } from './http/books.controller';
 import { BookRepositoryImpl } from './repositories/books.repostory-impl';
-import { BookOrmEntity } from './persistence/entities/book.orm-entity';
 import { CategoryOrmEntity } from 'src/app/categories/infrastructure/persistence/entities/category.orm-entity';
 import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/entities/authors.orm-entity';
 import { VerifyBookExistsUseCase } from '../application/use-cases/verify-book-exists/verify-book-exists.use-case';
+import { BooksOrmEntity } from './persistence/entities/books.orm-entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BookOrmEntity, CategoryOrmEntity, AuthorsOrmEntity])],
+  imports: [TypeOrmModule.forFeature([BooksOrmEntity, CategoryOrmEntity, AuthorsOrmEntity])],
   controllers: [BooksController],
   providers: [
     {

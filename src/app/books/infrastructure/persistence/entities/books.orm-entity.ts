@@ -15,7 +15,7 @@ import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/ent
 @Index('UQ_books_title_author_published_year', ['title', 'authorId', 'publishedYear'], {
   unique: true,
 })
-export class BookOrmEntity {
+export class BooksOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

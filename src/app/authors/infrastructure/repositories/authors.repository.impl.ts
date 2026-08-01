@@ -64,7 +64,7 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     return author !== null ? AuthorsMapper.toDomain(author) : null;
   }
 
-  async updateAuthor(input: UpdateAuthorDto): Promise<AuthorsDE> {
+  async updateAuthor(input: UpdateAuthorDto): Promise<AuthorsDE | null> {
     await this.repository.update(input.id, { birthdate: new Date(), ...input });
 
     const author = await this.repository.findOneBy({ id: input.id });

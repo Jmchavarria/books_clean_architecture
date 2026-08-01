@@ -8,5 +8,5 @@ export abstract class AuthorsRepository {
   abstract createAuthor(input: CreateAuthorDto): Promise<AuthorsDE>;
   abstract getAllAuthors(input: FindAllAuthorsDto): Promise<Pagination<AuthorsDE[]>>;
   abstract getAuthorById(id: number): Promise<AuthorsDE | null>;
-  abstract updateAuthor(input: UpdateAuthorDto): Promise<AuthorsDE>;
+  abstract updateAuthor(input: UpdateAuthorDto): Promise<AuthorsDE | null>;
 }

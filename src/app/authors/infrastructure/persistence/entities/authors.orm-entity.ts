@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BookOrmEntity } from 'src/app/books/infrastructure/persistence/entities/book.orm-entity';
+import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
 
 @Entity('authors')
 @Index(['name'], { unique: true })
@@ -42,6 +42,6 @@ export class AuthorsOrmEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => BookOrmEntity, (book) => book.author)
-  books: BookOrmEntity[];
+  @OneToMany(() => BooksOrmEntity, (book) => book.author)
+  books: BooksOrmEntity[];
 }

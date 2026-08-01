@@ -1,6 +1,6 @@
 import { configDotenv } from 'dotenv';
 import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/entities/authors.orm-entity';
-import { BookOrmEntity } from 'src/app/books/infrastructure/persistence/entities/book.orm-entity';
+import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
 import { CategoryOrmEntity } from 'src/app/categories/infrastructure/persistence/entities/category.orm-entity';
 import { DataSource } from 'typeorm';
 configDotenv();
@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'books',
-  entities: [AuthorsOrmEntity, BookOrmEntity, CategoryOrmEntity],
+  entities: [AuthorsOrmEntity, BooksOrmEntity, CategoryOrmEntity],
   synchronize: false,
 });
 
@@ -116,7 +116,7 @@ async function seed() {
   console.log(`✅ ${authors.length} autores creados`);
 
   // 3. Libros
-  const bookRepo = AppDataSource.getRepository(BookOrmEntity);
+  const bookRepo = AppDataSource.getRepository(BooksOrmEntity);
   const books = await bookRepo.save([
     // Programming
     {

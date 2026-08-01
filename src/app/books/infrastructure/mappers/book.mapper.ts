@@ -1,11 +1,11 @@
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
-import type { BookOrmEntity } from '../persistence/entities/book.orm-entity';
 import { CategoriesMapper } from 'src/app/categories/infrastructure/mapper/categories.mapper';
 import type { IBooksSumary } from '../../domain/interface/books-summary.interface';
 import { AuthorsMapper } from 'src/app/authors/infrastructure/mapper/authors.mapper';
+import type { BooksOrmEntity } from '../persistence/entities/books.orm-entity';
 
 export class BookMapper {
-  static toDomain(entity: BookOrmEntity): BooksDE {
+  static toDomain(entity: BooksOrmEntity): BooksDE {
     return new BooksDE({
       createdAt: entity.createdAt,
       description: entity.description,
@@ -22,7 +22,7 @@ export class BookMapper {
     });
   }
 
-  static toBooksSummary(entity: BookOrmEntity): IBooksSumary {
+  static toBooksSummary(entity: BooksOrmEntity): IBooksSumary {
     return {
       id: entity.id,
       title: entity.title,

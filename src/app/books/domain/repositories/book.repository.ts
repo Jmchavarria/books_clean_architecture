@@ -9,6 +9,6 @@ export abstract class BookRepository {
   abstract createBook(book: CreateBookDto): Promise<BooksDE>;
   abstract getAllBooks(input: GetAllBooksDto): Promise<Pagination<BooksDE[]>>;
   abstract getBookById(id: number): Promise<BooksDE | null>;
-  abstract updateBook(data: UpdateBookDto): Promise<BooksDE>;
+  abstract updateBook(data: UpdateBookDto): Promise<BooksDE | null>;
   abstract verifyBookExists(input: VerifyBookExistsDto): Promise<boolean>;
 }

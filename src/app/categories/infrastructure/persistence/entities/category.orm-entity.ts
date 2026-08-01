@@ -1,3 +1,4 @@
+import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,7 +8,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BookOrmEntity } from 'src/app/books/infrastructure/persistence/entities/book.orm-entity';
 
 @Entity('categories')
 @Index(['name'], { unique: true })
@@ -27,6 +27,6 @@ export class CategoryOrmEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => BookOrmEntity, (book) => book.category)
-  books: BookOrmEntity[];
+  @OneToMany(() => BooksOrmEntity, (book) => book.category)
+  books: BooksOrmEntity[];
 }

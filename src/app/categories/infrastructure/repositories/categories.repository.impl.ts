@@ -73,7 +73,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     return CategoriesMapper.toDomain(category);
   }
 
-  async updateCategory(input: UpdateCategoryDto): Promise<CategoryDE> {
+  async updateCategory(input: UpdateCategoryDto): Promise<CategoryDE | null> {
     await this.repository.update(input.id, { ...input });
 
     const category = await this.repository.findOne({
@@ -83,14 +83,6 @@ export class CategoryRepositoryImpl implements CategoryRepository {
       relations: { books: true },
     });
 
-    if (!category)
-      throw new CustomError({
-        code: ErrorCode.update_record_failed,
-        message: 'Error attempting to update the register',
-        statusCode: HttpStatus.BAD_REQUEST,
-        instanceName: CategoryRepositoryImpl.name,
-      });
-
-    return CategoriesMapper.toDomain(category);
+    return category !== null ? CategoriesMapper.toDomain(category) : null;
   }
 }
