@@ -17,7 +17,7 @@ export class UpdateBookUseCase {
   async execute(input: UpdateBookDto): Promise<BooksDE> {
     await this.getBookByIdUseCase.execute(input.id);
 
-    const updateBook = await this.bookRepository.updateBook(input);
+    const updateBook = await this.bookRepository.update(input);
 
     if (!updateBook)
       throw new CustomError({

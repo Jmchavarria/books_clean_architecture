@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { AuthorsRepository } from 'src/app/authors/domain/repository/authors.repository';
-import { AuthorsDE } from 'src/app/authors/domain/entity/authors.domain-entity';
+import { AuthorsRepository } from 'src/app/authors/domain/repositories/authors.repository';
+import { AuthorsDE } from 'src/app/authors/domain/entities/authors.domain-entity';
 import { UpdateAuthorDto } from './update-author.dto';
 import { GetAuthorByidUseCase } from '../get-author-by-id/get-author-by-id.use-case';
 import { CustomError } from 'src/app/conmon/errors/custom.error';
@@ -16,7 +16,7 @@ export class UpdateAuthorUseCase {
   async execute(input: UpdateAuthorDto): Promise<AuthorsDE> {
     await this.getAuthorByidUseCase.execute(input.id);
 
-    const updateAuthor = await this.repository.updateAuthor(input);
+    const updateAuthor = await this.repository.update(input);
 
     if (!updateAuthor)
       throw new CustomError({

@@ -1,5 +1,5 @@
 import { CategoryRepository } from 'src/app/categories/domain/repositories/category.reposiroty';
-import { FindCategoryByIdUseCase } from '../find-category-by-id/find-category-by-id.use-case';
+import { GetCategoryByIdUseCase } from '../get-category-by-id/get-category-by-id.use-case';
 import Injectable from 'src/app/conmon/decorators/injectable';
 import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
@@ -11,13 +11,13 @@ import { HttpStatus } from '@nestjs/common';
 export class UpdateCategoryUseCase {
   constructor(
     private readonly repository: CategoryRepository,
-    private readonly findCategoryByIdUseCase: FindCategoryByIdUseCase,
+    private readonly getCategoryByIdUseCase: GetCategoryByIdUseCase,
   ) {}
 
   async execute(input: UpdateCategoryDto): Promise<CategoryDE> {
-    await this.findCategoryByIdUseCase.execute(input.id);
+    await this.getCategoryByIdUseCase.execute(input.id);
 
-    const updateCategory = await this.repository.updateCategory(input);
+    const updateCategory = await this.repository.update(input);
 
     if (!updateCategory)
       throw new CustomError({

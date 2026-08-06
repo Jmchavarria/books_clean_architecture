@@ -1,4 +1,4 @@
-import type { IBooksSumary } from 'src/app/books/domain/interface/books-summary.interface';
+import type { IBooksSumary } from 'src/app/books/domain/interfaces/books-summary.interface';
 import type { IAuthors } from '../interfaces/authors.interface';
 
 export class AuthorsDE {

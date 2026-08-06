@@ -1,6 +1,6 @@
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 import { CategoriesMapper } from 'src/app/categories/infrastructure/mapper/categories.mapper';
-import type { IBooksSumary } from '../../domain/interface/books-summary.interface';
+import type { IBooksSumary } from '../../domain/interfaces/books-summary.interface';
 import { AuthorsMapper } from 'src/app/authors/infrastructure/mapper/authors.mapper';
 import type { BooksOrmEntity } from '../persistence/entities/books.orm-entity';
 

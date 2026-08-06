@@ -30,7 +30,7 @@ export class CreateBookUseCase {
           instanceName: CreateBookUseCase.name,
         });
 
-      return this.bookRepository.createBook(input);
+      return this.bookRepository.create(input);
     } catch (error) {
       console.error(error);
       throw error;

@@ -1,5 +1,5 @@
 import { BookMapper } from 'src/app/books/infrastructure/mappers/book.mapper';
-import { AuthorsDE } from '../../domain/entity/authors.domain-entity';
+import { AuthorsDE } from '../../domain/entities/authors.domain-entity';
 import type { AuthorsOrmEntity } from '../persistence/entities/authors.orm-entity';
 import type { IAuthorsSummary } from '../../domain/interfaces/authors-summary.interface';
 

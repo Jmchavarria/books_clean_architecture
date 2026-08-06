@@ -1,8 +1,8 @@
 import { AuthorsOrmEntity } from '../persistence/entities/authors.orm-entity';
-import { AuthorsRepository } from '../../domain/repository/authors.repository';
+import { AuthorsRepository } from '../../domain/repositories/authors.repository';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthorsDE } from '../../domain/entity/authors.domain-entity';
+import { AuthorsDE } from '../../domain/entities/authors.domain-entity';
 import { Pagination } from 'src/app/conmon/pagination/pagination';
 import Injectable from 'src/app/conmon/decorators/injectable';
 import { AuthorsMapper } from '../mapper/authors.mapper';
@@ -11,7 +11,7 @@ import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { HttpStatus } from '@nestjs/common';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { CreateAuthorDto } from '../../application/use-cases/create-author/create-author.dto';
-import { FindAllAuthorsDto } from '../../application/use-cases/get-all-authors/get-all-authors.dto';
+import { GetAllAuthorsDto } from '../../application/use-cases/get-all-authors/get-all-authors.dto';
 
 @Injectable()
 export class AuthorsRepositoryImpl implements AuthorsRepository {
@@ -20,18 +20,18 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     private readonly repository: Repository<AuthorsOrmEntity>,
   ) {}
 
-  async createAuthor(input: CreateAuthorDto): Promise<AuthorsDE> {
+  async create(input: CreateAuthorDto): Promise<AuthorsDE> {
     const author = await this.repository.save(input);
     return AuthorsMapper.toDomain(author);
   }
 
-  async getAllAuthors({
+  async getAll({
     isActive,
     literaryGenre,
     name,
     pageQuery = 1,
     takeQuery = 10,
-  }: FindAllAuthorsDto): Promise<Pagination<AuthorsDE[]>> {
+  }: GetAllAuthorsDto): Promise<Pagination<AuthorsDE[]>> {
     const where: FindOptionsWhere<AuthorsOrmEntity> = Object.fromEntries(
       Object.entries({
         isActive,
@@ -59,12 +59,12 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     );
   }
 
-  async getAuthorById(id: number): Promise<AuthorsDE | null> {
+  async getbyId(id: number): Promise<AuthorsDE | null> {
     const author = await this.repository.findOne({ where: { id }, relations: { books: true } });
     return author !== null ? AuthorsMapper.toDomain(author) : null;
   }
 
-  async updateAuthor(input: UpdateAuthorDto): Promise<AuthorsDE | null> {
+  async update(input: UpdateAuthorDto): Promise<AuthorsDE | null> {
     await this.repository.update(input.id, { birthdate: new Date(), ...input });
 
     const author = await this.repository.findOneBy({ id: input.id });

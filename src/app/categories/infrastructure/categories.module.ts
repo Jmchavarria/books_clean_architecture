@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CreateCategoryUseCase } from '../application/use-cases/create-category-use-case/create-category.use-case';
-import { GetAllCategoriesUseCase } from '../application/use-cases/find-all-categories-use-case/find-all-categories.use-case';
-import { FindCategoryByIdUseCase } from '../application/use-cases/find-category-by-id/find-category-by-id.use-case';
+import { CreateCategoryUseCase } from '../application/use-cases/create-category/create-category.use-case';
+import { GetAllCategoriesUseCase } from '../application/use-cases/get-all-categories/get-all-categories.use-case';
+import { GetCategoryByIdUseCase } from '../application/use-cases/get-category-by-id/get-category-by-id.use-case';
 import { UpdateCategoryUseCase } from '../application/use-cases/update-category/update-category.use-case';
 import { CategoryRepository } from '../domain/repositories/category.reposiroty';
 import { CategoriesController } from './http/categories.controller';
@@ -20,7 +20,7 @@ import { VerifyCategoryExistsUseCase } from '../application/use-cases/verify-cat
     },
     CreateCategoryUseCase,
     GetAllCategoriesUseCase,
-    FindCategoryByIdUseCase,
+    GetCategoryByIdUseCase,
     UpdateCategoryUseCase,
     VerifyCategoryExistsUseCase,
   ],

@@ -17,22 +17,22 @@ export class AuthorsController {
   ) {}
 
   @Get()
-  async findAllAuthors(@Query() input: FindAllAuthorsHttpDto) {
+  async getAll(@Query() input: FindAllAuthorsHttpDto) {
     return this.getAllAuthorsUseCase.execute(input);
   }
 
   @Post()
-  async createAuthors(@Body() input: CreateAuthorHttpDto) {
+  async create(@Body() input: CreateAuthorHttpDto) {
     return this.createAuthorUseCase.execute(input);
   }
 
   @Get(':id')
-  async getAuthorById(@Param('id') id: number) {
+  async getById(@Param('id') id: number) {
     return this.getAuthorByidUseCase.execute(id);
   }
 
   @Put(':id')
-  async updateAuthor(@Param('id') id: number, @Body() input: UpdateAuthorHttpDto) {
+  async update(@Param('id') id: number, @Body() input: UpdateAuthorHttpDto) {
     return this.updateAuthorUseCase.execute({ id, ...input });
   }
 }

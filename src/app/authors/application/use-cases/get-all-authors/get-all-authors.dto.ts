@@ -1,6 +1,6 @@
-import type { PaginationDto } from 'src/app/conmon/pagination-interface-dto/pagination.dto';
+import type { PaginationProps } from 'src/app/conmon/domain/pagination.props';
 
-export interface FindAllAuthorsDto extends PaginationDto {
+export interface GetAllAuthorsDto extends PaginationProps {
   name?: string;
   isActive?: boolean;
   literaryGenre?: string;

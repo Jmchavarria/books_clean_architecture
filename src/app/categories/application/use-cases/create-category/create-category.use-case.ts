@@ -25,6 +25,6 @@ export class CreateCategoryUseCase {
         instanceName: CreateCategoryUseCase.name,
       });
 
-    return this.repository.createCategory(input);
+    return this.repository.create(input);
   }
 }

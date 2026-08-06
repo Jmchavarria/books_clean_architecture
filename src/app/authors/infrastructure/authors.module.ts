@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthorsRepository } from '../domain/repository/authors.repository';
+import { AuthorsRepository } from '../domain/repositories/authors.repository';
 import { CreateAuthorUseCase } from '../application/use-cases/create-author/create-author.use-case';
 import { GetAllAuthorsUseCase } from '../application/use-cases/get-all-authors/get-all-authors.use-case';
 import { AuthorsController } from './http/authors.controller';

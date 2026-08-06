@@ -10,7 +10,7 @@ export class GetBookByIdUseCase {
   constructor(private readonly bookrepository: BookRepository) {}
 
   async execute(id: number): Promise<BooksDE> {
-    const book = await this.bookrepository.getBookById(id);
+    const book = await this.bookrepository.getById(id);
 
     if (!book)
       throw new CustomError({

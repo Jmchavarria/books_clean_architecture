@@ -1,6 +1,6 @@
-import { PaginationDto } from "src/app/conmon/pagination-interface-dto/pagination.dto"
+import type { PaginationProps } from 'src/app/conmon/domain/pagination.props';
 
-export interface GetAllCategoriesDto extends PaginationDto {
-    name?: string
-    isActive?: boolean
+export interface GetAllCategoriesDto extends PaginationProps {
+  name?: string;
+  isActive?: boolean;
 }

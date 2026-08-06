@@ -5,16 +5,16 @@ import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 
 @Injectable()
-export class FindCategoryByIdUseCase {
+export class GetCategoryByIdUseCase {
   constructor(private readonly repository: CategoryRepository) {}
 
   async execute(id: number): Promise<CategoryDE> {
-    const category = await this.repository.getCategoryById(id);
+    const category = await this.repository.getById(id);
     if (!category)
       throw new CustomError({
         code: ErrorCode.register_not_found,
         message: 'Category not found',
-        instanceName: FindCategoryByIdUseCase.name,
+        instanceName: GetCategoryByIdUseCase.name,
       });
     return category;
   }

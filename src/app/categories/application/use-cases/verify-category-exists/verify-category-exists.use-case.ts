@@ -7,7 +7,7 @@ export class VerifyCategoryExistsUseCase {
   constructor(private readonly repository: CategoryRepository) {}
 
   async execute({ name }: VerifyCategoryExistsDto): Promise<boolean> {
-    const result = await this.repository.verifyCategoryExists({ name });
+    const result = await this.repository.verifyExists({ name });
 
     return result;
   }

@@ -1,6 +1,6 @@
 import type { IAuthorsSummary } from 'src/app/authors/domain/interfaces/authors-summary.interface';
 import type { ICategorySummary } from 'src/app/categories/domain/interfaces/category-summary.interface';
-import type { IBooks } from '../interface/books.interface';
+import type { IBooks } from '../interfaces/books.interface';
 
 export class BooksDE {
   public id: number;

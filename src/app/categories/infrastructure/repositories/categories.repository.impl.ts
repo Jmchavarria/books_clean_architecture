@@ -5,11 +5,8 @@ import { FindOptionsWhere, Repository } from 'typeorm';
 import { CategoryDE } from '../../domain/enitities/category.domain-entity';
 import { Pagination } from 'src/app/conmon/pagination/pagination';
 import Injectable from 'src/app/conmon/decorators/injectable';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { CategoriesMapper } from '../mapper/categories.mapper';
 import { UpdateCategoryDto } from '../../application/use-cases/update-category/update-category.dto';
-import { HttpStatus } from '@nestjs/common';
 import { CreateCategoryDto } from '../../application/dto/create-category.dto';
 import { GetAllCategoriesDto } from '../../application/dto/find-all-categories.dto';
 import { VerifyCategoryExistsDto } from '../../application/use-cases/verify-category-exists/verify-category-exists.dto';
@@ -21,7 +18,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     private readonly repository: Repository<CategoryOrmEntity>,
   ) {}
 
-  async getCategoryById(idCategory: number): Promise<CategoryDE | null> {
+  async getById(idCategory: number): Promise<CategoryDE | null> {
     const category = await this.repository.findOne({
       where: { id: idCategory },
       relations: {
@@ -32,11 +29,11 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     return category !== null ? CategoriesMapper.toDomain(category) : null;
   }
 
-  async verifyCategoryExists({ name }: VerifyCategoryExistsDto): Promise<boolean> {
+  async verifyExists({ name }: VerifyCategoryExistsDto): Promise<boolean> {
     return this.repository.exists({ where: { name }, relations: { books: true } });
   }
 
-  async getAllCategories(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
+  async getAll(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
     const { isActive, name, pageQuery = 1, takeQuery = 200 } = filters;
 
     const where: FindOptionsWhere<CategoryOrmEntity> = Object.fromEntries(
@@ -68,12 +65,12 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     );
   }
 
-  async createCategory(data: CreateCategoryDto): Promise<CategoryDE> {
+  async create(data: CreateCategoryDto): Promise<CategoryDE> {
     const category = await this.repository.save(data);
     return CategoriesMapper.toDomain(category);
   }
 
-  async updateCategory(input: UpdateCategoryDto): Promise<CategoryDE | null> {
+  async update(input: UpdateCategoryDto): Promise<CategoryDE | null> {
     await this.repository.update(input.id, { ...input });
 
     const category = await this.repository.findOne({

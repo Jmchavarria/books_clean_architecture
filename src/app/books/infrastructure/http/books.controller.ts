@@ -36,7 +36,7 @@ export class BooksController {
   }
 
   @Put(':id')
-  updateBook(@Param('id') id: number, @Body() input: UpdateBookHttpDto) {
+  update(@Param('id') id: number, @Body() input: UpdateBookHttpDto) {
     return this.updateBookUseCase.execute({ id, ...input });
   }
 }

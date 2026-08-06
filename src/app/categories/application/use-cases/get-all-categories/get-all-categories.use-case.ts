@@ -9,6 +9,6 @@ export class GetAllCategoriesUseCase {
   constructor(private readonly repository: CategoryRepository) {}
 
   async execute(input: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
-    return this.repository.getAllCategories(input);
+    return this.repository.getAll(input);
   }
 }
