@@ -8,9 +8,9 @@ import type {
 } from '../entities/books.props';
 
 export abstract class BookRepository {
-  abstract create(book: CreateBookProps): Promise<BooksDE>;
+  abstract create(input: CreateBookProps): Promise<BooksDE>;
   abstract getAll(input: GetAllBooksProps): Promise<Pagination<BooksDE[]>>;
   abstract getById(id: number): Promise<BooksDE | null>;
-  abstract update(data: UpdateBookProps): Promise<BooksDE | null>;
+  abstract update(input: UpdateBookProps): Promise<BooksDE | null>;
   abstract verifyExists(input: VerifyBookExistsProps): Promise<boolean>;
 }
