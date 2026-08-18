@@ -4,8 +4,6 @@ import type { ICategorySummary } from 'src/app/categories/domain/interfaces/cate
 export interface IBooks {
   id: number;
   title: string;
-  authorId: number;
-  categoryId: number;
   category: ICategorySummary;
   description: string;
   author: IAuthorsSummary;

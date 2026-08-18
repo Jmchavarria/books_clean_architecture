@@ -11,9 +11,22 @@ import { CategoryOrmEntity } from 'src/app/categories/infrastructure/persistence
 import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/entities/authors.orm-entity';
 import { VerifyBookExistsUseCase } from '../application/use-cases/verify-book-exists/verify-book-exists.use-case';
 import { BooksOrmEntity } from './persistence/entities/books.orm-entity';
+import { UploadBookCoverUseCase } from '../application/use-cases/upload-book-cover/upload-book-cover.use-case';
+import { CommonModule } from 'src/app/conmon/common.module';
+import { CollectionsOrmEntity } from './persistence/entities/collections.orm-entity';
+import { PublishersOrmEntity } from './persistence/entities/publishers.orm-entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BooksOrmEntity, CategoryOrmEntity, AuthorsOrmEntity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      BooksOrmEntity,
+      CategoryOrmEntity,
+      AuthorsOrmEntity,
+      CollectionsOrmEntity,
+      PublishersOrmEntity,
+    ]),
+    CommonModule,
+  ],
   controllers: [BooksController],
   providers: [
     {
@@ -25,6 +38,7 @@ import { BooksOrmEntity } from './persistence/entities/books.orm-entity';
     UpdateBookUseCase,
     GetAllBooksUseCase,
     VerifyBookExistsUseCase,
+    UploadBookCoverUseCase,
   ],
   exports: [BookRepository, GetBookByIdUseCase],
 })

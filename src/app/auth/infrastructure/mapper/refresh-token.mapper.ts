@@ -1,4 +1,4 @@
-import { RefreshTokenDE } from 'src/auth/domain/entities/refresh-token-domain.entity';
+import { RefreshTokenDE } from 'src/app/auth/domain/entities/refresh-token-domain.entity';
 import type { RefreshTokenOrmEntity } from '../persitence/entities/refresh-token.orm-entity';
 
 export class RefreshTokenMapper {

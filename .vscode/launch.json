@@ -4,25 +4,14 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Attach NestJS",
+      "name": "Attach to NestJS",
       "port": 9229,
-      "address": "localhost",
       "restart": true,
+      "autoAttachChildProcesses": true,
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/dist/**",
-        "!**/node_modules/**"
-      ],
-      "sourceMapPathOverrides": {
-        "../../../../../../src/*": "${workspaceFolder}/src/*",
-        "../../../../../src/*": "${workspaceFolder}/src/*",
-        "../../../../src/*": "${workspaceFolder}/src/*",
-        "../../../src/*": "${workspaceFolder}/src/*",
-        "../../src/*": "${workspaceFolder}/src/*",
-        "../src/*": "${workspaceFolder}/src/*"
-      }
+      "skipFiles": ["<node_internals>/**"],
+      "preLaunchTask": "start:debug"
     }
   ]
 }

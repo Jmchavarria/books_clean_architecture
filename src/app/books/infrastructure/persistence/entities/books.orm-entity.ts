@@ -10,6 +10,8 @@ import {
 } from 'typeorm';
 import { CategoryOrmEntity } from 'src/app/categories/infrastructure/persistence/entities/category.orm-entity';
 import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/entities/authors.orm-entity';
+import { CollectionsOrmEntity } from './collections.orm-entity';
+import { PublishersOrmEntity } from './publishers.orm-entity';
 
 @Entity('books')
 @Index('UQ_books_title_author_published_year', ['title', 'authorId', 'publishedYear'], {
@@ -34,6 +36,12 @@ export class BooksOrmEntity {
   @Column()
   publishedYear: number;
 
+  @Column()
+  language: string;
+
+  @Column({ type: 'int', default: 0 })
+  stock: number;
+
   @Column({ default: true })
   isActive: boolean;
 
@@ -49,6 +57,24 @@ export class BooksOrmEntity {
   @ManyToOne(() => CategoryOrmEntity, (category) => category.books)
   @JoinColumn({ name: 'categoryId' })
   category: CategoryOrmEntity;
+
+  @Column({ type: 'int', nullable: true })
+  collectionId: number;
+
+  @ManyToOne(() => CollectionsOrmEntity, (collection) => collection.books, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'collectionId' })
+  collection?: CollectionsOrmEntity;
+
+  @Column({ type: 'int', nullable: true })
+  publisherId: number;
+
+  @ManyToOne(() => PublishersOrmEntity, (publisher) => publisher.books, {
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'publisherId' })
+  publisher: PublishersOrmEntity;
 
   @ManyToOne(() => AuthorsOrmEntity, (author) => author.books)
   @JoinColumn({ name: 'authorId' })

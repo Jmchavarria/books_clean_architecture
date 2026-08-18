@@ -15,7 +15,7 @@ export class CategoriesMapper {
     });
   }
 
-  static toDomainBooks(entity: CategoryOrmEntity): ICategorySummary {
+  static toSummary(entity: CategoryOrmEntity): ICategorySummary {
     return {
       id: entity.id,
       name: entity.name,

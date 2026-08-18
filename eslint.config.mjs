@@ -34,7 +34,13 @@ export default tseslint.config(
 
       // ─── Calidad de tipos ──────────────────────────────
       '@typescript-eslint/no-unnecessary-type-assertion': 'warn', // evita casteos innecesarios (value as string)
-      '@typescript-eslint/consistent-type-imports': 'error', // fuerza: import type { X } cuando solo es un tipo
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false, // 👈 Añade esto
+        },
+      ], // fuerza: import type { X } cuando solo es un tipo
       '@typescript-eslint/no-inferrable-types': 'warn', // evita: const x: number = 5 (TypeScript ya lo infiere)
       '@typescript-eslint/prefer-nullish-coalescing': 'warn', // prefiere ?? sobre ||
       '@typescript-eslint/prefer-optional-chain': 'warn', // prefiere a?.b?.c sobre a && a.b && a.b.c

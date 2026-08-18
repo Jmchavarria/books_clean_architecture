@@ -1,14 +1,16 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
-import { UserStatusEnum } from 'src/app/users/domain/enums/user-status.enum';
+import { Trim } from 'src/app/conmon/decorators/trim.decorator';
 
 export class CreateUserHttpDto {
   @IsString()
   @IsNotEmpty()
+  @Trim()
   firstName: string;
 
   @IsString()
   @IsNotEmpty()
+  @Trim()
   lastName: string;
 
   @IsString()
@@ -18,6 +20,7 @@ export class CreateUserHttpDto {
 
   @IsString()
   @IsNotEmpty()
+  @Trim()
   password: string;
 
   @IsEnum(UserRoleEnum)

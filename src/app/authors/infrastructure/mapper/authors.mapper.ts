@@ -15,12 +15,13 @@ export class AuthorsMapper {
       createdAt: author.createdAt,
       updatedAt: author.createdAt,
       literaryGenre: author.literaryGenre,
-      books: author.books.map((books) => BookMapper.toDomain(books)),
+      books: author.books.map((books) => BookMapper.toBooksSummary(books)),
     });
   }
 
   static toAuthorsSummary(author: AuthorsOrmEntity): IAuthorsSummary {
     return {
+      id: author.id,
       name: author.name,
       biography: author.biography,
       birthdate: author.birthdate,

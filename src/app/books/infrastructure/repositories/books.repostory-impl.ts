@@ -5,11 +5,13 @@ import Injectable from 'src/app/conmon/decorators/injectable';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pagination } from 'src/app/conmon/pagination/pagination';
 import { BookMapper } from '../mappers/book.mapper';
-import { GetAllBooksDto } from '../../application/use-cases/get-all-book-use-case/ge-all-book.dto';
-import { CreateBookDto } from '../../application/use-cases/create-book-use-case/create-book.dto';
-import { UpdateBookDto } from '../../application/dto/update-book.dto';
-import { VerifyBookExistsDto } from '../../application/use-cases/verify-book-exists/verify-book-exists.dto';
 import { BooksOrmEntity } from '../persistence/entities/books.orm-entity';
+import {
+  CreateBookProps,
+  GetAllBooksProps,
+  UpdateBookProps,
+  VerifyBookExistsProps,
+} from '../../domain/entities/books.props';
 
 @Injectable()
 export class BookRepositoryImpl implements BookRepository {
@@ -18,16 +20,20 @@ export class BookRepositoryImpl implements BookRepository {
     private readonly repository: Repository<BooksOrmEntity>,
   ) {}
 
-  async create(book: CreateBookDto): Promise<BooksDE> {
+  async updateBookCover(): Promise<void> {
+    //Acá es donde va toda la logica para la carga de imagenes con imageki
+  }
+
+  async create(book: CreateBookProps): Promise<BooksDE> {
     const saved = await this.repository.save(book);
     return BookMapper.toDomain(saved);
   }
 
-  async verifyExists({ title, authorId, publishedYear }: VerifyBookExistsDto): Promise<boolean> {
+  async verifyExists({ title, authorId, publishedYear }: VerifyBookExistsProps): Promise<boolean> {
     return this.repository.exists({ where: { title, authorId, publishedYear } });
   }
 
-  async getAll(input: GetAllBooksDto): Promise<Pagination<BooksDE[]>> {
+  async getAll(input: GetAllBooksProps): Promise<Pagination<BooksDE[]>> {
     const { isActive, publishedYear, title, search, pageQuery = 1, takeQuery = 10 } = input;
 
     const query = this.repository
@@ -66,11 +72,14 @@ export class BookRepositoryImpl implements BookRepository {
   }
 
   async getById(id: number): Promise<BooksDE | null> {
-    const book = await this.repository.findOneBy({ id });
+    const book = await this.repository.findOne({
+      where: { id },
+      relations: { category: true, author: true },
+    });
     return book !== null ? BookMapper.toDomain(book) : null;
   }
 
-  async update(input: UpdateBookDto): Promise<BooksDE | null> {
+  async update(input: UpdateBookProps): Promise<BooksDE | null> {
     await this.repository.update(input.id, { ...input });
 
     const book = await this.repository.findOneBy({ id: input.id });

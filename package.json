@@ -6,7 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "seed": "ts-node -r tsconfig-paths/register database/seeds/new-seed.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli.js",
+    "migration:generate": "pnpm typeorm migration:generate ./src/database/migrations/AutoMigration -d ./src/config/data-source.ts",
+    "migration:run": "pnpm typeorm migration:run -d ./src/config/data-source.ts",
+    "seed": "ts-node -r tsconfig-paths/register .src/database/seeds/new-seed.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/1*.ts\"",
     "start": "nest start",
@@ -22,6 +25,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@imagekit/nodejs": "^7.10.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
@@ -52,6 +56,7 @@
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
+    "@types/multer": "^2.2.0",
     "@types/node": "^22.10.7",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",

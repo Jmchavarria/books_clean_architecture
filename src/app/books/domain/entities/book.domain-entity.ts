@@ -5,8 +5,6 @@ import type { IBooks } from '../interfaces/books.interface';
 export class BooksDE {
   public id: number;
   public title: string;
-  public authorId: number;
-  public categoryId: number;
   public category: ICategorySummary;
   public description: string;
   public author: IAuthorsSummary;

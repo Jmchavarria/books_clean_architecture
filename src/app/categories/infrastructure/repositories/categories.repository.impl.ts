@@ -52,6 +52,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
       relations: {
         books: {
           category: true,
+          author: true,
         },
       },
     });

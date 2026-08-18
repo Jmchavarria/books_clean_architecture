@@ -13,4 +13,5 @@ export abstract class BookRepository {
   abstract getById(id: number): Promise<BooksDE | null>;
   abstract update(input: UpdateBookProps): Promise<BooksDE | null>;
   abstract verifyExists(input: VerifyBookExistsProps): Promise<boolean>;
+  abstract updateBookCover(): Promise<void>; // cambiar el tipo de respuesta (justamente por la respuesta que devuelve imageKit)
 }

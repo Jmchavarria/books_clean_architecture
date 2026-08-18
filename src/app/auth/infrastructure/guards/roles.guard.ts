@@ -1,7 +1,7 @@
 import { ForbiddenException, type CanActivate, type ExecutionContext } from '@nestjs/common';
 import type { Reflector } from '@nestjs/core';
 import type { Observable } from 'rxjs';
-import { ROLES_KEY } from 'src/auth/decorators/roles.decorator';
+import { ROLES_KEY } from 'src/app/auth/decorators/roles.decorator';
 
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}

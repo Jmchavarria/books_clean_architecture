@@ -28,15 +28,6 @@ export class RegisterUseCase {
         instanceName: RegisterUseCase.name,
       });
 
-    if (input.password !== input.confirmPassword) {
-      throw new CustomError({
-        code: ErrorCode.password_mismatch,
-        message: 'Password and confirmation password do not match',
-        statusCode: HttpStatus.BAD_REQUEST,
-        instanceName: RegisterUseCase.name,
-      });
-    }
-
     const user = await this.createUserUseCase.execute({
       ...input,
       role: UserRoleEnum.USER,

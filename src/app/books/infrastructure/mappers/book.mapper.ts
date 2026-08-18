@@ -7,18 +7,16 @@ import type { BooksOrmEntity } from '../persistence/entities/books.orm-entity';
 export class BookMapper {
   static toDomain(entity: BooksOrmEntity): BooksDE {
     return new BooksDE({
-      createdAt: entity.createdAt,
-      description: entity.description,
       id: entity.id,
+      title: entity.title,
+      description: entity.description,
+      publishedYear: entity.publishedYear,
       isActive: entity.isActive,
       pages: entity.pages,
-      publishedYear: entity.publishedYear,
-      title: entity.title,
+      createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       author: AuthorsMapper.toAuthorsSummary(entity.author),
-      authorId: entity.authorId,
-      category: CategoriesMapper.toDomainBooks(entity.category),
-      categoryId: entity.categoryId,
+      category: CategoriesMapper.toSummary(entity.category),
     });
   }
 
@@ -29,6 +27,8 @@ export class BookMapper {
       description: entity.description,
       isActive: entity.isActive,
       pages: entity.pages,
+      category: CategoriesMapper.toSummary(entity.category),
+      author: AuthorsMapper.toAuthorsSummary(entity.author),
       publishedYear: entity.publishedYear,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

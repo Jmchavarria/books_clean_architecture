@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { LoginUseCase } from 'src/auth/application/use-cases/login/login.use-case';
-import { LogoutUseCase } from 'src/auth/application/use-cases/logout/logout.use-case';
-import { RefreshTokenDto } from 'src/auth/application/use-cases/refresh-token/refresh-token/refresh-token.dto';
-import { RefreshTokenUseCase } from 'src/auth/application/use-cases/refresh-token/refresh-token/refresh-token.use-case';
-import { VerifyTokenOAuthUseCase } from 'src/auth/application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
+import { LoginUseCase } from 'src/app/auth/application/use-cases/login/login.use-case';
+import { LogoutUseCase } from 'src/app/auth/application/use-cases/logout/logout.use-case';
+import { RefreshTokenDto } from 'src/app/auth/application/use-cases/refresh-token/refresh-token/refresh-token.dto';
+import { RefreshTokenUseCase } from 'src/app/auth/application/use-cases/refresh-token/refresh-token/refresh-token.use-case';
+import { VerifyTokenOAuthUseCase } from 'src/app/auth/application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
 import { LoginHttpDto } from './dto/login.http-dto';
-import { RegisterUseCase } from 'src/auth/application/use-cases/register/register.use-case';
+import { RegisterUseCase } from 'src/app/auth/application/use-cases/register/register.use-case';
 import { RegisterHttpDto } from './dto/register.http-dto';
 
 @Controller('auth')

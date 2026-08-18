@@ -1,4 +1,4 @@
-import type { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
+import type { IBooksSumary } from 'src/app/books/domain/interfaces/books-summary.interface';
 
 export interface IAuthors {
   id: number;
@@ -10,5 +10,5 @@ export interface IAuthors {
   literaryGenre: string;
   createdAt: Date;
   updatedAt: Date;
-  books: BooksDE[];
+  books: IBooksSumary[];
 }
