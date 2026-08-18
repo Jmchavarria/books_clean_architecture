@@ -26,13 +26,11 @@ export default tseslint.config(
   },
   {
     rules: {
-      // ─── Ya tienes estas ───────────────────────────────
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
 
-      // ─── Calidad de tipos ──────────────────────────────
       '@typescript-eslint/no-unnecessary-type-assertion': 'warn', // evita casteos innecesarios (value as string)
       '@typescript-eslint/consistent-type-imports': [
         'error',
