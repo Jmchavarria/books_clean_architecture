@@ -8,7 +8,7 @@ export class BooksDE {
   public category: ICategorySummary;
   public description: string;
   public author: IAuthorsSummary;
-  public pages: number;
+  public pages?: number;
   public isActive: boolean;
   public publishedYear: number;
   public createdAt: Date;

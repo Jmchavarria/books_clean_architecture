@@ -1,11 +1,12 @@
 const mysql = require('mysql2/promise');
 const { randomUUID } = require('crypto');
+import 'dotenv/config';
 
 const connectionConfig = {
   host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'marlon3390',
+  port: 5432,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   database: 'books',
 };
 
@@ -24,8 +25,7 @@ const authors = [
     name: 'Jack',
     lastname: 'London',
     birthdate: '1876-01-12',
-    biography:
-      'Seeded from Open Library search/authors API. Top work: The Call of the Wild.',
+    biography: 'Seeded from Open Library search/authors API. Top work: The Call of the Wild.',
     countryOfBirth: 'Unknown',
     literaryGenre: 'Adventure fiction',
     isActive: true,
@@ -54,8 +54,7 @@ const authors = [
     name: 'Lucy Maud',
     lastname: 'Montgomery',
     birthdate: '1874-01-01',
-    biography:
-      'Seeded from Open Library search/authors API. Top work: Anne of Green Gables.',
+    biography: 'Seeded from Open Library search/authors API. Top work: Anne of Green Gables.',
     countryOfBirth: 'Unknown',
     literaryGenre: 'Children fiction',
     isActive: true,
@@ -73,8 +72,7 @@ const authors = [
     name: 'L. Frank',
     lastname: 'Baum',
     birthdate: '1856-05-15',
-    biography:
-      'Seeded from Open Library search/authors API. Top work: The Wonderful Wizard of Oz.',
+    biography: 'Seeded from Open Library search/authors API. Top work: The Wonderful Wizard of Oz.',
     countryOfBirth: 'Unknown',
     literaryGenre: 'Fantasy fiction',
     isActive: true,
@@ -83,8 +81,7 @@ const authors = [
     name: 'Edith',
     lastname: 'Nesbit',
     birthdate: '1858-08-15',
-    biography:
-      'Seeded from Open Library search/authors API. Top work: The Railway Children.',
+    biography: 'Seeded from Open Library search/authors API. Top work: The Railway Children.',
     countryOfBirth: 'Unknown',
     literaryGenre: 'Juvenile fiction',
     isActive: true,
@@ -111,8 +108,7 @@ const authors = [
     name: 'Edgar Rice',
     lastname: 'Burroughs',
     birthdate: '1875-09-01',
-    biography:
-      'Seeded from Open Library search/authors API. Top work: Tarzan of the Apes.',
+    biography: 'Seeded from Open Library search/authors API. Top work: Tarzan of the Apes.',
     countryOfBirth: 'Unknown',
     literaryGenre: 'Adventure fiction',
     isActive: true,
@@ -129,6 +125,7 @@ const books = [
     pages: 287,
     publishedYear: 1907,
     isActive: true,
+  
   },
   {
     title: 'Brood of the Witch-Queen',
@@ -227,10 +224,9 @@ function buildAuthorKey(name, lastname) {
 }
 
 async function ensureCategory(connection, category) {
-  const [rows] = await connection.query(
-    'SELECT id FROM categories WHERE name = ? LIMIT 1',
-    [category.name],
-  );
+  const [rows] = await connection.query('SELECT id FROM categories WHERE name = ? LIMIT 1', [
+    category.name,
+  ]);
 
   if (rows.length > 0) return rows[0].id;
 

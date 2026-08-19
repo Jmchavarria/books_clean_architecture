@@ -7,14 +7,18 @@ export class AuthorsMapper {
   static toDomain(author: AuthorsOrmEntity): AuthorsDE {
     return new AuthorsDE({
       id: author.id,
-      name: author.name,
+      firstName: author.firstName,
       lastName: author.lastName,
-      biography: author.biography,
+      slug: author.slug,
       birthdate: author.birthdate,
+      deathdate: author.deathdate,
+      biography: author.biography,
       countryOfBirth: author.countryOfBirth,
+      photoUrl: author.photoUrl,
+      isActive: author.isActive,
       createdAt: author.createdAt,
       updatedAt: author.createdAt,
-      literaryGenre: author.literaryGenre,
+      genres: author.genres,
       books: author.books.map((books) => BookMapper.toBooksSummary(books)),
     });
   }
@@ -22,13 +26,14 @@ export class AuthorsMapper {
   static toAuthorsSummary(author: AuthorsOrmEntity): IAuthorsSummary {
     return {
       id: author.id,
-      name: author.name,
+      firstName: author.firstName,
+      lastName: author.lastName,
       biography: author.biography,
       birthdate: author.birthdate,
       countryOfBirth: author.countryOfBirth,
+      genres: author.genres,
       createdAt: author.createdAt,
-      lastName: author.lastName,
-      literaryGenre: author.literaryGenre,
+      updatedAt: author.updatedAt,
     };
   }
 }

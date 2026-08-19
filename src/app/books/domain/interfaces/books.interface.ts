@@ -7,9 +7,9 @@ export interface IBooks {
   category: ICategorySummary;
   description: string;
   author: IAuthorsSummary;
-  pages: number;
+  pages?: number;
   isActive: boolean;
-  publishedYear: number;
+  publishedYear?: number;
   createdAt: Date;
   updatedAt: Date;
 }

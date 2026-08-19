@@ -19,7 +19,7 @@ export class RefreshTokenOrmEntity {
   @Column({ type: 'varchar', length: 255, unique: true })
   token: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamp' })
   expiresAt: Date;
 
   @CreateDateColumn()

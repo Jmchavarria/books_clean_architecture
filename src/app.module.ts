@@ -7,7 +7,12 @@ import { CategoryModule } from './app/categories/infrastructure/categories.modul
 import { AuthorsModule } from './app/authors/infrastructure/authors.module';
 import { AuthModule } from './app/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './app/users/users.module';
+import { UsersModule } from './app/users/infrastructure/users.module';
+import 'dotenv/config';
+import { CartModule } from './app/cart/infrastructure/cart.module';
+import { GenresModule } from './app/genres/infrastructure/genres.module';
+import { OrderModule } from './app/order/infrastructure/order.module';
+import { BookReviewsModule } from './app/book-reviews/infrastructure/book-reviews.module';
 
 @Module({
   imports: [
@@ -15,11 +20,11 @@ import { UsersModule } from './app/users/users.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'marlon3390',
+      port: 5432,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
       database: 'books',
       autoLoadEntities: true,
       synchronize: true,
@@ -29,6 +34,10 @@ import { UsersModule } from './app/users/users.module';
     AuthorsModule,
     AuthModule,
     UsersModule,
+    CartModule,
+    GenresModule,
+    OrderModule,
+    BookReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

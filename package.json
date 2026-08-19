@@ -13,7 +13,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/1*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "nest start --watch --node-args=\"--trace-deprecation\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "seed:openlibrary": "node scripts/seed-openlibrary.js",

@@ -14,7 +14,7 @@ import { RefreshTokenRepository } from './domain/repository/refresh-token.reposi
 import { RefreshTokenOrmEntity } from './infrastructure/persitence/entities/refresh-token.orm-entity';
 import { RefreshTokenRepositoryImpl } from './infrastructure/repositories/refresh-token.impl-repository';
 import { LogoutUseCase } from './application/use-cases/logout/logout.use-case';
-import { UsersModule } from 'src/app/users/users.module';
+import { UsersModule } from 'src/app/users/infrastructure/users.module';
 import { VerifyTokenOAuthUseCase } from './application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
 import { RegisterUseCase } from './application/use-cases/register/register.use-case';
 import { CreateUserUseCase } from 'src/app/users/application/use-cases/create-user/create-user.use-case';

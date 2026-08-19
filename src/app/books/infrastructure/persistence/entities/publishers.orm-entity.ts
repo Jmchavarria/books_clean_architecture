@@ -2,49 +2,54 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CollectionsOrmEntity } from './collections.orm-entity'; // Ajusta la ruta
-import { BooksOrmEntity } from './books.orm-entity';
+import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
+import { CollectionsOrmEntity } from './collections.orm-entity';
 
 @Entity('publishers')
 export class PublishersOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // 1. Nombre oficial de la editorial (ej. "Penguin Random House")
-  @Column({ unique: true })
+  @Column({ type: 'varchar', length: 150 })
   name: string;
 
-  // 2. Breve reseña o información de la empresa
-  @Column({ nullable: true, type: 'text' })
-  description: string;
+  // Slug único para la URL amigable de la editorial (SEO)
+  @Column({ type: 'varchar', length: 180, unique: true })
+  @Index('UQ_publishers_slug', { unique: true })
+  slug: string;
 
-  // 3. Sitio web oficial (útil para el frontend o catalogación)
-  @Column({ nullable: true })
-  website: string;
+  @Column({ type: 'text', nullable: true })
+  description?: string;
 
-  // 4. País de origen o fundación (muy usado en filtros de búsqueda)
-  @Column({ nullable: true, length: 100 })
-  country: string;
+  // Logo de la editorial para mostrar en la web
+  @Column({ type: 'varchar', length: 500, nullable: true })
+  logoUrl?: string;
 
-  // 5. Estado de la editorial (por si deja de operar)
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  websiteUrl?: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  country?: string;
+
   @Column({ default: true })
   isActive: boolean;
 
-  // 6. Auditoría estándar (igual que tus otras tablas)
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
+  // Una editorial publica muchos libros
   @OneToMany(() => BooksOrmEntity, (book) => book.publisher)
   books: BooksOrmEntity[];
 
-  // 7. Relación: Una editorial tiene muchas colecciones
+  // Una editorial posee muchas colecciones
   @OneToMany(() => CollectionsOrmEntity, (collection) => collection.publisher)
   collections: CollectionsOrmEntity[];
 }
