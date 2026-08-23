@@ -8,6 +8,7 @@ export class UsersMapper {
       firstName: entity.firstName,
       lastName: entity.lastName,
       email: entity.email,
+      password: entity.password,
       phone: entity.phone,
       avatarUrl: entity.avatarUrl,
       isEmailVerified: entity.isEmailVerified,

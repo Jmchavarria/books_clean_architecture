@@ -13,8 +13,14 @@ export class UsersImplRepository implements UsersRepository {
     private readonly repository: Repository<UsersOrmEntity>,
   ) {}
 
+  includeAll<T extends object>(repository: Repository<T>): Array<keyof T> {
+    return repository.metadata.columns.map((col) => col.propertyName) as Array<keyof T>;
+  }
   async getUserByEmail(email: string): Promise<UsersDE | null> {
-    const user = await this.repository.findOneBy({ email });
+    const user = await this.repository.findOne({
+      where: { email },
+      select: this.includeAll(this.repository),
+    });
     return user !== null ? UsersMapper.toDomain(user) : null;
   }
 

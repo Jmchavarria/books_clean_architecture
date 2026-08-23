@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { LoginUseCase } from 'src/app/auth/application/use-cases/login/login.use-case';
 import { LogoutUseCase } from 'src/app/auth/application/use-cases/logout/logout.use-case';
-import { RefreshTokenDto } from 'src/app/auth/application/use-cases/refresh-token/refresh-token/refresh-token.dto';
+import type { RefreshTokenDto } from 'src/app/auth/application/use-cases/refresh-token/refresh-token/refresh-token.dto';
 import { RefreshTokenUseCase } from 'src/app/auth/application/use-cases/refresh-token/refresh-token/refresh-token.use-case';
 import { VerifyTokenOAuthUseCase } from 'src/app/auth/application/use-cases/verify-token-oauth/verify-token-oauth.use.case';
 import { LoginHttpDto } from './dto/login.http-dto';
