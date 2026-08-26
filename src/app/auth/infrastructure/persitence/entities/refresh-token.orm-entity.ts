@@ -11,7 +11,7 @@ import {
 @Entity('refresh_tokens')
 export class RefreshTokenOrmEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column({ type: 'int' })
   userId: number;

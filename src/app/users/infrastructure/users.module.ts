@@ -9,6 +9,7 @@ import { GetUserByEmailUseCase } from '../application/use-cases/get-user-by-emai
 import { GetUserByIdUseCase } from '../application/use-cases/get-user-by-id/get-user-by-id.use-case';
 import { UserAddressOrmEntity } from './persistence/entities/users-address.orm-entity';
 import { GetAllUsersUseCase } from '../application/use-cases/get-all-users/get-all-users.use-case';
+import { UpdateUserUseCase } from '../application/use-cases/update-user/update-user.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UsersOrmEntity, UserAddressOrmEntity])],
@@ -19,6 +20,7 @@ import { GetAllUsersUseCase } from '../application/use-cases/get-all-users/get-a
     GetUserByEmailUseCase,
     GetUserByIdUseCase,
     GetAllUsersUseCase,
+    UpdateUserUseCase,
     {
       provide: UsersRepository,
       useClass: UsersImplRepository,

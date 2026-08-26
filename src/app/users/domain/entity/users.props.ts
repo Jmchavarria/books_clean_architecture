@@ -15,3 +15,5 @@ export interface CreateUserProps {
   role: UserRoleEnum;
   password: string;
 }
+
+export type UpdateUserProps = Partial<CreateUserProps> & { id: number };

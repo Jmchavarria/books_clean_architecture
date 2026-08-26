@@ -7,13 +7,21 @@ import { UsersDE } from '../../domain/entity/users.domain-enity';
 import { CreateUserDto } from '../../application/use-cases/create-user/create-user.dto';
 import { UsersRepository } from '../../domain/repository/users.repository';
 import { Pagination } from 'src/app/conmon/pagination/pagination';
-import { GetAllUsersProps } from '../../domain/entity/users.props';
+import { GetAllUsersProps, UpdateUserProps } from '../../domain/entity/users.props';
 
 export class UsersImplRepository implements UsersRepository {
   constructor(
     @InjectRepository(UsersOrmEntity)
     private readonly repository: Repository<UsersOrmEntity>,
   ) {}
+
+  async update(input: UpdateUserProps): Promise<UsersDE | null> {
+    await this.repository.update(input.id, { ...input });
+
+    const existsUser = await this.repository.findOneBy({ id: input.id });
+
+    return existsUser !== null ? UsersMapper.toDomain(existsUser) : null;
+  }
 
   async getAll(input: GetAllUsersProps): Promise<Pagination<UsersDE[]>> {
     const { search, status, pageQuery = 1, takeQuery = 10 } = input;
@@ -38,7 +46,11 @@ export class UsersImplRepository implements UsersRepository {
       );
     }
 
-    const data = await query.skip(skip).take(takeQuery).getMany();
+    const data = await query
+      .orderBy('users.createdAt', 'DESC')
+      .skip(skip)
+      .take(takeQuery)
+      .getMany();
 
     const count = await query.getCount();
 

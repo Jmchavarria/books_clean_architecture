@@ -5,6 +5,7 @@
     },
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
