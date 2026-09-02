@@ -3,7 +3,7 @@ import type { CartOrmEntity } from 'src/app/cart/infrastructure/persistence/enti
 import type { OrderOrmEntity } from 'src/app/order/infrastructure/persistence/entities/order.orm-entity';
 import type { UserAddressOrmEntity } from '../../infrastructure/persistence/entities/users-address.orm-entity';
 import type { UserRoleEnum } from '../enums/user-role.enum';
-import type { UserStatusEnum } from '../enums/user-status.enum';
+import type { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
 
 export interface IUser {
   id: number;
@@ -15,7 +15,7 @@ export interface IUser {
   avatarUrl?: string;
   isEmailVerified: boolean;
   role: UserRoleEnum;
-  status: UserStatusEnum;
+  status: StatusTypeEnum;
   createdAt: Date;
   updatedAt: Date;
 

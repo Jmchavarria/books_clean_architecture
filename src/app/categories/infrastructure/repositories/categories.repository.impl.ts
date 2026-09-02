@@ -34,7 +34,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   async getAll(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
-    const { isActive, name, pageQuery = 1, takeQuery = 200 } = filters;
+    const { isActive, name, pageQuery = 1, takeQuery = 10 } = filters;
 
     const where: FindOptionsWhere<CategoryOrmEntity> = Object.fromEntries(
       Object.entries({
@@ -49,6 +49,9 @@ export class CategoryRepositoryImpl implements CategoryRepository {
       where,
       take: takeQuery,
       skip,
+      order: {
+        createdAt: 'DESC',
+      },
       relations: {
         books: {
           category: true,

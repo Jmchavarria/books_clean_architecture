@@ -1,4 +1,4 @@
 export interface CreateCategoryDto {
   name: string;
-  isActive: boolean;
+  description: string;
 }

@@ -9,7 +9,8 @@ export interface GetAllCategoriesProps extends PaginationProps {
 
 export interface CreateCategoryProps {
   name: string;
-  isActive: boolean;
+  slug: string;
+  description: string;
 }
 
 export type UpdateCategoryProps = Partial<CreateCategoryProps> & { id: number };

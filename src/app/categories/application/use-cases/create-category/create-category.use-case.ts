@@ -6,6 +6,7 @@ import { VerifyCategoryExistsUseCase } from '../verify-category-exists/verify-ca
 import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { HttpStatus } from '@nestjs/common';
+import { CustomSlugify } from 'src/app/conmon/utils/custom.slugify.util';
 
 @Injectable()
 export class CreateCategoryUseCase {
@@ -16,6 +17,7 @@ export class CreateCategoryUseCase {
 
   async execute(input: CreateCategoryDto): Promise<CategoryDE> {
     const verifyCategoryExists = await this.verifyCategoryExistsUseCase.execute(input);
+    const generateSlug = CustomSlugify(input.name);
 
     if (verifyCategoryExists)
       throw new CustomError({
@@ -25,6 +27,9 @@ export class CreateCategoryUseCase {
         instanceName: CreateCategoryUseCase.name,
       });
 
-    return this.repository.create(input);
+    return this.repository.create({
+      ...input,
+      slug: generateSlug,
+    });
   }
 }

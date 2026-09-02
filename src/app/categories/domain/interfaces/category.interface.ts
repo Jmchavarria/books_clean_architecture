@@ -1,9 +1,12 @@
 import type { IBooksSumary } from 'src/app/books/domain/interfaces/books-summary.interface';
+import type { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
 
 export interface ICategory {
   id: number;
   name: string;
-  isActive: boolean;
+  slug: string;
+  description?: string;
+  status: StatusTypeEnum;
   books: IBooksSumary[];
   createdAt: Date;
   updatedAt: Date;

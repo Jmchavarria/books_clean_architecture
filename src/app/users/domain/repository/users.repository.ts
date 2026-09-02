@@ -9,4 +9,5 @@ export abstract class UsersRepository {
   abstract getUserById(id: number): Promise<UsersDE | null>;
   abstract getAll(input: GetAllUsersProps): Promise<Pagination<UsersDE[]>>;
   abstract update(input: UpdateUserProps): Promise<UsersDE | null>;
+  abstract changePassword(id: number, newPassword: string): Promise<boolean>;
 }

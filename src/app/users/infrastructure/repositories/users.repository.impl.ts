@@ -15,6 +15,13 @@ export class UsersImplRepository implements UsersRepository {
     private readonly repository: Repository<UsersOrmEntity>,
   ) {}
 
+  async changePassword(id: number, newPassword: string): Promise<boolean> {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const result = await this.repository.update(id, { password: hashedPassword });
+
+    return result.affected === 1;
+  }
+
   async update(input: UpdateUserProps): Promise<UsersDE | null> {
     await this.repository.update(input.id, { ...input });
 
@@ -84,7 +91,6 @@ export class UsersImplRepository implements UsersRepository {
       ...input,
       password: hashedPassword,
     });
-    const domain = UsersMapper.toDomain(saved);
-    return domain;
+    return UsersMapper.toDomain(saved);
   }
 }

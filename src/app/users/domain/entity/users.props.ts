@@ -1,9 +1,9 @@
 import type { PaginationProps } from 'src/app/conmon/domain/pagination.props';
-import type { UserStatusEnum } from '../enums/user-status.enum';
 import type { UserRoleEnum } from '../enums/user-role.enum';
+import type { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
 
 export interface GetAllUsersProps extends PaginationProps {
-  status?: UserStatusEnum;
+  status?: StatusTypeEnum;
   search?: string;
 }
 

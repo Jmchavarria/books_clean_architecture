@@ -6,6 +6,8 @@ import { GetAllUsersUseCase } from '../../application/use-cases/get-all-users/ge
 import { GetAllUsersHttpDto } from './dto/get-all-users.http-dto';
 import { UpdateUserUseCase } from '../../application/use-cases/update-user/update-user.use-case';
 import { UpdateUserHttDto } from './dto/update-user.http-dto';
+import { ChangePasswordHttpDto } from './dto/change-password.http-dto';
+import { ChangePasswordUseCase } from '../../application/use-cases/change-password/change-password.use-case';
 
 @Controller('users')
 export class UsersController {
@@ -14,6 +16,7 @@ export class UsersController {
     private readonly getUserByIdUseCase: GetUserByIdUseCase,
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
+    private readonly changePasswordUseCase: ChangePasswordUseCase,
   ) {}
 
   @Get()
@@ -29,6 +32,11 @@ export class UsersController {
   @Get('/:idUser')
   getUserById(@Param() idUser: number) {
     return this.getUserByIdUseCase.execute(idUser);
+  }
+
+  @Patch('change-password/:id')
+  changePassword(@Param('id') id: number, @Body() input: ChangePasswordHttpDto) {
+    return this.changePasswordUseCase.execute(id, input.password);
   }
 
   @Patch('/:id')

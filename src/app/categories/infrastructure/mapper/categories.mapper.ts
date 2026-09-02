@@ -8,8 +8,10 @@ export class CategoriesMapper {
     return new CategoryDE({
       id: entity.id,
       name: entity.name,
-      isActive: entity.isActive,
-      books: entity.books.map((book) => BookMapper.toBooksSummary(book)),
+      slug: entity.slug,
+      description: entity.description,
+      status: entity.status,
+      books: (entity.books || []).map((book) => BookMapper.toBooksSummary(book)),
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });
@@ -19,7 +21,7 @@ export class CategoriesMapper {
     return {
       id: entity.id,
       name: entity.name,
-      isActive: entity.isActive,
+      status: entity.status,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };

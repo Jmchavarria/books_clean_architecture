@@ -1,6 +1,5 @@
 import { CartOrmEntity } from 'src/app/cart/infrastructure/persistence/entities/cart.orm-entity';
 import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
-import { UserStatusEnum } from 'src/app/users/domain/enums/user-status.enum';
 import {
   Column,
   CreateDateColumn,
@@ -14,6 +13,7 @@ import {
 import { UserAddressOrmEntity } from './users-address.orm-entity';
 import { OrderOrmEntity } from 'src/app/order/infrastructure/persistence/entities/order.orm-entity';
 import { BookReviewOrmEntity } from 'src/app/book-reviews/infrastructure/persistence/entities/book-review.orm-entity';
+import { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
 @Entity('users')
 export class UsersOrmEntity {
   @PrimaryGeneratedColumn()
@@ -51,10 +51,10 @@ export class UsersOrmEntity {
 
   @Column({
     type: 'enum',
-    enum: UserStatusEnum,
-    default: UserStatusEnum.ACTIVE,
+    enum: StatusTypeEnum,
+    default: StatusTypeEnum.ACTIVE,
   })
-  status: UserStatusEnum;
+  status: StatusTypeEnum;
 
   @CreateDateColumn()
   createdAt: Date;

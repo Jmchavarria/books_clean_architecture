@@ -10,8 +10,8 @@ import { UpdateAuthorDto } from '../../application/use-cases/update-author/updat
 import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { HttpStatus } from '@nestjs/common';
 import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
-import { CreateAuthorDto } from '../../application/use-cases/create-author/create-author.dto';
 import { GetAllAuthorsDto } from '../../application/use-cases/get-all-authors/get-all-authors.dto';
+import { CreateAuthorProps } from '../../domain/entities/authors.props';
 
 @Injectable()
 export class AuthorsRepositoryImpl implements AuthorsRepository {
@@ -20,8 +20,9 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     private readonly repository: Repository<AuthorsOrmEntity>,
   ) {}
 
-  async create(input: CreateAuthorDto): Promise<AuthorsDE> {
+  async create(input: CreateAuthorProps): Promise<AuthorsDE> {
     const author = await this.repository.save(input);
+
     return AuthorsMapper.toDomain(author);
   }
 

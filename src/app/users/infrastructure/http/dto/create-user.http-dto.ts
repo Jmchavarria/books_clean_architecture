@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsEnum,
+  IsMobilePhone,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -14,14 +15,12 @@ export class CreateUserHttpDto {
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(50)
-  @Trim()
   firstName: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(50)
-  @Trim()
   lastName: string;
 
   @IsString()
@@ -33,6 +32,7 @@ export class CreateUserHttpDto {
   @IsString()
   @IsOptional()
   @MinLength(10)
+  @IsMobilePhone('es-CO')
   @MaxLength(10)
   phone?: string;
 

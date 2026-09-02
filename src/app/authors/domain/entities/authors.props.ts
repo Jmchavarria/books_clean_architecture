@@ -1,13 +1,15 @@
 import type { PaginationProps } from 'src/app/conmon/domain/pagination.props';
 
 export interface CreateAuthorProps extends PaginationProps {
-  name: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
+  slug: string;
   birthdate: Date;
+  deathdate?: Date;
   biography?: string;
   countryOfBirth: string;
+  photoUrl?: string;
   literaryGenre?: string;
-  isActive: boolean;
 }
 
 export interface GetAllAuthorsProps {

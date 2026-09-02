@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CreateCategoryUseCase } from '../../application/use-cases/create-category/create-category.use-case';
 import { GetAllCategoriesUseCase } from '../../application/use-cases/get-all-categories/get-all-categories.use-case';
 import { GetCategoryByIdUseCase } from '../../application/use-cases/get-category-by-id/get-category-by-id.use-case';
@@ -31,7 +31,7 @@ export class CategoriesController {
     return this.findAllCategoriesFiltersUseCase.execute(input);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id') id: number, @Body() input: UpdateCategoryHttpDto) {
     return this.updateCategoryUseCase.execute({
       id,

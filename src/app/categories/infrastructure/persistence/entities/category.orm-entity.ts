@@ -1,4 +1,3 @@
-import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,18 +7,31 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
+import { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
 
 @Entity('categories')
-@Index(['name'], { unique: true })
 export class CategoryOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100, unique: true })
+  @Index('UQ_categories_name', { unique: true })
   name: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ type: 'varchar', length: 120, unique: true })
+  @Index('UQ_categories_slug', { unique: true })
+  slug: string;
+
+  @Column({ type: 'text', nullable: true })
+  description?: string;
+
+  @Column({
+    type: 'enum',
+    enum: StatusTypeEnum,
+    default: StatusTypeEnum.ACTIVE,
+  })
+  status: StatusTypeEnum;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -27,6 +39,7 @@ export class CategoryOrmEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  // Una categoría puede tener múltiples libros asociados
   @OneToMany(() => BooksOrmEntity, (book) => book.category)
   books: BooksOrmEntity[];
 }
