@@ -31,9 +31,7 @@ export class CreateUserHttpDto {
 
   @IsString()
   @IsOptional()
-  @MinLength(10)
-  @IsMobilePhone('es-CO')
-  @MaxLength(10)
+  @IsMobilePhone('es-CO', { strictMode: true }, { message: 'Remember to include the prefix' })
   phone?: string;
 
   @IsString()
