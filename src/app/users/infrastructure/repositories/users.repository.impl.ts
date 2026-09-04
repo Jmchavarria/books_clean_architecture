@@ -30,8 +30,8 @@ export class UsersImplRepository implements UsersRepository {
     return existsUser !== null ? UsersMapper.toDomain(existsUser) : null;
   }
 
-  async getAll(input: GetAllUsersProps): Promise<Pagination<UsersDE[]>> {
-    const { search, status, pageQuery = 1, takeQuery = 10 } = input;
+  async getAll(filters: GetAllUsersProps): Promise<Pagination<UsersDE[]>> {
+    const { search, status, pageQuery = 1, takeQuery = 10 } = filters;
 
     const query = this.repository.createQueryBuilder('users');
 

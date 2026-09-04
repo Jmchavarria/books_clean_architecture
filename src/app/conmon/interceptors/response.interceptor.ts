@@ -9,6 +9,7 @@ export interface ApiResponse<T> {
   page?: number;
   limit?: number;
   total?: number;
+  totalPages?: number;
 }
 
 @Injectable()
@@ -26,6 +27,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<unknown, ApiRespo
             page: response.page,
             limit: response.limit,
             total: response.total,
+            totalPages: response.totalPages,
           };
         }
 

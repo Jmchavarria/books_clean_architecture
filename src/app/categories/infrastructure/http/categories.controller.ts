@@ -17,8 +17,8 @@ export class CategoriesController {
   ) {}
 
   @Post()
-  create(@Body() data: CreateCategoryHttpDto) {
-    return this.createCategoryUseCase.execute(data);
+  create(@Body() input: CreateCategoryHttpDto) {
+    return this.createCategoryUseCase.execute(input);
   }
 
   @Get(':id')

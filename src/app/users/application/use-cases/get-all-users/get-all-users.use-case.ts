@@ -6,7 +6,7 @@ import Injectable from 'src/app/conmon/decorators/injectable';
 export class GetAllUsersUseCase {
   constructor(private readonly repository: UsersRepository) {}
 
-  async execute(input: GetAllUsersDto) {
-    return this.repository.getAll(input);
+  async execute(filters: GetAllUsersDto) {
+    return this.repository.getAll(filters);
   }
 }

@@ -20,8 +20,8 @@ export class UsersController {
   ) {}
 
   @Get()
-  getAlL(@Query() input: GetAllUsersHttpDto) {
-    return this.getAllUsersUseCase.execute(input);
+  getAlL(@Query() filters: GetAllUsersHttpDto) {
+    return this.getAllUsersUseCase.execute(filters);
   }
 
   @Post()
