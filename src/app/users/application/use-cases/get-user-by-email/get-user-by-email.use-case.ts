@@ -1,4 +1,4 @@
-import Injectable from 'src/app/conmon/decorators/injectable';
+import Injectable from 'src/app/common/decorators/injectable';
 import { UsersDE } from 'src/app/users/domain/entity/users.domain-enity';
 import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 

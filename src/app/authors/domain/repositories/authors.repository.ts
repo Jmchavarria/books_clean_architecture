@@ -1,4 +1,4 @@
-import type { Pagination } from 'src/app/conmon/pagination/pagination';
+import type { Pagination } from 'src/app/common/pagination/pagination';
 import type { AuthorsDE } from '../entities/authors.domain-entity';
 import type {
   CreateAuthorProps,

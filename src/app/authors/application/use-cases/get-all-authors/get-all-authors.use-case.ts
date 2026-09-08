@@ -1,8 +1,8 @@
 import { AuthorsDE } from 'src/app/authors/domain/entities/authors.domain-entity';
 import { AuthorsRepository } from 'src/app/authors/domain/repositories/authors.repository';
-import Injectable from 'src/app/conmon/decorators/injectable';
+import Injectable from 'src/app/common/decorators/injectable';
 import { GetAllAuthorsDto } from './get-all-authors.dto';
-import { Pagination } from 'src/app/conmon/pagination/pagination';
+import { Pagination } from 'src/app/common/pagination/pagination';
 
 @Injectable()
 export class GetAllAuthorsUseCase {

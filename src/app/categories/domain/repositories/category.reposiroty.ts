@@ -1,4 +1,3 @@
-import type { Pagination } from 'src/app/conmon/pagination/pagination';
 import type { CategoryDE } from '../enitities/category.domain-entity';
 import type {
   CreateCategoryProps,
@@ -6,6 +5,7 @@ import type {
   UpdateCategoryProps,
   VerifyCategoryExistsProps,
 } from '../enitities/categories.props';
+import type { Pagination } from 'src/app/common/pagination/pagination';
 
 export abstract class CategoryRepository {
   abstract create(input: CreateCategoryProps): Promise<CategoryDE>;

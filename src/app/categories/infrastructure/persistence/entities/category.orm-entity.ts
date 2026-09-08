@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { BooksOrmEntity } from 'src/app/books/infrastructure/persistence/entities/books.orm-entity';
-import { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
+import { StatusTypeEnum } from 'src/app/common/enums/status.type.enum';
 
 @Entity('categories')
 export class CategoryOrmEntity {

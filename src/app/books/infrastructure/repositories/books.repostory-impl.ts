@@ -1,9 +1,7 @@
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 import { BookRepository } from 'src/app/books/domain/repositories/book.repository';
 import { Repository } from 'typeorm';
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Pagination } from 'src/app/conmon/pagination/pagination';
 import { BookMapper } from '../mappers/book.mapper';
 import { BooksOrmEntity } from '../persistence/entities/books.orm-entity';
 import {
@@ -12,6 +10,8 @@ import {
   UpdateBookProps,
   VerifyBookExistsProps,
 } from '../../domain/entities/books.props';
+import Injectable from 'src/app/common/decorators/injectable';
+import { Pagination } from 'src/app/common/pagination/pagination';
 
 @Injectable()
 export class BookRepositoryImpl implements BookRepository {
@@ -34,7 +34,7 @@ export class BookRepositoryImpl implements BookRepository {
   }
 
   async getAll(input: GetAllBooksProps): Promise<Pagination<BooksDE[]>> {
-    const { isActive, publishedYear, title, search, pageQuery = 1, takeQuery = 10 } = input;
+    const { isActive, publishedYear, title, search, pageQuery = 1, takeQuery = 5 } = input;
 
     const query = this.repository
       .createQueryBuilder('books')
@@ -51,10 +51,10 @@ export class BookRepositoryImpl implements BookRepository {
     if (search?.trim()) {
       query.andWhere(
         `(
-      books.title LIKE :search
-      OR books.description LIKE :search
-      OR author.name LIKE :search
-      OR category.name LIKE :search
+      books.title ILIKE :search
+      OR books.description ILIKE :search
+      OR author.name ILIKE :search
+      OR category.name ILIKE :search
     )`,
         { search: `%${search}%` },
       );

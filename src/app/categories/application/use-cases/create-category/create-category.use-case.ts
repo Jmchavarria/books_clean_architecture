@@ -1,12 +1,12 @@
 import { CategoryRepository } from 'src/app/categories/domain/repositories/category.reposiroty';
 import { CategoryDE } from 'src/app/categories/domain/enitities/category.domain-entity';
 import { CreateCategoryDto } from '../../dto/create-category.dto';
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { VerifyCategoryExistsUseCase } from '../verify-category-exists/verify-category-exists.use-case';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { HttpStatus } from '@nestjs/common';
-import { CustomSlugify } from 'src/app/conmon/utils/custom.slugify.util';
+import { CustomError } from 'src/app/common/errors/custom.error';
+import { ErrorCode } from 'src/app/common/errors/error-code.enum';
+import { CustomSlugify } from 'src/app/common/utils/custom.slugify.util';
+import Injectable from 'src/app/common/decorators/injectable';
 
 @Injectable()
 export class CreateCategoryUseCase {

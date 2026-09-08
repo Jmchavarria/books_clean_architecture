@@ -1,15 +1,15 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryOrmEntity } from '../persistence/entities/category.orm-entity';
 import { CategoryRepository } from 'src/app/categories/domain/repositories/category.reposiroty';
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CategoryDE } from '../../domain/enitities/category.domain-entity';
-import { Pagination } from 'src/app/conmon/pagination/pagination';
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { CategoriesMapper } from '../mapper/categories.mapper';
 import { UpdateCategoryDto } from '../../application/use-cases/update-category/update-category.dto';
 import { CreateCategoryDto } from '../../application/dto/create-category.dto';
 import { GetAllCategoriesDto } from '../../application/dto/find-all-categories.dto';
 import { VerifyCategoryExistsDto } from '../../application/use-cases/verify-category-exists/verify-category-exists.dto';
+import { Pagination } from 'src/app/common/pagination/pagination';
+import Injectable from 'src/app/common/decorators/injectable';
 
 @Injectable()
 export class CategoryRepositoryImpl implements CategoryRepository {
@@ -34,32 +34,40 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   async getAll(filters: GetAllCategoriesDto): Promise<Pagination<CategoryDE[]>> {
-    const { isActive, name, pageQuery = 1, takeQuery = 10 } = filters;
+    const { isActive, pageQuery = 1, takeQuery = 5, search, name } = filters;
 
-    const where: FindOptionsWhere<CategoryOrmEntity> = Object.fromEntries(
-      Object.entries({
-        name,
-        isActive,
-      }).filter(([, value]) => value !== undefined),
-    );
+    const query = this.repository
+      .createQueryBuilder('categories')
+      .leftJoinAndSelect('categories.books', 'books')
+      .leftJoinAndSelect('books.author', 'author');
+
+    for (const [field, value] of Object.entries({ isActive, name })) {
+      if (value !== undefined) {
+        query.andWhere(`categories.${field} = :${field}`, { [field]: value });
+      }
+    }
+
+    if (search?.trim()) {
+      query.andWhere(
+        `(
+        categories.name ILIKE :search 
+   
+        )`,
+        {
+          search: `%${search}%`,
+        },
+      );
+    }
 
     const skip = (pageQuery - 1) * takeQuery;
 
-    const data = await this.repository.find({
-      where,
-      take: takeQuery,
-      skip,
-      order: {
-        createdAt: 'DESC',
-      },
-      relations: {
-        books: {
-          category: true,
-          author: true,
-        },
-      },
-    });
-    const count = await this.repository.count({ where });
+    const data = await query
+      .orderBy('categories.createdAt', 'DESC')
+      .skip(skip)
+      .take(takeQuery)
+      .getMany();
+
+    const count = await query.getCount();
 
     return new Pagination(
       data.map((entity) => CategoriesMapper.toDomain(entity)),

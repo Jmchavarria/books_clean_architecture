@@ -3,7 +3,7 @@ import type { CartOrmEntity } from 'src/app/cart/infrastructure/persistence/enti
 import type { OrderOrmEntity } from 'src/app/order/infrastructure/persistence/entities/order.orm-entity';
 import type { UserAddressOrmEntity } from '../../infrastructure/persistence/entities/users-address.orm-entity';
 import type { UserRoleEnum } from '../enums/user-role.enum';
-import type { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
+import type { StatusTypeEnum } from 'src/app/common/enums/status.type.enum';
 
 export interface IUser {
   id: number;

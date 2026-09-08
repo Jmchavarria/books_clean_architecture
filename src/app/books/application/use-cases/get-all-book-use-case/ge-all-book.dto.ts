@@ -1,4 +1,4 @@
-import type { PaginationProps } from 'src/app/conmon/domain/pagination.props';
+import type { PaginationProps } from 'src/app/common/domain/pagination.props';
 
 export interface GetAllBooksDto extends PaginationProps {
   title?: string;

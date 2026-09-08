@@ -1,8 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
 import { OAuth2Client } from 'google-auth-library';
-import Injectable from 'src/app/conmon/decorators/injectable';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
+import Injectable from 'src/app/common/decorators/injectable';
+import { CustomError } from 'src/app/common/errors/custom.error';
+import { ErrorCode } from 'src/app/common/errors/error-code.enum';
 
 @Injectable()
 export class VerifyTokenOAuthUseCase {

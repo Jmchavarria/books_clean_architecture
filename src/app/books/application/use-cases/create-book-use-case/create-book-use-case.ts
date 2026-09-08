@@ -1,11 +1,11 @@
 import { BookRepository } from 'src/app/books/domain/repositories/book.repository';
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
 import { CreateBookDto } from './create-book.dto';
 import { VerifyBookExistsUseCase } from '../verify-book-exists/verify-book-exists.use-case';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { HttpStatus } from '@nestjs/common';
+import Injectable from 'src/app/common/decorators/injectable';
+import { CustomError } from 'src/app/common/errors/custom.error';
+import { ErrorCode } from 'src/app/common/errors/error-code.enum';
 
 @Injectable()
 export class CreateBookUseCase {

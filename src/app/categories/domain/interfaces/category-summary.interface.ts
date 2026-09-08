@@ -1,4 +1,4 @@
-import type { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
+import type { StatusTypeEnum } from 'src/app/common/enums/status.type.enum';
 
 export interface ICategorySummary {
   id: number;

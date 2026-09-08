@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersDE } from '../../domain/entity/users.domain-enity';
 import { CreateUserDto } from '../../application/use-cases/create-user/create-user.dto';
 import { UsersRepository } from '../../domain/repository/users.repository';
-import { Pagination } from 'src/app/conmon/pagination/pagination';
+import { Pagination } from 'src/app/common/pagination/pagination';
 import { GetAllUsersProps, UpdateUserProps } from '../../domain/entity/users.props';
 
 export class UsersImplRepository implements UsersRepository {
@@ -31,7 +31,7 @@ export class UsersImplRepository implements UsersRepository {
   }
 
   async getAll(filters: GetAllUsersProps): Promise<Pagination<UsersDE[]>> {
-    const { search, status, pageQuery = 1, takeQuery = 10 } = filters;
+    const { search, status, pageQuery = 1, takeQuery = 5 } = filters;
 
     const query = this.repository.createQueryBuilder('users');
 
@@ -45,7 +45,8 @@ export class UsersImplRepository implements UsersRepository {
     if (search?.trim()) {
       query.andWhere(
         `(
-       CONCAT_WS(' ', users.firstName, users.lastName) ILIKE :search,
+        users.email ILIKE :search OR
+        CONCAT_WS(' ', users.firstName, users.lastName) ILIKE :search
         )`,
         {
           search: `%${search}%`,

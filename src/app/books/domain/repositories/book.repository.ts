@@ -1,4 +1,4 @@
-import type { Pagination } from 'src/app/conmon/pagination/pagination';
+import type { Pagination } from 'src/app/common/pagination/pagination';
 import type { BooksDE } from '../entities/book.domain-entity';
 import type {
   CreateBookProps,

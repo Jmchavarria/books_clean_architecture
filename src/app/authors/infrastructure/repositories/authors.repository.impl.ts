@@ -3,15 +3,15 @@ import { AuthorsRepository } from '../../domain/repositories/authors.repository'
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthorsDE } from '../../domain/entities/authors.domain-entity';
-import { Pagination } from 'src/app/conmon/pagination/pagination';
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { AuthorsMapper } from '../mapper/authors.mapper';
 import { UpdateAuthorDto } from '../../application/use-cases/update-author/update-author.dto';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
 import { HttpStatus } from '@nestjs/common';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
 import { GetAllAuthorsDto } from '../../application/use-cases/get-all-authors/get-all-authors.dto';
 import { CreateAuthorProps } from '../../domain/entities/authors.props';
+import Injectable from 'src/app/common/decorators/injectable';
+import { Pagination } from 'src/app/common/pagination/pagination';
+import { CustomError } from 'src/app/common/errors/custom.error';
+import { ErrorCode } from 'src/app/common/errors/error-code.enum';
 
 @Injectable()
 export class AuthorsRepositoryImpl implements AuthorsRepository {
@@ -31,7 +31,7 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
     literaryGenre,
     name,
     pageQuery = 1,
-    takeQuery = 10,
+    takeQuery = 5,
   }: GetAllAuthorsDto): Promise<Pagination<AuthorsDE[]>> {
     const where: FindOptionsWhere<AuthorsOrmEntity> = Object.fromEntries(
       Object.entries({

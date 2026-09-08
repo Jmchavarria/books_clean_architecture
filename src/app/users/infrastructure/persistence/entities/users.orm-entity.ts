@@ -13,7 +13,7 @@ import {
 import { UserAddressOrmEntity } from './users-address.orm-entity';
 import { OrderOrmEntity } from 'src/app/order/infrastructure/persistence/entities/order.orm-entity';
 import { BookReviewOrmEntity } from 'src/app/book-reviews/infrastructure/persistence/entities/book-review.orm-entity';
-import { StatusTypeEnum } from 'src/app/conmon/enums/status.type.enum';
+import { StatusTypeEnum } from 'src/app/common/enums/status.type.enum';
 @Entity('users')
 export class UsersOrmEntity {
   @PrimaryGeneratedColumn()

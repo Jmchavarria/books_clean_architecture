@@ -8,8 +8,8 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Trim } from 'src/app/common/decorators/trim.decorator';
 import { UserRoleEnum } from 'src/app/users/domain/enums/user-role.enum';
-import { Trim } from 'src/app/conmon/decorators/trim.decorator';
 export class CreateUserHttpDto {
   @IsString()
   @IsNotEmpty()

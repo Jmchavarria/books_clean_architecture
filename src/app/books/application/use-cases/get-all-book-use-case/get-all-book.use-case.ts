@@ -1,8 +1,8 @@
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { BookRepository } from 'src/app/books/domain/repositories/book.repository';
 import { GetAllBooksDto } from './ge-all-book.dto';
-import { Pagination } from 'src/app/conmon/pagination/pagination';
 import { BooksDE } from 'src/app/books/domain/entities/book.domain-entity';
+import Injectable from 'src/app/common/decorators/injectable';
+import { Pagination } from 'src/app/common/pagination/pagination';
 
 @Injectable()
 export class GetAllBooksUseCase {

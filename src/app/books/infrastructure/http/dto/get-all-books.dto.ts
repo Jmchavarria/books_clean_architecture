@@ -1,6 +1,6 @@
 import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { PaginationHttpDto } from 'src/app/conmon/http/dto/paginaton.http-dto';
+import { PaginationHttpDto } from 'src/app/common/http/dto/paginaton.http-dto';
 
 export class GetAllBooksHttpDto extends PaginationHttpDto {
   @IsString()

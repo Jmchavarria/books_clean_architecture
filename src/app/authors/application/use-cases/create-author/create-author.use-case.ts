@@ -1,8 +1,8 @@
 import { AuthorsRepository } from 'src/app/authors/domain/repositories/authors.repository';
 import { CreateAuthorDto } from './create-author.dto';
 import { AuthorsDE } from 'src/app/authors/domain/entities/authors.domain-entity';
-import Injectable from 'src/app/conmon/decorators/injectable';
-import { CustomSlugify } from 'src/app/conmon/utils/custom.slugify.util';
+import Injectable from 'src/app/common/decorators/injectable';
+import { CustomSlugify } from 'src/app/common/utils/custom.slugify.util';
 
 @Injectable()
 export class CreateAuthorUseCase {

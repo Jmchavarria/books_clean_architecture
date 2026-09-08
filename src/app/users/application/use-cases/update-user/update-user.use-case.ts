@@ -1,11 +1,10 @@
 import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 import type { UpdateUserDto } from './update-user.dto';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
 import type { UsersDE } from 'src/app/users/domain/entity/users.domain-enity';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
-import { HttpStatus } from '@nestjs/common';
-import Injectable from 'src/app/conmon/decorators/injectable';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { GetUserByIdUseCase } from '../get-user-by-id/get-user-by-id.use-case';
+import { CustomError } from 'src/app/common/errors/custom.error';
+import { ErrorCode } from 'src/app/common/errors/error-code.enum';
 
 @Injectable()
 export class UpdateUserUseCase {

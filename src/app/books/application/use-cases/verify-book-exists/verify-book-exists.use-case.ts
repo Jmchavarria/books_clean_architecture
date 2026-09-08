@@ -1,6 +1,6 @@
 import { BookRepository } from 'src/app/books/domain/repositories/book.repository';
-import Injectable from 'src/app/conmon/decorators/injectable';
 import { VerifyBookExistsDto } from './verify-book-exists.dto';
+import Injectable from 'src/app/common/decorators/injectable';
 
 @Injectable()
 export class VerifyBookExistsUseCase {

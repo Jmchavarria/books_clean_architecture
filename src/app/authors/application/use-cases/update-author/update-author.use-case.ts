@@ -3,8 +3,8 @@ import { AuthorsRepository } from 'src/app/authors/domain/repositories/authors.r
 import { AuthorsDE } from 'src/app/authors/domain/entities/authors.domain-entity';
 import { UpdateAuthorDto } from './update-author.dto';
 import { GetAuthorByidUseCase } from '../get-author-by-id/get-author-by-id.use-case';
-import { CustomError } from 'src/app/conmon/errors/custom.error';
-import { ErrorCode } from 'src/app/conmon/errors/error-code.enum';
+import { CustomError } from 'src/app/common/errors/custom.error';
+import { ErrorCode } from 'src/app/common/errors/error-code.enum';
 
 @Injectable()
 export class UpdateAuthorUseCase {

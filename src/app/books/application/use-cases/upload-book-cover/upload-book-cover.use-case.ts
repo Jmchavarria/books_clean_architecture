@@ -1,7 +1,7 @@
-import Injectable from 'src/app/conmon/decorators/injectable';
+import Injectable from 'src/app/common/decorators/injectable';
 import type { UploadBookCoverDto } from './upload-book-cover.dto';
-import { UploadFileService } from 'src/app/conmon/infrastructure/services/upload-file.service';
-import { FileUploadResponse } from 'src/app/conmon/interfaces/upload-files-response.interface';
+import { FileUploadResponse } from '@imagekit/nodejs/resources';
+import { UploadFileService } from 'src/app/common/infrastructure/services/upload-file.service';
 
 @Injectable()
 export class UploadBookCoverUseCase {
