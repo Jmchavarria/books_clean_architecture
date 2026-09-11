@@ -20,6 +20,10 @@ export class CreateBookHttpDto {
   @IsNumber()
   pages: number;
 
+  @Type(() => Number)
+  @IsNumber()
+  price: number;
+
   @Type(() => Boolean)
   @IsBoolean()
   isActive: boolean;

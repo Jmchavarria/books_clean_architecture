@@ -8,7 +8,7 @@ import type { IUser } from '../interfaces/user.interface';
 export class UsersDE {
   public id: number;
   public firstName: string;
-  public lastname: string;
+  public lastName: string;
   public email: string;
   public password: string;
   public phone: string;

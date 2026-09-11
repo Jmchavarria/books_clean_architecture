@@ -1,7 +1,7 @@
 import { UsersDE } from 'src/app/users/domain/entity/users.domain-enity';
 import { UsersRepository } from 'src/app/users/domain/repository/users.repository';
 import { CreateUserDto } from './create-user.dto';
-import { GetUserByEmailUseCase } from '../get-user-by-email/get-user-by-email.use-case';
+import { GetUserExistsUseCase } from '../get-user-by-email/get-user-by-email.use-case';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { CustomError } from 'src/app/common/errors/custom.error';
 import { ErrorCode } from 'src/app/common/errors/error-code.enum';
@@ -10,11 +10,11 @@ import { ErrorCode } from 'src/app/common/errors/error-code.enum';
 export class CreateUserUseCase {
   constructor(
     private readonly repository: UsersRepository,
-    private readonly getUserByEmailUseCase: GetUserByEmailUseCase,
+    private readonly getUserExistsUseCase: GetUserExistsUseCase,
   ) {}
 
   async execute(input: CreateUserDto): Promise<UsersDE> {
-    const userExists = await this.getUserByEmailUseCase.execute(input.email);
+    const userExists = await this.getUserExistsUseCase.execute(input.email, input.phone);
 
     if (userExists) {
       throw new CustomError({

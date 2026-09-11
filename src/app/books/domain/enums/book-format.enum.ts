@@ -1,4 +1,4 @@
-export enum BookFormat {
+export enum BookFormatEnum {
   HARDCOVER = 'hardcover',
   PAPERBACK = 'paperback',
   EBOOK = 'ebook',

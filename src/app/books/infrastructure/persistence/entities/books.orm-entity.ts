@@ -14,8 +14,9 @@ import { CategoryOrmEntity } from 'src/app/categories/infrastructure/persistence
 import { AuthorsOrmEntity } from 'src/app/authors/infrastructure/persistence/entities/authors.orm-entity';
 import { CollectionsOrmEntity } from './collections.orm-entity';
 import { PublishersOrmEntity } from './publishers.orm-entity';
-import { BookFormat } from 'src/app/books/domain/enums/book-format.enum';
+import { BookFormatEnum } from 'src/app/books/domain/enums/book-format.enum';
 import { GenresOrmEntity } from 'src/app/genres/infrastructure/persistence/entities/genres.orm-entity';
+import { StatusTypeEnum } from 'src/app/common/enums/status.type.enum';
 
 @Entity('books')
 @Index('UQ_books_title_author_published_year', ['title', 'authorId', 'publishedYear'], {
@@ -49,10 +50,10 @@ export class BooksOrmEntity {
 
   @Column({
     type: 'enum',
-    enum: BookFormat,
-    default: BookFormat.PAPERBACK,
+    enum: BookFormatEnum,
+    default: BookFormatEnum.PAPERBACK,
   })
-  format: BookFormat;
+  format: BookFormatEnum;
 
   @Column({ type: 'varchar', length: 500, nullable: true })
   coverImageUrl?: string;
@@ -70,8 +71,12 @@ export class BooksOrmEntity {
   @Column({ type: 'int', nullable: true })
   weightInGrams?: number;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({
+    type: 'enum',
+    enum: StatusTypeEnum,
+    default: StatusTypeEnum.ACTIVE,
+  })
+  status: StatusTypeEnum;
 
   @CreateDateColumn()
   createdAt: Date;

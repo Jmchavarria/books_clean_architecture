@@ -1,4 +1,4 @@
-import type { IBooksSumary } from 'src/app/books/domain/interfaces/books-summary.interface';
+import type { ItoAuthorsResponse } from 'src/app/books/domain/interfaces/books.interface';
 import type { GenresOrmEntity } from 'src/app/genres/infrastructure/persistence/entities/genres.orm-entity';
 
 export interface IAuthors {
@@ -17,5 +17,5 @@ export interface IAuthors {
 
   // cambiarlo por su respectiva interfaz
   genres: GenresOrmEntity[];
-  books: IBooksSumary[];
+  books: ItoAuthorsResponse[];
 }

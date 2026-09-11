@@ -26,7 +26,17 @@ export class BookRepositoryImpl implements BookRepository {
 
   async create(book: CreateBookProps): Promise<BooksDE> {
     const saved = await this.repository.save(book);
-    return BookMapper.toDomain(saved);
+
+    const createdBook = await this.repository.findOne({
+      where: { id: saved.id },
+      relations: { author: true, category: true },
+    });
+
+    if (!createdBook) {
+      throw new Error('The saved book could not be retrieved');
+    }
+
+    return BookMapper.toDomain(createdBook);
   }
 
   async verifyExists({ title, authorId, publishedYear }: VerifyBookExistsProps): Promise<boolean> {
@@ -38,8 +48,8 @@ export class BookRepositoryImpl implements BookRepository {
 
     const query = this.repository
       .createQueryBuilder('books')
-      .innerJoinAndSelect('books.category', 'category')
-      .innerJoinAndSelect('books.author', 'author');
+      .leftJoinAndSelect('books.author', 'author')
+      .leftJoinAndSelect('books.category', 'category');
 
     for (const [field, value] of Object.entries({ isActive, publishedYear, title })) {
       if (value !== undefined) {

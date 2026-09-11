@@ -33,7 +33,12 @@ export class UsersImplRepository implements UsersRepository {
   async getAll(filters: GetAllUsersProps): Promise<Pagination<UsersDE[]>> {
     const { search, status, pageQuery = 1, takeQuery = 5 } = filters;
 
-    const query = this.repository.createQueryBuilder('users');
+    const query = this.repository
+      .createQueryBuilder('users')
+      .leftJoinAndSelect('users.orders', 'orders')
+      .leftJoinAndSelect('users.cart', 'cart')
+      .leftJoinAndSelect('users.reviews', 'reviews')
+      .leftJoinAndSelect('users.addresses', 'addresses');
 
     for (const [field, value] of Object.entries({ status })) {
       if (value !== undefined) {
@@ -73,9 +78,10 @@ export class UsersImplRepository implements UsersRepository {
   includeAll<T extends object>(repository: Repository<T>): Array<keyof T> {
     return repository.metadata.columns.map((col) => col.propertyName) as Array<keyof T>;
   }
-  async getUserByEmail(email: string): Promise<UsersDE | null> {
+
+  async getUserExists(email?: string, phone?: string): Promise<UsersDE | null> {
     const user = await this.repository.findOne({
-      where: { email },
+      where: [{ email }, { phone }],
       select: this.includeAll(this.repository),
     });
     return user !== null ? UsersMapper.toDomain(user) : null;

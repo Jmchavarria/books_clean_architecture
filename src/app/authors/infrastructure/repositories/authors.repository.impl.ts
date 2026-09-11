@@ -47,7 +47,12 @@ export class AuthorsRepositoryImpl implements AuthorsRepository {
       where,
       take: takeQuery,
       skip,
-      relations: { books: true },
+      relations: {
+        books: {
+          category: true,
+          author: true,
+        },
+      },
     });
 
     const count = await this.repository.count({ where });

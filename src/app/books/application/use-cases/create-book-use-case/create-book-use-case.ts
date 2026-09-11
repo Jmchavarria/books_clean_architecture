@@ -6,6 +6,7 @@ import { HttpStatus } from '@nestjs/common';
 import Injectable from 'src/app/common/decorators/injectable';
 import { CustomError } from 'src/app/common/errors/custom.error';
 import { ErrorCode } from 'src/app/common/errors/error-code.enum';
+import { CustomSlugify } from 'src/app/common/utils/custom.slugify.util';
 
 @Injectable()
 export class CreateBookUseCase {
@@ -30,7 +31,11 @@ export class CreateBookUseCase {
           instanceName: CreateBookUseCase.name,
         });
 
-      return this.bookRepository.create(input);
+      const generateSlug = CustomSlugify(input.title);
+      return this.bookRepository.create({
+        ...input,
+        slug: generateSlug,
+      });
     } catch (error) {
       console.error(error);
       throw error;

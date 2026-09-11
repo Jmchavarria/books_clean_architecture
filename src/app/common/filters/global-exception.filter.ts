@@ -32,7 +32,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         error: {
           code: exception.code,
           message: exception.message,
-          details: exception.details ?? undefined, // 👈 más simple, sin spread
+          details: exception.details ?? undefined,
         },
         path: request.url,
         timestamp: new Date().toISOString(),

@@ -9,7 +9,7 @@ export class CreateAuthorUseCase {
   constructor(private readonly authorsRepository: AuthorsRepository) {}
 
   async execute(input: CreateAuthorDto): Promise<AuthorsDE> {
-    const generateSlug = CustomSlugify(`${input.firstName}${input.lastName}`);
+    const generateSlug = CustomSlugify(`${input.firstName} ${input.lastName}`);
     return this.authorsRepository.create({
       ...input,
       slug: generateSlug,

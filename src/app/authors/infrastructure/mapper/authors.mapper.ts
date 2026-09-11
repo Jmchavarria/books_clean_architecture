@@ -19,7 +19,7 @@ export class AuthorsMapper {
       createdAt: author.createdAt,
       updatedAt: author.createdAt,
       genres: author.genres,
-      books: (author.books || []).map((book) => BookMapper.toBooksSummary(book)),
+      books: (author.books || []).map((book) => BookMapper.toauthorsResponse(book)),
     });
   }
 

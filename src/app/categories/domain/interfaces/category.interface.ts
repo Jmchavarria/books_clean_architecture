@@ -1,4 +1,4 @@
-import type { IBooksSumary } from 'src/app/books/domain/interfaces/books-summary.interface';
+import type { ItoCategoriesResponse } from 'src/app/books/domain/interfaces/books.interface';
 import type { StatusTypeEnum } from 'src/app/common/enums/status.type.enum';
 
 export interface ICategory {
@@ -7,7 +7,17 @@ export interface ICategory {
   slug: string;
   description?: string;
   status: StatusTypeEnum;
-  books: IBooksSumary[];
+  books: ItoCategoriesResponse[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export type toBooksresponse = Omit<ICategory, 'books'>;
+
+export interface ICategorySummary {
+  id: number;
+  name: string;
+  status: StatusTypeEnum;
   createdAt: Date;
   updatedAt: Date;
 }

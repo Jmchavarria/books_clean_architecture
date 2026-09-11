@@ -9,7 +9,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string) {
-    const user = await this.usersRepository.getUserByEmail(username);
+    const user = await this.usersRepository.getUserExists(username);
 
     if (user?.password === pass) {
       const { password, ...result } = user;

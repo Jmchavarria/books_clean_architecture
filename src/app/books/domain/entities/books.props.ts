@@ -2,6 +2,8 @@ import type { PaginationProps } from 'src/app/common/domain/pagination.props';
 
 export interface CreateBookProps {
   title: string;
+  slug: string;
+  price: number;
   categoryId?: number;
   authorId: number;
   description?: string;

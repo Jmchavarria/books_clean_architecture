@@ -1,4 +1,4 @@
-import { GetUserByEmailUseCase } from 'src/app/users/application/use-cases/get-user-by-email/get-user-by-email.use-case';
+import { GetUserExistsUseCase } from 'src/app/users/application/use-cases/get-user-by-email/get-user-by-email.use-case';
 import type { RegisterDto } from './register.dto';
 import { CustomError } from 'src/app/common/errors/custom.error';
 import { ErrorCode } from 'src/app/common/errors/error-code.enum';
@@ -12,13 +12,13 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class RegisterUseCase {
   constructor(
-    private readonly getUserByEmailUseCase: GetUserByEmailUseCase,
+    private readonly getUserExistsUseCase: GetUserExistsUseCase,
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly createRefreshTokenUseCase: CreateRefreshTokenUseCase,
     private readonly jwtService: JwtService,
   ) {}
   async execute(input: RegisterDto) {
-    const userExists = await this.getUserByEmailUseCase.execute(input.email);
+    const userExists = await this.getUserExistsUseCase.execute(input.email);
 
     if (userExists)
       throw new CustomError({

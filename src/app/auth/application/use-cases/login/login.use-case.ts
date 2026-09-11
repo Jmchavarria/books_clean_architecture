@@ -18,7 +18,7 @@ export class LoginUseCase {
     const payload = {
       sub: user.id,
       email: user.email,
-      fullName: `${user.firstName} ${user.lastname}`,
+      fullName: `${user.firstName} ${user.lastName}`,
       role: user.role,
     };
 
