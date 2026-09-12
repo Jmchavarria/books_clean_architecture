@@ -856,6 +856,97 @@ async function ensureOrderItem(orderId, bookId, quantity, priceAtPurchase) {
 }
 
 /* ============================================================
+   CARTS
+   ============================================================ */
+
+async function ensureCart(cart, userId) {
+  /*
+   * Un carrito de usuario registrado se identifica por userId (unique).
+   * Un carrito de invitado (sin userId) se identifica por sessionToken.
+   */
+  const existing = userId
+    ? await client.query(
+        `
+          SELECT id
+          FROM carts
+          WHERE "userId" = $1
+          LIMIT 1
+        `,
+        [userId],
+      )
+    : await client.query(
+        `
+          SELECT id
+          FROM carts
+          WHERE "sessionToken" = $1
+          LIMIT 1
+        `,
+        [cart.sessionToken],
+      );
+
+  if (existing.rows.length > 0) {
+    return existing.rows[0].id;
+  }
+
+  const result = await client.query(
+    `
+      INSERT INTO carts (
+        "userId",
+        "sessionToken"
+      )
+      VALUES (
+        $1,
+        $2
+      )
+      RETURNING id
+    `,
+    [userId, cart.sessionToken],
+  );
+
+  return result.rows[0].id;
+}
+
+/* ============================================================
+   CART ITEMS
+   ============================================================ */
+
+async function ensureCartItem(cartId, bookId, quantity) {
+  const existing = await client.query(
+    `
+      SELECT id
+      FROM cart_items
+      WHERE "cartId" = $1
+        AND "bookId" = $2
+      LIMIT 1
+    `,
+    [cartId, bookId],
+  );
+
+  if (existing.rows.length > 0) {
+    return existing.rows[0].id;
+  }
+
+  const result = await client.query(
+    `
+      INSERT INTO cart_items (
+        "cartId",
+        "bookId",
+        quantity
+      )
+      VALUES (
+        $1,
+        $2,
+        $3
+      )
+      RETURNING id
+    `,
+    [cartId, bookId, quantity],
+  );
+
+  return result.rows[0].id;
+}
+
+/* ============================================================
    SEED DATA - CATEGORIES
    ============================================================ */
 
@@ -1366,6 +1457,37 @@ const orders = [
 ];
 
 /* ============================================================
+   SEED DATA - CARTS
+   ============================================================ */
+
+const carts = [
+  {
+    userEmail: 'ana.torres@example.com',
+    sessionToken: null,
+    items: [
+      { bookSlug: 'the-call-of-the-wild', quantity: 1 },
+      { bookSlug: 'animal-farm', quantity: 2 },
+    ],
+  },
+  {
+    userEmail: 'carlos.ramirez@example.com',
+    sessionToken: null,
+    items: [{ bookSlug: 'frankenstein', quantity: 1 }],
+  },
+  {
+    userEmail: 'lucia.fernandez@example.com',
+    sessionToken: null,
+    items: [{ bookSlug: 'the-iron-heel', quantity: 1 }],
+  },
+  {
+    // Carrito de invitado: sin usuario registrado, identificado por sessionToken
+    userEmail: null,
+    sessionToken: 'guest-9f3e2b1c4a7d4e6f9b3c8a1d2e5f0abc',
+    items: [{ bookSlug: 'the-hobbit', quantity: 1 }],
+  },
+];
+
+/* ============================================================
    MAIN
    ============================================================ */
 
@@ -1395,6 +1517,8 @@ async function main() {
       'wishlist_items',
       'orders',
       'order_items',
+      'carts',
+      'cart_items',
     ];
 
     for (const tableName of requiredTables) {
@@ -1573,6 +1697,18 @@ async function main() {
       'priceAtPurchase',
       'totalPrice',
     ]);
+
+    /* --------------------------------------------------------
+       VERIFY CART COLUMNS
+       -------------------------------------------------------- */
+
+    await assertRequiredColumns('carts', ['userId', 'sessionToken']);
+
+    /* --------------------------------------------------------
+       VERIFY CART ITEM COLUMNS
+       -------------------------------------------------------- */
+
+    await assertRequiredColumns('cart_items', ['cartId', 'bookId', 'quantity']);
 
     /* --------------------------------------------------------
        RESOLVE ENUMS DIRECTLY FROM POSTGRESQL
@@ -1948,6 +2084,37 @@ async function main() {
         await ensureOrderItem(orderId, item.bookId, item.quantity, item.priceAtPurchase);
 
         console.log(`    + ${item.quantity} x book#${item.bookId} @ ${item.priceAtPurchase}`);
+      }
+    }
+
+    /* --------------------------------------------------------
+       CARTS + CART ITEMS
+       -------------------------------------------------------- */
+
+    console.log('');
+    console.log('Seeding carts...');
+
+    for (const cart of carts) {
+      const userId = cart.userEmail ? userIds[cart.userEmail] : null;
+
+      if (cart.userEmail && !userId) {
+        throw new Error(`No existe el usuario "${cart.userEmail}" para el carrito.`);
+      }
+
+      const cartId = await ensureCart(cart, userId);
+
+      console.log(`  Cart: ${cart.userEmail || cart.sessionToken} -> ${cartId}`);
+
+      for (const item of cart.items) {
+        const bookId = bookIds[item.bookSlug];
+
+        if (!bookId) {
+          throw new Error(`No existe el libro "${item.bookSlug}" para el carrito.`);
+        }
+
+        await ensureCartItem(cartId, bookId, item.quantity);
+
+        console.log(`    + ${item.quantity} x ${item.bookSlug}`);
       }
     }
 

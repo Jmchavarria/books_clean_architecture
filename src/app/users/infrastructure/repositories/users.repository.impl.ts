@@ -36,7 +36,13 @@ export class UsersImplRepository implements UsersRepository {
     const query = this.repository
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.orders', 'orders')
+      .leftJoinAndSelect('orders.items', 'orderItems')
+      .leftJoinAndSelect('orderItems.book', 'orderBook')
+
       .leftJoinAndSelect('users.cart', 'cart')
+      .leftJoinAndSelect('cart.items', 'cartItems')
+      .leftJoinAndSelect('cartItems.book', 'cartBook')
+
       .leftJoinAndSelect('users.reviews', 'reviews')
       .leftJoinAndSelect('users.addresses', 'addresses');
 
