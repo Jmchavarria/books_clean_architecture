@@ -21,7 +21,7 @@ export class UpdateUserUseCase {
     if (userUpdated === null)
       throw new CustomError({
         code: ErrorCode.register_not_found,
-        message: `Book with ID ${input.id} not found`,
+        message: `User with ID ${input.id} not found`,
         statusCode: HttpStatus.NOT_FOUND,
         instanceName: UpdateUserUseCase.name,
       });

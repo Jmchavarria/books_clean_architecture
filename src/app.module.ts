@@ -13,6 +13,7 @@ import { CartModule } from './app/cart/infrastructure/cart.module';
 import { GenresModule } from './app/genres/infrastructure/genres.module';
 import { OrderModule } from './app/order/infrastructure/order.module';
 import { BookReviewsModule } from './app/book-reviews/infrastructure/book-reviews.module';
+import { UserAddressesModule } from './app/users/infrastructure/user-addresses.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { BookReviewsModule } from './app/book-reviews/infrastructure/book-review
     GenresModule,
     OrderModule,
     BookReviewsModule,
+    UserAddressesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
