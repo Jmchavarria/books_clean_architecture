@@ -32,19 +32,15 @@ export class UserAddressesRepositoryImpl implements UserAddressRepository {
     return this.dataSource.transaction(async (manager) => {
       const addressRepo = manager.getRepository(UserAddressOrmEntity);
 
-      // 1. Si la dirección que se está actualizando viene con isDefault: true
+      // 1. Si la dirección que se está actualizando viene con isDefault: true, Desmarcamos la dirección predeterminada anterior del usuario
       if (input.isDefault) {
-        // Desmarcamos la dirección predeterminada anterior del usuario
         await addressRepo.update({ userId: input.userId, isDefault: true }, { isDefault: false });
       }
 
-      // 2. Actualizamos la dirección solicitada
       await addressRepo.update(input.id, { ...input });
 
-      // 3. Obtenemos el registro actualizado
       const existAddress = await addressRepo.findOneBy({ id: input.id });
 
-      // 4. Mapeamos a Dominio
       return existAddress !== null ? UserAddressesMapper.toDomain(existAddress) : null;
     });
   }
@@ -60,7 +56,6 @@ export class UserAddressesRepositoryImpl implements UserAddressRepository {
 
     const cacheKey = `user:${userId}:addresses:page:${pageQuery}:limit:${takeQuery}:search:${search || 'none'}`;
 
-    // 1. Intentar obtener desde Redis
     const cachedData = await this.cacheManager.get<Pagination<UserAddressesDE[]>>(cacheKey);
 
     if (cachedData !== undefined) {

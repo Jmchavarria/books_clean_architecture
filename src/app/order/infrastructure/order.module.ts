@@ -23,6 +23,5 @@ import { GetOrderByIdUseCase } from '../application/use-cases/get-order-by-id/ge
     },
   ],
   controllers: [OrderController],
-  exports: [],
 })
 export class OrderModule {}

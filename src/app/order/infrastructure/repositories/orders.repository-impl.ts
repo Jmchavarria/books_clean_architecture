@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrdersRepository } from 'src/app/order/domain/repositories/orders.repository';
 import { Repository } from 'typeorm';
@@ -11,6 +10,7 @@ import {
 import { OrderDE } from 'src/app/order/domain/entities/order.domain-entity';
 import { OrdersMapper } from '../mappers/orders.mapper';
 import { Pagination } from 'src/app/common/pagination/pagination';
+import Injectable from 'src/app/common/decorators/injectable';
 
 @Injectable()
 export class OrdersRepositoryImpl implements OrdersRepository {
@@ -73,7 +73,6 @@ export class OrdersRepositoryImpl implements OrdersRepository {
   }
 
   async update(input: UpdateOrderProps): Promise<OrderDE | null> {
-    // Mezcla las propiedades enviadas manteniendo la instancia de TypeORM
     await this.repository.update(input.id, { ...input });
 
     const existsUser = await this.repository.findOneBy({ id: input.id });
