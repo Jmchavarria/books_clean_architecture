@@ -33,15 +33,12 @@ export class OrderItemOrmEntity {
   @JoinColumn({ name: 'bookId' })
   book: BooksOrmEntity;
 
-  // Cantidad comprada
   @Column({ type: 'int' })
   quantity: number;
 
-  // PRECIO HISTÓRICO AL MOMENTO DE COMPRA
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   priceAtPurchase: number;
 
-  // Subtotal de la línea (priceAtPurchase * quantity)
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   totalPrice: number;
 

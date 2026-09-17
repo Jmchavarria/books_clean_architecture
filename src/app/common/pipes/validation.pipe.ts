@@ -1,5 +1,5 @@
 import { PipeTransform, ArgumentMetadata } from '@nestjs/common';
-import { validate } from 'class-validator';
+import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import Injectable from '../decorators/injectable';
 import { CustomError } from '../errors/custom.error';
@@ -16,13 +16,14 @@ export class CustomValidationPipe<T = unknown> implements PipeTransform<
     }
 
     const object = plainToInstance(metatype, value) as unknown as object;
-    const errors = await validate(object);
+
+    const errors = await validate(object, {
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
 
     if (errors.length > 0) {
-      const details = errors.map((err) => ({
-        field: err.property,
-        errors: Object.values(err.constraints ?? {}),
-      }));
+      const details = this.formatErrors(errors);
 
       throw new CustomError({
         code: ErrorCode.validation_error,
@@ -32,6 +33,30 @@ export class CustomValidationPipe<T = unknown> implements PipeTransform<
       });
     }
     return object;
+  }
+
+  private formatErrors(errors: ValidationError[]): Array<{ field: string; errors: string[] }> {
+    const formatted: Array<{ field: string; errors: string[] }> = [];
+
+    const extract = (errorList: ValidationError[], parentPath = '') => {
+      for (const err of errorList) {
+        const fieldPath = parentPath ? `${parentPath}.${err.property}` : err.property;
+
+        if (err.constraints) {
+          formatted.push({
+            field: fieldPath,
+            errors: Object.values(err.constraints),
+          });
+        }
+
+        if (err.children && err.children.length > 0) {
+          extract(err.children, fieldPath);
+        }
+      }
+    };
+
+    extract(errors);
+    return formatted;
   }
 
   private toValidate(metatype: new (...args: unknown[]) => unknown): boolean {

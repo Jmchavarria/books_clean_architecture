@@ -10,6 +10,7 @@ async function bootstrap() {
     origin: 'http://localhost:4200',
     Credential: true,
   });
+
   app.useGlobalPipes(new CustomValidationPipe());
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new GlobalExceptionFilter());

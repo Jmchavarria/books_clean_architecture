@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateUserAddressHttpDto {
   @IsNumber()
@@ -28,6 +28,10 @@ export class CreateUserAddressHttpDto {
   @IsString()
   @IsNotEmpty()
   postalCode: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  isDefault: boolean;
 
   @IsString()
   @IsNotEmpty()

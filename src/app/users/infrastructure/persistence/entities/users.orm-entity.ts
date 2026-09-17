@@ -29,7 +29,6 @@ export class UsersOrmEntity {
   @Index('UQ_users_email', { unique: true })
   email: string;
 
-  // En TypeORM no es recomendable retornar el password por defecto en queries de lectura
   @Column({ type: 'varchar', length: 255, select: false })
   password?: string;
 
