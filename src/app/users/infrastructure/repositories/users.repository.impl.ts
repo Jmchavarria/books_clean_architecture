@@ -44,11 +44,12 @@ export class UsersImplRepository implements UsersRepository {
       .leftJoinAndSelect('cartItems.book', 'cartBook')
 
       .leftJoinAndSelect('users.reviews', 'reviews')
+      .leftJoinAndSelect('reviews.book', 'booksReviews')
       .leftJoinAndSelect('users.addresses', 'addresses');
 
     for (const [field, value] of Object.entries({ status })) {
       if (value !== undefined) {
-        query.andWhere(`users.${field} = : ${field} `, { [field]: value });
+        query.andWhere(`users.${field} = :${field} `, { [field]: value });
       }
     }
     const skip = (pageQuery - 1) * takeQuery;

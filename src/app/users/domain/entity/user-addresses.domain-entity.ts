@@ -10,6 +10,7 @@ export class UserAddressesDE {
   public state: string;
   public postalCode: string;
   public country: string;
+  public isDefault: boolean;
   public createdAt: Date;
   public updatedAt: Date;
 

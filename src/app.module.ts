@@ -14,9 +14,16 @@ import { GenresModule } from './app/genres/infrastructure/genres.module';
 import { OrderModule } from './app/order/infrastructure/order.module';
 import { BookReviewsModule } from './app/book-reviews/infrastructure/book-reviews.module';
 import { UserAddressesModule } from './app/users/infrastructure/user-addresses.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { createKeyv } from '@keyv/redis';
 
 @Module({
   imports: [
+    CacheModule.register({
+      stores: [createKeyv('redis://localhost:6379')],
+      isGlobal: true,
+    }),
+
     ConfigModule.forRoot({
       isGlobal: true,
     }),

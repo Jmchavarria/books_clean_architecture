@@ -7,6 +7,7 @@ import { UpdateUserAddressUseCase } from '../application/use-cases/user-addresse
 import { UserAddressRepository } from '../domain/repository/users-addresses.repositorty';
 import { UserAddressesRepositoryImpl } from './repositories/user-addresses.repository-impl';
 import { UserAddressesController } from './http/user-addresses.controller';
+import { GetAllUserAddressesUseCase } from '../application/use-cases/user-addresses/get-all-user-addresses/get-all-user-addresses.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserAddressOrmEntity])],
@@ -16,7 +17,7 @@ import { UserAddressesController } from './http/user-addresses.controller';
     CreateUserAddressUseCase,
     GetUserAddressByIdUseCase,
     UpdateUserAddressUseCase,
-
+    GetAllUserAddressesUseCase,
     {
       provide: UserAddressRepository,
       useClass: UserAddressesRepositoryImpl,

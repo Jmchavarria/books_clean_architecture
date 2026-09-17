@@ -24,7 +24,7 @@ export class UserAddressOrmEntity {
   user: UsersOrmEntity;
 
   @Column({ type: 'varchar', length: 100 })
-  alias: string; // Ej: "Casa", "Oficina"
+  alias: string;
 
   @Column({ type: 'varchar', length: 200 })
   streetAddress: string; // Dirección completa
@@ -45,7 +45,7 @@ export class UserAddressOrmEntity {
   country: string;
 
   @Column({ default: false })
-  isDefault: boolean; // Indica si es la dirección predeterminada de envío
+  isDefault: boolean;
 
   @CreateDateColumn()
   createdAt: Date;

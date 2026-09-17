@@ -7,6 +7,7 @@ export interface IUserAddresses {
   city: string;
   state: string;
   postalCode: string;
+  isDefault: boolean;
   country: string;
   createdAt: Date;
   updatedAt: Date;
