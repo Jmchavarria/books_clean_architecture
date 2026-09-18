@@ -9,10 +9,13 @@ import { OrderController } from 'src/app/order/infrastructure/http/orders.contro
 import { GetAllOrdersUseCase } from '../application/use-cases/get-all-orders/get-all-orders.use-case';
 import { UpdateOrderUseCase } from '../application/use-cases/update-orders/update-order.use-case';
 import { GetOrderByIdUseCase } from '../application/use-cases/get-order-by-id/get-order-by-id.use-case';
+import { GetBookByIdUseCase } from 'src/app/books/application/use-cases/get-book-by-id-use-case/get-book-by-id.use-case';
+import { BooksModule } from 'src/app/books/infrastructure/books.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([OrderOrmEntity, OrderItemOrmEntity])],
+  imports: [TypeOrmModule.forFeature([OrderOrmEntity, OrderItemOrmEntity]), BooksModule],
   providers: [
+    GetBookByIdUseCase,
     CreateOrderUseCase,
     GetAllOrdersUseCase,
     UpdateOrderUseCase,

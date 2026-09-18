@@ -10,6 +10,7 @@ export interface IBooks {
   language: string;
   format: BookFormatEnum;
   pages?: number;
+  price: number;
   status: StatusTypeEnum;
   publishedYear?: number;
   author: IAuthorsSummary;

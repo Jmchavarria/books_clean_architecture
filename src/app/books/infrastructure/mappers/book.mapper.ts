@@ -18,6 +18,7 @@ export class BookMapper {
       publishedYear: entity.publishedYear,
       status: entity.status,
       pages: entity.pages,
+      price: entity.price,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       author: AuthorsMapper.toAuthorsSummary(entity.author),
@@ -34,6 +35,7 @@ export class BookMapper {
       format: entity.format,
       status: entity.status,
       pages: entity.pages,
+      price: entity.price,
       author: AuthorsMapper.toAuthorsSummary(entity.author),
       publishedYear: entity.publishedYear,
       createdAt: entity.createdAt,
@@ -51,6 +53,7 @@ export class BookMapper {
       category: entity.category,
       status: entity.status,
       pages: entity.pages,
+      price: entity.price,
       publishedYear: entity.publishedYear,
     };
   }

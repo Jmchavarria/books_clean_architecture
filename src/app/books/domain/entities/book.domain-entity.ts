@@ -11,6 +11,7 @@ export class BooksDE {
   public language: string;
   public format: BookFormatEnum;
   public pages?: number;
+  public price: number;
   public status: StatusTypeEnum;
   public publishedYear: number;
   public author: IAuthorsSummary;

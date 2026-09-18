@@ -6,6 +6,7 @@ import { UpdateOrderUseCase } from 'src/app/order/application/use-cases/update-o
 import { CreateOrderHttpDto } from './dto/create-order.http-dto';
 import { UpdateOrderHttpDto } from './dto/update-order.http-dto';
 import { GetOrderByIdUseCase } from '../../application/use-cases/get-order-by-id/get-order-by-id.use-case';
+import { CurrentUser } from 'src/app/auth/decorators/current-user.decorator';
 
 @Controller('orders')
 export class OrderController {
@@ -22,8 +23,8 @@ export class OrderController {
   }
 
   @Post()
-  async create(@Body() input: CreateOrderHttpDto) {
-    return this.createOrderUseCase.execute(input);
+  async create(@Body() input: CreateOrderHttpDto, @CurrentUser('id') userId: number) {
+    return this.createOrderUseCase.execute({ userId, ...input });
   }
 
   @Get(':id')

@@ -1,14 +1,25 @@
 import type { PaginationProps } from 'src/app/common/domain/pagination.props';
-import type { IOrderItem } from '../interfaces/order-item.interface';
-import type { IOrder } from '../interfaces/order.interface';
 import type { OrderStatusEnum } from '../enums/order-status.enum';
+import type { ShippingAddressSnapshot } from '../interfaces/order.interface';
 
-export type CreateOrderProps = Omit<
-  IOrder,
-  'id' | 'createdAt' | 'updatedAt' | 'items' | 'status' | 'user'
-> & {
-  items: Omit<IOrderItem, 'id' | 'orderId' | 'totalPrice' | 'createdAt' | 'updatedAt'>[];
-};
+export interface CreateOrderItemProps {
+  bookId: number;
+  quantity: number;
+  priceAtPurchase: number;
+  totalPrice: number;
+}
+
+export interface CreateOrderProps {
+  orderNumber: string;
+  userId: number;
+  subtotal: number;
+  shippingCost: number;
+  taxAmount: number;
+  discountAmount: number;
+  totalAmount: number;
+  shippingAddressSnapshot: ShippingAddressSnapshot;
+  items: CreateOrderItemProps[];
+}
 
 export interface GetAllOrdersProps extends PaginationProps {
   search?: string;
